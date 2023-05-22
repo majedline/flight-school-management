@@ -25,13 +25,13 @@ function App() {
             Sign Up
           </Button>
           <Button color="inherit" component={Link} to="/profile">
-            Profile
+            Student
           </Button>
           <Button color="inherit" component={Link} to="/assets">
-            Assets
+            Plane
           </Button>
           <Button color="inherit" component={Link} to="/flights">
-            Flights
+            Flight
           </Button>
           <Button color="inherit" component={Link} to="/calendar">
             Calendar
