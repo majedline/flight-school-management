@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/flight-school-app/static/css/main.e6c13ad2.css",
+    "main.js": "/flight-school-app/static/js/main.08f7ce46.js",
+    "index.html": "/flight-school-app/index.html",
+    "main.e6c13ad2.css.map": "/flight-school-app/static/css/main.e6c13ad2.css.map",
+    "main.08f7ce46.js.map": "/flight-school-app/static/js/main.08f7ce46.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.08f7ce46.js"
+  ]
+}
