@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import { AppContext } from './AppContext';
 import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, Container } from '@mui/material';
 import LoginScreen from './pages/LoginScreen';
 import SignupScreen from './pages/SignupScreen';
-import ProfileScreen from './pages/ProfileScreen';
-import AssetScreen from './pages/AssetScreen';
+import StudentScreen from './pages/StudentScreen';
+import AssetListScreen from './pages/AssetListScreen';
 import FlightScreen from './pages/FlightScreen';
-import AddAssetForm from './pages/AddAssetForm';
+import AssetScreen from './pages/AssetScreen';
 import CalendarScreen from './pages/CalendarScreen';
-import { AppProvider } from './AppContext';
+import ResetPasswordScreen from './pages/ResetPasswordScreen';
+import StudentListScreen from './pages/StudentListScreen';
+import MyProfileScreen from './pages/MyProfileScreen';
+import PageNotFoundScreen from './pages/PageNotFoundScreen';
+
+
 
 function App() {
+
+
   return (
     <HashRouter>
       <AppBar position="static" style={{ marginBottom: '5px' }}>
@@ -24,33 +32,47 @@ function App() {
           <Button color="inherit" component={Link} to="/signup">
             Sign Up
           </Button>
-          <Button color="inherit" component={Link} to="/profile">
-            Student
+          <Button color="inherit" component={Link} to="/student">
+            New Student
+          </Button>
+          <Button color="inherit" component={Link} to="/students">
+            Students
           </Button>
           <Button color="inherit" component={Link} to="/assets">
-            Plane
+            Planes
           </Button>
           <Button color="inherit" component={Link} to="/flights">
-            Flight
+            Flights
           </Button>
           <Button color="inherit" component={Link} to="/calendar">
             Calendar
+          </Button>
+          <Button color="inherit" component={Link} to="/my-profile">
+            My Profile
           </Button>
         </Toolbar>
       </AppBar>
 
       <Container sx={{ marginTop: '24px', minHeight: 'calc(100vh - 64px - 80px)' }}>
-        <AppProvider>
-          <Routes>
-            <Route path="/" element={<LoginScreen />} />
-            <Route path="/signup" element={<SignupScreen />} />
-            <Route path="/profile" element={<ProfileScreen />} />
-            <Route path="/assets" element={<AssetScreen />} />
-            <Route path="/flights" element={<FlightScreen />} />
-            <Route path="/add-asset" element={<AddAssetForm />} />
-            <Route path="/calendar" element={<CalendarScreen />} />
-          </Routes>
-        </AppProvider>
+        <Routes>
+          <Route path="/" element={<LoginScreen />} />
+          <Route path="/login" element={<LoginScreen />} />
+          <Route path="/signup" element={<SignupScreen />} />
+          <Route path="/reset-password" element={<ResetPasswordScreen />} />
+
+          <Route path="/students" element={<StudentListScreen />} />
+          <Route path="/student" element={<StudentScreen />} />
+          <Route path="/student/:studentid" element={<StudentScreen />} />
+                    
+          <Route path="/assets" element={<AssetListScreen />} />
+          <Route path="/asset" element={<AssetScreen />} />
+          <Route path="/asset/:assetid" element={<AssetScreen />} />
+          <Route path="/flights" element={<FlightScreen />} />
+          <Route path="/calendar" element={<CalendarScreen />} />
+                    
+          <Route path="/my-profile" element={<MyProfileScreen />} />
+          <Route path="*" element={<PageNotFoundScreen />} />
+        </Routes>
       </Container>
 
       <footer

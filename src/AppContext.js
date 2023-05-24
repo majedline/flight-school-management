@@ -11,6 +11,7 @@ export const AppProvider = ({ children }) => {
     user: {
       name: 'John Doe',
       email: 'john.doe@example.com',
+      password: '',
     },
     settings: {},
     // Add more properties as needed

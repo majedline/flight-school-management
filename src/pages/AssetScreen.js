@@ -1,46 +1,122 @@
-import React from 'react';
-import { Table, TableHead, TableRow, TableCell, TableBody, Paper, Typography, Button } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Typography } from '@mui/material';
 import BoxView from '../components/BoxView';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+
 
 function AssetScreen() {
-  // Fetch asset data (planes)
-  const planes = [
-    { id: 1, name: 'Plane 1', type: 'Type 1' },
-    { id: 2, name: 'Plane 2', type: 'Type 2' },
-    // Add more planes as needed
-  ];
 
-  return (
-    <BoxView>
-      <Typography variant="h4" component="h1" align="center">
-        Asset List
-      </Typography>
-      <Paper elevation={3} sx={{ width: '100%' }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>ID</TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Name</TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Type</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {planes.map((plane) => (
-              <TableRow key={plane.id}>
-                <TableCell align="center">{plane.id}</TableCell>
-                <TableCell align="center">{plane.name}</TableCell>
-                <TableCell align="center">{plane.type}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
-      <Button component={Link} to="/add-asset" variant="contained" sx={{ marginBottom: '16px' }}>
-        Add Asset
-      </Button>
-    </BoxView>
-  );
+    // Fetch asset data
+    const assets = [
+        {
+            id: 1,
+            name: 'plane 1',
+            type: '',
+            registrationNumber: '',
+            callSign: '',
+            flightSchoolDesignation: '',
+        },
+        {
+            id: 2,
+            name: 'plane 2',
+            type: '',
+            registrationNumber: '',
+            callSign: '',
+            flightSchoolDesignation: '',
+        },
+        // Add more assets as needed
+    ];
+
+    const initialAssetData = {
+        name: '',
+        type: '',
+        registrationNumber: '',
+        callSign: '',
+        flightSchoolDesignation: '',
+    };
+
+    const [asset, setAsset] = useState(initialAssetData);
+    const [isEditingMode, setIsEditingMode] = useState(false); // Check if assetid exists (editing an existing asset)
+
+    const { assetid } = useParams();
+
+    useEffect(() => {
+        if (assetid) {
+            // Find the asset data from the assets array based on the ID
+            const existingAsset = assets.find((asset) => asset.id === parseInt(assetid, 10));
+
+            if (existingAsset) {
+                // Set the existing asset data as the initial state
+                setAsset(existingAsset);
+                setIsEditingMode(true);
+            }
+        }
+    }, [assetid]);
+
+
+    const handleSaveClick = () => {
+        console.log('asset is', asset);
+        // call save
+    };
+
+    const handleInputChange = (e) => {
+        setAsset({ ...asset, [e.target.name]: e.target.value });
+    };
+
+    return (
+        <BoxView>
+            <Typography variant="h4" component="h1" align="center">
+                {isEditingMode ? 'Edit asset' : 'Create asset'}
+            </Typography>
+            <>
+                <TextField
+                    label="Name"
+                    name="name"
+                    variant="outlined"
+                    fullWidth
+                    value={asset.name}
+                    onChange={handleInputChange}
+                />
+                <TextField
+                    label="Type"
+                    name="type"
+                    variant="outlined"
+                    fullWidth
+                    value={asset.type}
+                    onChange={handleInputChange}
+                />
+                {/* Add additional fields for additional profile data */}
+                <TextField
+                    label="Registration Number"
+                    name="registrationNumber"
+                    variant="outlined"
+                    fullWidth
+                    value={asset.registrationNumber}
+                    onChange={handleInputChange}
+                />
+                <TextField
+                    label="Call Sign"
+                    name="callSign"
+                    variant="outlined"
+                    fullWidth
+                    value={asset.callSign}
+                    onChange={handleInputChange}
+                />
+                <TextField
+                    label="Flight School Designation"
+                    name="flightSchoolDesignation"
+                    variant="outlined"
+                    fullWidth
+                    value={asset.flightSchoolDesignation}
+                    onChange={handleInputChange}
+                />
+                {/* Save button */}
+                <Button variant="contained" fullWidth onClick={handleSaveClick}>
+                    Save
+                </Button>
+            </>
+        </BoxView>
+    );
 }
 
 export default AssetScreen;

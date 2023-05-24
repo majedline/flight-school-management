@@ -21,6 +21,12 @@ function LoginScreen() {
       <Typography variant="body2" align="center">
         Don't have an account? <Link to="/signup">Sign up</Link>
       </Typography>
+      <Typography variant="body2" align="center">
+      Forgot password? <Link to="/reset-password">Reset Password</Link>
+      </Typography>
+      <Typography variant="body1" align="center">
+      ***Site Under Developmet***
+      </Typography>
     </BoxView>
   );
 }

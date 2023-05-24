@@ -1,43 +1,84 @@
-import React, { useState, useContext } from 'react';
-import { AppContext } from '../AppContext';
-
+import React, { useState, useEffect } from 'react';
 import { Typography, TextField, Button } from '@mui/material';
 import BoxView from '../components/BoxView';
-
-function ProfileScreen() {
-
-  const { appState, setAppState } = useContext(AppContext);
-  const { user, settings } = appState;
-
-  // Update the appState using setAppState
-  const updateGlobalUser = (newUser) => {
-    setAppState((prevState) => ({
-      ...prevState,
-      user: newUser,
-    }));
-  };
+import { useParams } from 'react-router-dom';
 
 
-  const [editing, setEditing] = useState(false);
-  const [updatedUser, setUpdatedUser] = useState(user);
+function StudentScreen() {
 
-  const handleEditClick = () => {
-    setEditing(true);
-  };
+  // Fetch student data
+  const students = [
+    {
+      id: 1,
+      name: 'John Doe',
+      age: 20,
+      email: 'john@email.com',
+      medicalFitness: '',
+      languageProficiency: '',
+      groundSchool: '',
+      flightTraining: '',
+      flightTest: '',
+      writtenExam: '',
+    },
+    {
+      id: 2,
+      name: 'Jane Smith',
+      age: 22,
+      email: 'jane@email.com',
+      medicalFitness: '',
+      languageProficiency: '',
+      groundSchool: '',
+      flightTraining: '',
+      flightTest: '',
+      writtenExam: '',
+    },
+    // Add more students as needed
+  ];
+
+  const initialStudentData =  {
+        name: '',
+        age: '',
+        email: '',
+        medicalFitness: '',
+        languageProficiency: '',
+        groundSchool: '',
+        flightTraining: '',
+        flightTest: '',
+        writtenExam: '',
+      };
+
+  const [student, setStudent] = useState(initialStudentData);
+  const [isEditingMode, setIsEditingMode] = useState(false); // Check if studentid exists (editing an existing student)
+
+  const { studentid } = useParams();
+
+  useEffect(() => {
+    if (studentid) {
+      // Find the student data from the students array based on the ID
+      const existingStudent = students.find((student) => student.id === parseInt(studentid, 10));
+
+      if (existingStudent) {
+        // Set the existing student data as the initial state
+        setStudent(existingStudent);
+        setIsEditingMode(true);
+      }
+    }
+  }, [studentid]);
+
 
   const handleSaveClick = () => {
-    updateGlobalUser(updatedUser)
-    setEditing(false);
+    console.log('student is', student);
+    // call save
   };
 
   const handleInputChange = (e) => {
-    setUpdatedUser({ ...updatedUser, [e.target.name]: e.target.value });
+    setStudent({ ...student, [e.target.name]: e.target.value });
   };
 
   return (
     <BoxView>
       <Typography variant="h4" component="h1" align="center">
-        Profile
+        {isEditingMode ? 'Edit Student' : 'Create Student'}
       </Typography>
       <>
         <TextField
@@ -45,7 +86,7 @@ function ProfileScreen() {
           name="name"
           variant="outlined"
           fullWidth
-          value={updatedUser.name}
+          value={student.name}
           onChange={handleInputChange}
         />
         <TextField
@@ -53,7 +94,7 @@ function ProfileScreen() {
           name="email"
           variant="outlined"
           fullWidth
-          value={updatedUser.email}
+          value={student.email}
           onChange={handleInputChange}
         />
         {/* Add additional fields for additional profile data */}
@@ -62,7 +103,7 @@ function ProfileScreen() {
           name="age"
           variant="outlined"
           fullWidth
-          value={updatedUser.age}
+          value={student.age}
           onChange={handleInputChange}
         />
         <TextField
@@ -70,7 +111,7 @@ function ProfileScreen() {
           name="medicalFitness"
           variant="outlined"
           fullWidth
-          value={updatedUser.medicalFitness}
+          value={student.medicalFitness}
           onChange={handleInputChange}
         />
         <TextField
@@ -78,7 +119,7 @@ function ProfileScreen() {
           name="languageProficiency"
           variant="outlined"
           fullWidth
-          value={updatedUser.languageProficiency}
+          value={student.languageProficiency}
           onChange={handleInputChange}
         />
         <TextField
@@ -86,7 +127,7 @@ function ProfileScreen() {
           name="groundSchool"
           variant="outlined"
           fullWidth
-          value={updatedUser.groundSchool}
+          value={student.groundSchool}
           onChange={handleInputChange}
         />
         <TextField
@@ -94,7 +135,7 @@ function ProfileScreen() {
           name="flightTraining"
           variant="outlined"
           fullWidth
-          value={updatedUser.flightTraining}
+          value={student.flightTraining}
           onChange={handleInputChange}
         />
         <TextField
@@ -102,7 +143,7 @@ function ProfileScreen() {
           name="flightTest"
           variant="outlined"
           fullWidth
-          value={updatedUser.flightTest}
+          value={student.flightTest}
           onChange={handleInputChange}
         />
         <TextField
@@ -110,7 +151,7 @@ function ProfileScreen() {
           name="writtenExam"
           variant="outlined"
           fullWidth
-          value={updatedUser.writtenExam}
+          value={student.writtenExam}
           onChange={handleInputChange}
         />
         {/* Save button */}
@@ -122,4 +163,4 @@ function ProfileScreen() {
   );
 }
 
-export default ProfileScreen;
+export default StudentScreen;

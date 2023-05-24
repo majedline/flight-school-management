@@ -39,6 +39,16 @@ function CalendarScreen() {
   // Create an array of days of the week
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+  // Function to check if a given date is today's date
+  const isToday = (date, day) => {
+    const today = new Date();
+    return (
+      date.getFullYear() === today.getFullYear() &&
+      date.getMonth() === today.getMonth() &&
+      day === today.getDate()
+    );
+  };
+
   return (
     <Grid container justifyContent="flex-start" spacing={2}>
       <Grid item xs={12}>
@@ -66,18 +76,18 @@ function CalendarScreen() {
       {daysArray.map((day) => (
         <Grid item xs={1.6} key={`day-${day}`} >
           <Paper elevation={2} sx={{ height: '80px', padding: '5px', '&:hover': { backgroundColor: '#eee' } }}>
-            <Typography variant="body1" align="center">
-              {day}
+            <Typography variant="body1" align="center" color={isToday(selectedDate, day) ? 'primary' : 'inherit'}>
+              {(isToday(selectedDate, day)) ? `${day} (Today)` : day}
             </Typography>
           </Paper>
         </Grid>
       ))}
 
-      <Grid item xs={12} container justifyContent="center"  style={{margin:'5px'}}>
-        <Button variant="contained" onClick={handlePreviousMonth} style={{margin:'5px'}}>
+      <Grid item xs={12} container justifyContent="center" style={{ margin: '5px' }}>
+        <Button variant="contained" onClick={handlePreviousMonth} style={{ margin: '5px' }}>
           Previous
         </Button>
-        <Button variant="contained" onClick={handleNextMonth} style={{margin:'5px'}}>
+        <Button variant="contained" onClick={handleNextMonth} style={{ margin: '5px' }}>
           Next
         </Button>
       </Grid>
