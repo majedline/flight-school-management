@@ -15,8 +15,8 @@ function BoxView({ children }) {
                 maxWidth:700,
                 paddingLeft: 5,
                 paddingRight: 5,
-                paddingTop: 10,
-                paddingBottom: 10,
+                paddingTop: 5,
+                paddingBottom: 5,
                 marginBottom: 5,
 
 

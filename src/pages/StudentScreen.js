@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, TextField, Button } from '@mui/material';
+import { Typography, TextField, Button, Select, MenuItem } from '@mui/material';
 import BoxView from '../components/BoxView';
 import { useParams } from 'react-router-dom';
+import permitOrLicenceTypes from '../rules/permitOrLicenceType.json';
+import aeroplaneLicenceOptions from '../rules/aeroplaneLicenceOptions.json';
 
 
 function StudentScreen() {
@@ -35,20 +37,31 @@ function StudentScreen() {
     // Add more students as needed
   ];
 
-  const initialStudentData =  {
-        name: '',
-        age: '',
-        email: '',
-        medicalFitness: '',
-        languageProficiency: '',
-        groundSchool: '',
-        flightTraining: '',
-        flightTest: '',
-        writtenExam: '',
-      };
+  const initialStudentData = {
+    name: '',
+    age: '',
+    email: '',
+    medicalFitness: '',
+    languageProficiency: '',
+    groundSchool: '',
+    flightTraining: '',
+    flightTest: '',
+    writtenExam: '',
+  };
 
   const [student, setStudent] = useState(initialStudentData);
   const [isEditingMode, setIsEditingMode] = useState(false); // Check if studentid exists (editing an existing student)
+
+
+  const [selectedAge, setSelectedAge] = useState('');
+  const [selectedPermitType, setSelectedPermitType] = useState('');
+  const [selectedLicence, setSelectedLicence] = useState('');
+
+
+  const filteredPermitTypes = permitOrLicenceTypes.filter(
+    (permitType) => permitType.age <= selectedAge
+  );
+
 
   const { studentid } = useParams();
 
@@ -98,14 +111,62 @@ function StudentScreen() {
           onChange={handleInputChange}
         />
         {/* Add additional fields for additional profile data */}
-        <TextField
+        <Select
           label="Age"
           name="age"
           variant="outlined"
           fullWidth
-          value={student.age}
-          onChange={handleInputChange}
-        />
+          value={selectedAge}
+          onChange={(e) => setSelectedAge(e.target.value)}
+        >
+          <MenuItem value="">Select Age</MenuItem>
+          <MenuItem value={14} key={14}>14</MenuItem>
+          <MenuItem value={15} key={15}>15</MenuItem>
+          <MenuItem value={16} key={16}>16</MenuItem>
+          <MenuItem value={17} key={17}>17</MenuItem>
+          <MenuItem value={18} key={18}>18</MenuItem>
+          <MenuItem value={19} key={19}>19</MenuItem>
+          <MenuItem value={20} key={20}>20</MenuItem>
+          <MenuItem value={21} key={21}>21+</MenuItem>
+        </Select>
+
+        <Select
+          label="Permit or Licence Type"
+          name="permitType"
+          variant="outlined"
+          fullWidth
+          value={selectedPermitType}
+          onChange={(e) => setSelectedPermitType(e.target.value)}
+          disabled={!selectedAge}
+        >
+          <MenuItem value="">Select Permit or Licence Type</MenuItem>
+          {filteredPermitTypes.map((permitType) => (
+
+            <MenuItem value={permitType.permitOrLicenceType} key={permitType.permitOrLicenceType}>
+              {permitType.permitOrLicenceType}
+            </MenuItem>
+          ))}
+        </Select>
+
+        <Select
+          label="Aeroplane Licence"
+          name="licence"
+          variant="outlined"
+          fullWidth
+          value={selectedLicence}
+          onChange={(e) => setSelectedLicence(e.target.value)}
+        >
+          <MenuItem value="">Select Aeroplane Licence</MenuItem>
+          {aeroplaneLicenceOptions.map((licence) => (
+            <MenuItem value={licence.id} key={licence.id}>
+              {licence.name}
+            </MenuItem>
+          ))}
+        </Select>
+
+
+
+
         <TextField
           label="Medical Fitness"
           name="medicalFitness"

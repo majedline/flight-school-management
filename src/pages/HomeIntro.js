@@ -56,6 +56,11 @@ const HomeIntro = () => {
                             training and growing your business.
                         </Typography>
                     </Grid>
+                    <Grid container justifyContent="center">
+                            <Button component={Link} to="/login" variant="contained" size="large" color="primary">
+                                Get Started
+                            </Button>
+                        </Grid>
                 </Grid>
             </BoxView>
             <BoxView>
