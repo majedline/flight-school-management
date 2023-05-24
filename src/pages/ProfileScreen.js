@@ -1,10 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { AppContext } from '../AppContext';
+import {  useNavigate } from 'react-router-dom';
 
 import { Typography, TextField, Button } from '@mui/material';
 import BoxView from '../components/BoxView';
 
-function MyProfileScreen() {
+function ProfileScreen() {
+    const navigate = useNavigate();
 
     const { appState, setAppState } = useContext(AppContext);
     const { user, settings } = appState;
@@ -18,16 +20,15 @@ function MyProfileScreen() {
     };
 
 
-    const [editing, setEditing] = useState(false);
     const [updatedUser, setUpdatedUser] = useState(user);
-
-    const handleEditClick = () => {
-        setEditing(true);
-    };
 
     const handleSaveClick = () => {
         updateGlobalUser(updatedUser)
-        setEditing(false);
+    };
+
+    const handleLogoutClick = () => {
+        updateGlobalUser(null);
+        navigate('/')
     };
 
     const handleInputChange = (e) => {
@@ -69,9 +70,13 @@ function MyProfileScreen() {
                 <Button variant="contained" fullWidth onClick={handleSaveClick}>
                     Save
                 </Button>
+
+                <Button variant="contained" fullWidth onClick={handleLogoutClick}>
+                    logout
+                </Button>
             </>
         </BoxView>
     );
 }
 
-export default MyProfileScreen;
+export default ProfileScreen;

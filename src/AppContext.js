@@ -8,11 +8,7 @@ export const AppProvider = ({ children }) => {
   // Define your application state here
   const [appState, setAppState] = useState({
     // Initial state values
-    user: {
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      password: '',
-    },
+    user: null,
     settings: {},
     // Add more properties as needed
   });
