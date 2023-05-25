@@ -46,7 +46,7 @@ function FlightScreen() {
     return (
         <Grid container spacing={2} >
 
-            <Grid item xs="5">
+            <Grid item xs="12" md="5">
                 <BoxView>
                     <Typography variant="h4" component="h1" align="center">
                         Schedule Flight
@@ -92,7 +92,7 @@ function FlightScreen() {
                 </BoxView>
 
             </Grid>
-            <Grid item xs="7">
+            <Grid item xs="12" md="7">
                 <BoxView>
 
 
