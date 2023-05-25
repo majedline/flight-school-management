@@ -6,14 +6,13 @@ import permitOrLicenceTypes from '../rules/permitOrLicenceType.json';
 import aeroplaneLicenceOptions from '../rules/aeroplaneLicenceOptions.json';
 
 
-function StudentScreen() {
+function InstructorScreen() {
 
-  // Fetch student data
-  const students = [
+  // Fetch instructor data
+  const instructors = [
     {
       id: 1,
       name: 'John Doe',
-      age: 20,
       email: 'john@email.com',
       medicalFitness: '',
       languageProficiency: '',
@@ -25,7 +24,6 @@ function StudentScreen() {
     {
       id: 2,
       name: 'Jane Smith',
-      age: 22,
       email: 'jane@email.com',
       medicalFitness: '',
       languageProficiency: '',
@@ -34,12 +32,11 @@ function StudentScreen() {
       flightTest: '',
       writtenExam: '',
     },
-    // Add more students as needed
+    // Add more Instructors as needed
   ];
 
-  const initialStudentData = {
+  const initialInstructorData = {
     name: '',
-    age: '',
     email: '',
     medicalFitness: '',
     languageProficiency: '',
@@ -49,49 +46,45 @@ function StudentScreen() {
     writtenExam: '',
   };
 
-  const [student, setStudent] = useState(initialStudentData);
-  const [isEditingMode, setIsEditingMode] = useState(false); // Check if studentid exists (editing an existing student)
+  const [instructor, setInstructor] = useState(initialInstructorData);
+  const [isEditingMode, setIsEditingMode] = useState(false); // Check if instructorid exists (editing an existing instructor)
 
 
-  const [selectedAge, setSelectedAge] = useState('');
   const [selectedPermitType, setSelectedPermitType] = useState('');
   const [selectedLicence, setSelectedLicence] = useState('');
 
 
-  const filteredPermitTypes = permitOrLicenceTypes.filter(
-    (permitType) => permitType.age <= selectedAge
-  );
 
 
-  const { studentid } = useParams();
+  const { instructorid } = useParams();
 
   useEffect(() => {
-    if (studentid) {
-      // Find the student data from the students array based on the ID
-      const existingStudent = students.find((student) => student.id === parseInt(studentid, 10));
+    if (instructorid) {
+      // Find the instructor data from the instructors array based on the ID
+      const existingInstructor = instructors.find((instructor) => instructor.id === parseInt(instructorid, 10));
 
-      if (existingStudent) {
-        // Set the existing student data as the initial state
-        setStudent(existingStudent);
+      if (existingInstructor) {
+        // Set the existing instructor data as the initial state
+        setInstructor(existingInstructor);
         setIsEditingMode(true);
       }
     }
-  }, [studentid]);
+  }, [instructorid]);
 
 
   const handleSaveClick = () => {
-    console.log('student is', student);
+    console.log('instructor is', instructor);
     // call save
   };
 
   const handleInputChange = (e) => {
-    setStudent({ ...student, [e.target.name]: e.target.value });
+    setInstructor({ ...instructor, [e.target.name]: e.target.value });
   };
 
   return (
     <BoxView>
       <Typography variant="h4" component="h1" align="center">
-        {isEditingMode ? 'Edit Student' : 'Create Student'}
+        {isEditingMode ? 'Edit Instructor' : 'Create Instructor'}
       </Typography>
       <>
 
@@ -100,29 +93,11 @@ function StudentScreen() {
           name="email"
           variant="outlined"
           fullWidth
-          value={student.email}
+          value={instructor.email}
           onChange={handleInputChange}
         />
 
-        <TextField
-          label="Age"
-          name="age"
-          variant="outlined"
-          fullWidth
-          value={selectedAge}
-          onChange={(e) => setSelectedAge(e.target.value)}
-          select
-        >
-          <MenuItem value="">Select Age</MenuItem>
-          <MenuItem value={14} key={14}>14</MenuItem>
-          <MenuItem value={15} key={15}>15</MenuItem>
-          <MenuItem value={16} key={16}>16</MenuItem>
-          <MenuItem value={17} key={17}>17</MenuItem>
-          <MenuItem value={18} key={18}>18</MenuItem>
-          <MenuItem value={19} key={19}>19</MenuItem>
-          <MenuItem value={20} key={20}>20</MenuItem>
-          <MenuItem value={21} key={21}>21+</MenuItem>
-        </TextField>
+       
 
         <TextField
           label="Permit or Licence Type"
@@ -131,11 +106,10 @@ function StudentScreen() {
           fullWidth
           value={selectedPermitType}
           onChange={(e) => setSelectedPermitType(e.target.value)}
-          disabled={!selectedAge}
           select
         >
           <MenuItem value="">Select Permit or Licence Type</MenuItem>
-          {filteredPermitTypes.map((permitType) => (
+          {permitOrLicenceTypes.map((permitType) => (
             <MenuItem value={permitType.permitOrLicenceType} key={permitType.permitOrLicenceType}>
               {permitType.permitOrLicenceType}
             </MenuItem>
@@ -167,7 +141,7 @@ function StudentScreen() {
           name="medicalFitness"
           variant="outlined"
           fullWidth
-          value={student.medicalFitness}
+          value={instructor.medicalFitness}
           onChange={handleInputChange}
         />
         <TextField
@@ -175,39 +149,16 @@ function StudentScreen() {
           name="languageProficiency"
           variant="outlined"
           fullWidth
-          value={student.languageProficiency}
+          value={instructor.languageProficiency}
           onChange={handleInputChange}
         />
-        <TextField
-          label="Ground School"
-          name="groundSchool"
-          variant="outlined"
-          fullWidth
-          value={student.groundSchool}
-          onChange={handleInputChange}
-        />
-        <TextField
-          label="Flight Training"
-          name="flightTraining"
-          variant="outlined"
-          fullWidth
-          value={student.flightTraining}
-          onChange={handleInputChange}
-        />
-        <TextField
-          label="Flight Test"
-          name="flightTest"
-          variant="outlined"
-          fullWidth
-          value={student.flightTest}
-          onChange={handleInputChange}
-        />
+       
         <TextField
           label="Transport Canada Written Exam"
           name="writtenExam"
           variant="outlined"
           fullWidth
-          value={student.writtenExam}
+          value={instructor.writtenExam}
           onChange={handleInputChange}
         />
         {/* Save button */}
@@ -219,4 +170,4 @@ function StudentScreen() {
   );
 }
 
-export default StudentScreen;
+export default InstructorScreen;

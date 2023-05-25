@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Select, MenuItem, Typography, Table, TableHead, TableRow, TableCell, TableBody, TextField, Grid } from '@mui/material';
+import { Button,  MenuItem, Typography, Table, TableHead, TableRow, TableCell, TableBody, TextField, Grid } from '@mui/material';
 import BoxView from '../components/BoxView';
 
 function FlightScreen() {
@@ -51,23 +51,24 @@ function FlightScreen() {
                     <Typography variant="h4" component="h1" align="center">
                         Schedule Flight
                     </Typography>
-                    <Select label="Student" name="Student" defaultValue="" variant="outlined" fullWidth>
+                    <TextField label="Student" name="Student" defaultValue="" variant="outlined" fullWidth select>
                         {students.map((student) => (
                             <MenuItem value={student.id} key={student.id}>
                                 {student.name}
                             </MenuItem>
                         ))}
-                    </Select>
+                    </TextField>
 
-                    <Select label="Asset" defaultValue="" variant="outlined" fullWidth>
+                    <TextField label="Asset" defaultValue="" variant="outlined" fullWidth select>
                         {assets.map((asset) => (
                             <MenuItem value={asset.id} key={asset.id}>
                                 {asset.name}
                             </MenuItem>
                         ))}
-                    </Select>
+                    </TextField>
 
                     <TextField
+                        InputLabelProps={{ shrink: true }}
                         label="Date"
                         type="date"
                         variant="outlined"
@@ -78,6 +79,7 @@ function FlightScreen() {
                     />
 
                     <TextField
+                        InputLabelProps={{ shrink: true }}
                         label="Time"
                         type="time"
                         variant="outlined"

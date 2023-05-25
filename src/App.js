@@ -15,6 +15,8 @@ import PageNotFoundScreen from './pages/PageNotFoundScreen';
 import NavigationBar from './navigation/NavigationBar';
 import FooterBar from './navigation/FooterBar';
 import HomeIntro from './pages/HomeIntro';
+import InstructorListScreen from './pages/InstructorListScreen';
+import InstructorScreen from './pages/InstructorScreen';
 
 function App() {
 
@@ -36,14 +38,21 @@ function App() {
           <Route path="/student" element={<StudentScreen />} />
           <Route path="/student/:studentid" element={<StudentScreen />} />
 
+          <Route path="/instructors" element={<InstructorListScreen />} />
+          <Route path="/instructor" element={<InstructorScreen />} />
+          <Route path="/instructor/:instructorid" element={<InstructorScreen />} />
+
+
+
           <Route path="/assets" element={<AssetListScreen />} />
           <Route path="/asset" element={<AssetScreen />} />
           <Route path="/asset/:assetid" element={<AssetScreen />} />
+
           <Route path="/flights" element={<FlightScreen />} />
           <Route path="/calendar" element={<CalendarScreen />} />
-          
+
           <Route path="/my-profile" element={<ProfileScreen />} />
-          
+
           <Route path="*" element={<PageNotFoundScreen />} />
         </Routes>
       </Container>

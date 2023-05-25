@@ -11,17 +11,17 @@ function AssetScreen() {
         {
             id: 1,
             name: 'plane 1',
-            type: '',
+            type: 'Cessna 174',
             registrationNumber: '',
-            callSign: '',
+            callSign:'KWM',
             flightSchoolDesignation: '',
         },
         {
             id: 2,
             name: 'plane 2',
-            type: '',
+            type: 'Cessna 172',
             registrationNumber: '',
-            callSign: '',
+            callSign:'KWO',
             flightSchoolDesignation: '',
         },
         // Add more assets as needed

@@ -18,8 +18,8 @@ function AssetListScreen() {
 
   // Fetch asset data (planes)
   const initialPlanes = [
-    { id: 1, name: 'Plane 1', type: 'Type 1' },
-    { id: 2, name: 'Plane 2', type: 'Type 2' },
+    { id: 1, name: 'Plane 1', callSign: 'KWM', type: 'Cessna 174' },
+    { id: 2, name: 'Plane 2', callSign: 'KWO', type: 'Cessna 172' },
     // Add more planes as needed
   ];
 
@@ -65,7 +65,7 @@ function AssetListScreen() {
                 ID
               </TableCell>
               <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>
-                Name
+                Call Sign
               </TableCell>
               <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>
                 Type
@@ -82,7 +82,7 @@ function AssetListScreen() {
                 to={`/asset/${plane.id}`}
               >
                 <TableCell align="center">{plane.id}</TableCell>
-                <TableCell align="center">{plane.name}</TableCell>
+                <TableCell align="center">{plane.callSign}</TableCell>
                 <TableCell align="center">{plane.type}</TableCell>
               </TableRow>
             ))}

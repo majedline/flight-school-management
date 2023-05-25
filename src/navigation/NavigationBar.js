@@ -31,6 +31,9 @@ function NavigationBar() {
       <Button color="inherit" component={Link} to="/students">
         Students
       </Button>
+      <Button color="inherit" component={Link} to="/instructors">
+        Instructors
+      </Button>
       <Button color="inherit" component={Link} to="/assets">
         Planes
       </Button>

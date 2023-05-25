@@ -18,10 +18,8 @@ function BoxView({ children }) {
                 paddingTop: 5,
                 paddingBottom: 5,
                 marginBottom: 5,
-
-
                 boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                borderRadius: 8,
+                borderRadius: 10,
                 backgroundColor: '#eee',
             }}
         >
