@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Button, MenuItem, Typography, Table, TableHead, TableRow, TableCell, TableBody, TextField, Grid } from '@mui/material';
+import { Button, MenuItem, Typography, Table, TableHead, TableRow, TableCell, TableBody, TextField, Grid, Paper } from '@mui/material';
 import BoxView from '../components/BoxView';
+import { Link } from 'react-router-dom';
+
 
 function FlightScreen() {
     // Fetch student and asset data
@@ -57,7 +59,7 @@ function FlightScreen() {
     return (
         <Grid container columnSpacing={2} >
 
-            <Grid item xs="12" md="5">
+            <Grid item xs="12" md="4">
                 <BoxView>
                     <Typography variant="h4" component="h1" align="center">
                         Schedule Flight
@@ -156,7 +158,7 @@ function FlightScreen() {
                 </BoxView>
 
             </Grid>
-            <Grid item xs="12" md="7">
+            <Grid item xs="12" md="8">
                 <BoxView>
 
 
@@ -172,35 +174,37 @@ function FlightScreen() {
                         fullWidth
                         style={{ marginBottom: '1px' }}
                     />
+                    <Paper elevation={3} sx={{ width: '100%' }}>
 
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center">ID</TableCell>
-                                <TableCell align="center">Student</TableCell>
-                                <TableCell align="center">Instructor</TableCell>
-                                <TableCell align="center">Asset</TableCell>
-                                <TableCell align="center">Time</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {filteredFlights.map((flight) => (
-                                <TableRow
-                                    key={flight.id}
-                                    onClick={() => setSelectedFlight(flight)}
-                                    selected={selectedFlight === flight}
-                                    style={{ textDecoration: 'none' }}
-
-                                >
-                                    <TableCell align="center">{flight.id}</TableCell>
-                                    <TableCell align="center">{students.find((student) => student.id === flight.studentId)?.name}</TableCell>
-                                    <TableCell align="center">{instructors.find((instructor) => instructor.id === flight.instructorId)?.name}</TableCell>
-                                    <TableCell align="center">{assets.find((asset) => asset.id === flight.assetId)?.name}</TableCell>
-                                    <TableCell align="center">{flight.time}</TableCell>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>ID</TableCell>
+                                    <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Student</TableCell>
+                                    <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Instructor</TableCell>
+                                    <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Asset</TableCell>
+                                    <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Time</TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+                            </TableHead>
+                            <TableBody>
+                                {filteredFlights.map((flight) => (
+                                    <TableRow
+                                        key={flight.id}
+                                        onClick={() => setSelectedFlight(flight)}
+                                        selected={selectedFlight === flight}
+                                        style={{ textDecoration: 'none' }}
+
+                                    >
+                                        <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{flight.id}</TableCell>
+                                        <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{students.find((student) => student.id === flight.studentId)?.name}</TableCell>
+                                        <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{instructors.find((instructor) => instructor.id === flight.instructorId)?.name}</TableCell>
+                                        <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{assets.find((asset) => asset.id === flight.assetId)?.name}</TableCell>
+                                        <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{flight.time}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </Paper>
                 </BoxView>
             </Grid>
         </Grid>

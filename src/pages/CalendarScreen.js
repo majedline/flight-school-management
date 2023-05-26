@@ -8,6 +8,13 @@ function CalendarScreen() {
   // State for storing the selected month and year
   const [selectedDate, setSelectedDate] = useState(currentDate);
 
+  // Sample data array
+  const sampleData = [
+    { date: new Date().setDate(5), data: 'Event 1' },
+    { date: new Date().setDate(10), data: 'Event 2' },
+    { date: new Date().setDate(15), data: 'Event 3' },
+  ];
+
   // Function to handle navigation to the next month
   const handleNextMonth = () => {
     const nextMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1);
@@ -49,6 +56,19 @@ function CalendarScreen() {
     );
   };
 
+  // Function to check if a given date has associated data
+  const hasData = (date) => {
+    const dateString = date.toDateString();
+    return sampleData.some((event) => new Date(event.date).toDateString() === dateString);
+  };
+
+  // Function to get data for a given date
+  const getData = (date) => {
+    const dateString = date.toDateString();
+    const eventData = sampleData.find((event) => new Date(event.date).toDateString() === dateString);
+    return eventData ? eventData.data : '';
+  };
+
   return (
     <Grid container justifyContent="flex-start" spacing={2}>
       <Grid item xs={12}>
@@ -74,11 +94,29 @@ function CalendarScreen() {
       ))}
 
       {daysArray.map((day) => (
-        <Grid item xs={1.6} key={`day-${day}`} >
-          <Paper elevation={2} sx={{ height: '80px', padding: '5px', '&:hover': { backgroundColor: '#eee' } }}>
-            <Typography variant="body1" align="center" color={isToday(selectedDate, day) ? 'primary' : 'inherit'}>
+        <Grid item xs={1.6} key={`day-${day}`}>
+          <Paper
+            elevation={2}
+            sx={{
+              height: '80px',
+              padding: '5px',
+              backgroundColor: hasData(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day))
+                ? '#eee'
+                : undefined,
+            }}
+          >
+            <Typography
+              variant="body1"
+              align="center"
+              color={isToday(selectedDate, day) ? 'primary' : 'inherit'}
+            >
               {(isToday(selectedDate, day)) ? `${day} (Today)` : day}
             </Typography>
+            {hasData(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day)) && (
+              <Typography variant="caption" align="center">
+                {getData(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day))}
+              </Typography>
+            )}
           </Paper>
         </Grid>
       ))}

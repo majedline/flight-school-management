@@ -27,8 +27,6 @@ function StudentListScreen() {
   const filteredStudents = students.filter((student) =>
     student.name.toLowerCase().includes(filterText.toLowerCase()) ||
     String(student.id).toLowerCase().includes(filterText.toLowerCase())
-
-    
   );
 
   return (
