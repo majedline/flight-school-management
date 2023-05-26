@@ -73,9 +73,14 @@ function InstructorScreen() {
 
 
   const handleSaveClick = () => {
-    console.log('instructor is', instructor);
+    console.log('instructor handleSaveClick', instructor);
     // call save
   };
+
+  const handleCreateUserAccountClick = ()=>{
+    console.log('instructor handleCreateUserAccountClick', instructor);
+
+  }
 
   const handleInputChange = (e) => {
     setInstructor({ ...instructor, [e.target.name]: e.target.value });
@@ -164,6 +169,9 @@ function InstructorScreen() {
         {/* Save button */}
         <Button variant="contained" fullWidth onClick={handleSaveClick}>
           Save
+        </Button>
+        <Button variant="contained" fullWidth onClick={handleCreateUserAccountClick}>
+          Create A User Account
         </Button>
       </>
     </BoxView >

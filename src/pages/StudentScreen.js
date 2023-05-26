@@ -80,9 +80,14 @@ function StudentScreen() {
 
 
   const handleSaveClick = () => {
-    console.log('student is', student);
+    console.log('student handleSaveClick', student);
     // call save
   };
+
+  const handleCreateUserAccountClick = ()=>{
+    console.log('student handleCreateUserAccountClick', student);
+
+  }
 
   const handleInputChange = (e) => {
     setStudent({ ...student, [e.target.name]: e.target.value });
@@ -214,6 +219,11 @@ function StudentScreen() {
         <Button variant="contained" fullWidth onClick={handleSaveClick}>
           Save
         </Button>
+
+        <Button variant="contained" fullWidth onClick={handleCreateUserAccountClick}>
+          Create A User Account
+        </Button>
+
       </>
     </BoxView >
   );
