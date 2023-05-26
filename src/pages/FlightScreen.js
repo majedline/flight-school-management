@@ -162,7 +162,7 @@ function FlightScreen() {
                 <BoxView>
 
 
-                    <Typography variant="h6" component="h2" align="center" style={{ marginTop: '20px' }}>
+                    <Typography variant="h4" component="h1" align="center">
                         Scheduled Flights
                     </Typography>
 

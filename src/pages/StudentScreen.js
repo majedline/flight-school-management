@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, TextField, Button, MenuItem, Grid, Table, TableHead, TableRow, TableBody, TableCell, Paper } from '@mui/material';
+import { Typography, TextField, Button, MenuItem, Grid} from '@mui/material';
 import BoxView from '../components/BoxView';
 import { useParams } from 'react-router-dom';
 import permitOrLicenceTypes from '../rules/permitOrLicenceType.json';
 import aeroplaneLicenceOptions from '../rules/aeroplaneLicenceOptions.json';
+import History from '../components/History';
 
 
 function StudentScreen() {
@@ -39,7 +40,7 @@ function StudentScreen() {
 
   const historyListData = [
     { id: 1, info: "Created Account", date: "01/22/2023" },
-    { id: 1, info: "Flight Lesson with Jack Jones", date: "01/25/2023" }
+    { id: 2, info: "Flight Lesson with Jack Jones", date: "01/25/2023" }
   ];
 
   const initialStudentData = {
@@ -62,17 +63,8 @@ function StudentScreen() {
   const [selectedPermitType, setSelectedPermitType] = useState('');
   const [selectedLicence, setSelectedLicence] = useState('');
 
-  const [filterText, setFilterText] = useState('');
-
-
-
   const filteredPermitTypes = permitOrLicenceTypes.filter(
     (permitType) => permitType.age <= selectedAge
-  );
-
-  const filteredHistory = historyListData.filter((record) =>
-    record.info.toLowerCase().includes(filterText.toLowerCase()) ||
-    String(record.date).toLowerCase().includes(filterText.toLowerCase())
   );
 
   const { studentid } = useParams();
@@ -89,10 +81,6 @@ function StudentScreen() {
       }
     }
   }, [studentid]);
-
-  const handleFilterChange = (e) => {
-    setFilterText(e.target.value);
-  };
 
   const handleSaveClick = () => {
     console.log('student handleSaveClick', student);
@@ -112,48 +100,7 @@ function StudentScreen() {
 
     <Grid container columnSpacing={2} >
       <Grid item xs="12" md="4">
-        <BoxView>
-          <Typography variant="h4" component="h1" align="center">
-            History
-          </Typography>
-          <>
-
-            <TextField
-              label="Search"
-              name="search"
-              variant="outlined"
-              fullWidth
-              value={filterText}
-              onChange={handleFilterChange}
-              style={{ marginBottom: '16px', marginLeft: '16px', marginRight: '16px', marginTop: '8px' }}
-            />
-
-            <Paper elevation={3} sx={{ width: '100%' }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Info</TableCell>
-                    <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Date</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {filteredHistory.map((record) => (
-                    <TableRow
-                      key={record.id}
-                      style={{ textDecoration: 'none' }}
-                    >
-                      <TableCell >{record.info}</TableCell>
-                      <TableCell>{record.date}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Paper>
-          </>
-
-
-        </BoxView>
-
+        <History historyListData={historyListData}></History>
       </Grid>
 
       <Grid item xs="12" md="8">
@@ -228,9 +175,6 @@ function StudentScreen() {
               ))}
             </TextField>
 
-
-
-
             <TextField
               label="Medical Fitness"
               name="medicalFitness"
@@ -288,6 +232,7 @@ function StudentScreen() {
               Create A User Account
             </Button>
 
+            
           </>
         </BoxView >
       </Grid>

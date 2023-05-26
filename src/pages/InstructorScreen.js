@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, TextField, Button,  MenuItem } from '@mui/material';
+import { Typography, TextField, Button, MenuItem, Grid } from '@mui/material';
 import BoxView from '../components/BoxView';
 import { useParams } from 'react-router-dom';
 import permitOrLicenceTypes from '../rules/permitOrLicenceType.json';
 import aeroplaneLicenceOptions from '../rules/aeroplaneLicenceOptions.json';
+import History from '../components/History';
 
 
 function InstructorScreen() {
@@ -46,6 +47,12 @@ function InstructorScreen() {
     writtenExam: '',
   };
 
+  const historyListData = [
+    { id: 1, info: "Created", date: "01/22/2023" },
+    { id: 2, info: "Flight with student Bob Smith on KWO", date: "01/25/2023" },
+    { id: 3, info: "Flight with student Alex Smith on KWM", date: "02/02/2023" }
+];
+
   const [instructor, setInstructor] = useState(initialInstructorData);
   const [isEditingMode, setIsEditingMode] = useState(false); // Check if instructorid exists (editing an existing instructor)
 
@@ -77,7 +84,7 @@ function InstructorScreen() {
     // call save
   };
 
-  const handleCreateUserAccountClick = ()=>{
+  const handleCreateUserAccountClick = () => {
     console.log('instructor handleCreateUserAccountClick', instructor);
 
   }
@@ -87,94 +94,104 @@ function InstructorScreen() {
   };
 
   return (
-    <BoxView>
-      <Typography variant="h4" component="h1" align="center">
-        {isEditingMode ? 'Edit Instructor' : 'Create Instructor'}
-      </Typography>
-      <>
 
-        <TextField
-          label="Email"
-          name="email"
-          variant="outlined"
-          fullWidth
-          value={instructor.email}
-          onChange={handleInputChange}
-        />
+    <>
+      <Grid container columnSpacing={2} >
 
-       
+        <Grid item xs="12" md="4">
+          <History historyListData={historyListData}></History>
+        </Grid>
+        <Grid item xs="12" md="8">
 
-        <TextField
-          label="Permit or Licence Type"
-          name="permitType"
-          variant="outlined"
-          fullWidth
-          value={selectedPermitType}
-          onChange={(e) => setSelectedPermitType(e.target.value)}
-          select
-        >
-          <MenuItem value="">Select Permit or Licence Type</MenuItem>
-          {permitOrLicenceTypes.map((permitType) => (
-            <MenuItem value={permitType.permitOrLicenceType} key={permitType.permitOrLicenceType}>
-              {permitType.permitOrLicenceType}
-            </MenuItem>
-          ))}
-        </TextField>
+          <BoxView>
+            <Typography variant="h4" component="h1" align="center">
+              {isEditingMode ? 'Edit Instructor' : 'Create Instructor'}
+            </Typography>
+            <>
 
-        <TextField
-          label="Aeroplane Licence"
-          name="licence"
-          variant="outlined"
-          fullWidth
-          value={selectedLicence}
-          onChange={(e) => setSelectedLicence(e.target.value)}
-          select
-        >
-          <MenuItem value="">Select Aeroplane Licence</MenuItem>
-          {aeroplaneLicenceOptions.map((licence) => (
-            <MenuItem value={licence.id} key={licence.id}>
-              {licence.name}
-            </MenuItem>
-          ))}
-        </TextField>
+              <TextField
+                label="Email"
+                name="email"
+                variant="outlined"
+                fullWidth
+                value={instructor.email}
+                onChange={handleInputChange}
+              />
+
+              <TextField
+                label="Permit or Licence Type"
+                name="permitType"
+                variant="outlined"
+                fullWidth
+                value={selectedPermitType}
+                onChange={(e) => setSelectedPermitType(e.target.value)}
+                select
+              >
+                <MenuItem value="">Select Permit or Licence Type</MenuItem>
+                {permitOrLicenceTypes.map((permitType) => (
+                  <MenuItem value={permitType.permitOrLicenceType} key={permitType.permitOrLicenceType}>
+                    {permitType.permitOrLicenceType}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+              <TextField
+                label="Aeroplane Licence"
+                name="licence"
+                variant="outlined"
+                fullWidth
+                value={selectedLicence}
+                onChange={(e) => setSelectedLicence(e.target.value)}
+                select
+              >
+                <MenuItem value="">Select Aeroplane Licence</MenuItem>
+                {aeroplaneLicenceOptions.map((licence) => (
+                  <MenuItem value={licence.id} key={licence.id}>
+                    {licence.name}
+                  </MenuItem>
+                ))}
+              </TextField>
 
 
 
 
-        <TextField
-          label="Medical Fitness"
-          name="medicalFitness"
-          variant="outlined"
-          fullWidth
-          value={instructor.medicalFitness}
-          onChange={handleInputChange}
-        />
-        <TextField
-          label="Language Proficiency"
-          name="languageProficiency"
-          variant="outlined"
-          fullWidth
-          value={instructor.languageProficiency}
-          onChange={handleInputChange}
-        />
-       
-        <TextField
-          label="Transport Canada Written Exam"
-          name="writtenExam"
-          variant="outlined"
-          fullWidth
-          value={instructor.writtenExam}
-          onChange={handleInputChange}
-        />
-        {/* Save button */}
-        <Button variant="contained" fullWidth onClick={handleSaveClick}>
-          Save
-        </Button>
-        <Button variant="contained" fullWidth onClick={handleCreateUserAccountClick}>
-          Create A User Account
-        </Button>
-      </>
-    </BoxView >
+              <TextField
+                label="Medical Fitness"
+                name="medicalFitness"
+                variant="outlined"
+                fullWidth
+                value={instructor.medicalFitness}
+                onChange={handleInputChange}
+              />
+              <TextField
+                label="Language Proficiency"
+                name="languageProficiency"
+                variant="outlined"
+                fullWidth
+                value={instructor.languageProficiency}
+                onChange={handleInputChange}
+              />
+
+              <TextField
+                label="Transport Canada Written Exam"
+                name="writtenExam"
+                variant="outlined"
+                fullWidth
+                value={instructor.writtenExam}
+                onChange={handleInputChange}
+              />
+              {/* Save button */}
+              <Button variant="contained" fullWidth onClick={handleSaveClick}>
+                Save
+              </Button>
+              <Button variant="contained" fullWidth onClick={handleCreateUserAccountClick}>
+                Create A User Account
+              </Button>
+            </>
+          </BoxView >
+        </Grid>
+      </Grid>
+    </>
   );
 }
 
