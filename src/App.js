@@ -8,6 +8,7 @@ import AssetListScreen from './pages/AssetListScreen';
 import FlightScreen from './pages/FlightScreen';
 import AssetScreen from './pages/AssetScreen';
 import CalendarScreen from './pages/CalendarScreen';
+import CalendarPage from './pages/CalendarPage';
 import ResetPasswordScreen from './pages/ResetPasswordScreen';
 import StudentListScreen from './pages/StudentListScreen';
 import ProfileScreen from './pages/ProfileScreen';
@@ -50,6 +51,8 @@ function App() {
 
           <Route path="/flights" element={<FlightScreen />} />
           <Route path="/calendar" element={<CalendarScreen />} />
+          <Route path="/calendar-page" element={<CalendarPage />} />
+
 
           <Route path="/my-profile" element={<ProfileScreen />} />
 

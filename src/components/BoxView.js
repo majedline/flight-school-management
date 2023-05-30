@@ -2,7 +2,8 @@ import React from 'react';
 import { Box } from '@mui/material';
 
 
-function BoxView({ children }) {
+function BoxView({ children, size }) {
+
 
     return (
         <Box
@@ -12,7 +13,7 @@ function BoxView({ children }) {
                 alignItems: 'center',
                 gap: 2,
                 margin: '0 auto',
-                maxWidth:800,
+                maxWidth: ((size === "large") ? '100%' : 800),
                 paddingLeft: 2,
                 paddingRight: 2,
                 paddingTop: 3,
