@@ -18,44 +18,38 @@ function History({ historyListData }) {
 
     return (
         <BoxView>
-            <Typography variant="h4" component="h1" align="center">
-                History
-            </Typography>
-            <>
 
-                <TextField
-                    label="Search"
-                    name="search"
-                    variant="outlined"
-                    fullWidth
-                    value={filterText}
-                    onChange={handleFilterChange}
-                    style={{ marginBottom: '16px', marginLeft: '16px', marginRight: '16px', marginTop: '8px' }}
-                />
+            <TextField
+                label="Search"
+                name="search"
+                variant="outlined"
+                fullWidth
+                value={filterText}
+                onChange={handleFilterChange}
+                style={{ marginBottom: '16px', marginLeft: '16px', marginRight: '16px', marginTop: '8px' }}
+            />
 
-                <Paper elevation={3} sx={{ width: '100%' }}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Info</TableCell>
-                                <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Date</TableCell>
+            <Paper elevation={3} sx={{ width: '100%' }}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Info</TableCell>
+                            <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Date</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {filteredHistory.map((record) => (
+                            <TableRow
+                                key={record.id}
+                                style={{ textDecoration: 'none' }}
+                            >
+                                <TableCell >{record.info}</TableCell>
+                                <TableCell>{record.date}</TableCell>
                             </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {filteredHistory.map((record) => (
-                                <TableRow
-                                    key={record.id}
-                                    style={{ textDecoration: 'none' }}
-                                >
-                                    <TableCell >{record.info}</TableCell>
-                                    <TableCell>{record.date}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </Paper>
-            </>
-
+                        ))}
+                    </TableBody>
+                </Table>
+            </Paper>
 
         </BoxView>
     );

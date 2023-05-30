@@ -70,6 +70,10 @@ function AssetListScreen() {
               <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>
                 Type
               </TableCell>
+
+
+
+
             </TableRow>
           </TableHead>
           <TableBody>

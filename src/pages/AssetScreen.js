@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Grid } from '@mui/material';
+import AirplaneTicket from '@mui/icons-material/AirplaneTicket';
+
 import BoxView from '../components/BoxView';
 import { useParams } from 'react-router-dom';
 import History from '../components/History';
+import BasicTabs from '../components/Tabs/BasicTabs';
+
 
 
 function AssetScreen() {
@@ -16,6 +20,7 @@ function AssetScreen() {
             registrationNumber: '',
             callSign: 'KWM',
             flightSchoolDesignation: '',
+            flightSchoolAerodrome:'YTZ',
         },
         {
             id: 2,
@@ -24,6 +29,8 @@ function AssetScreen() {
             registrationNumber: '',
             callSign: 'KWO',
             flightSchoolDesignation: '',
+            flightSchoolAerodrome:'YYZ',
+
         },
         // Add more assets as needed
     ];
@@ -34,6 +41,8 @@ function AssetScreen() {
         registrationNumber: '',
         callSign: '',
         flightSchoolDesignation: '',
+        flightSchoolAerodrome:'',
+
     };
 
     const historyListData = [
@@ -70,68 +79,112 @@ function AssetScreen() {
         setAsset({ ...asset, [e.target.name]: e.target.value });
     };
 
+
+
+    const handleTabChange = (event, newValue) => {
+        console.log(newValue); // You can perform any additional logic based on the selected tab
+    };
+
+
     return (
         <>
             <Grid container columnSpacing={2} >
 
-                <Grid item xs="12" md="4">
-                    <History historyListData={historyListData}></History>
-                </Grid>
-                <Grid item xs="12" md="8">
+
+                <Grid item xs="12" md="9">
                     <BoxView>
-                        <Typography variant="h4" component="h1" align="center">
-                            {isEditingMode ? 'Edit asset' : 'Create asset'}
-                        </Typography>
-                        <>
-                            <TextField
-                                label="Name"
-                                name="name"
-                                variant="outlined"
-                                fullWidth
-                                value={asset.name}
-                                onChange={handleInputChange}
-                            />
-                            <TextField
-                                label="Type"
-                                name="type"
-                                variant="outlined"
-                                fullWidth
-                                value={asset.type}
-                                onChange={handleInputChange}
-                            />
-                            {/* Add additional fields for additional profile data */}
-                            <TextField
-                                label="Registration Number"
-                                name="registrationNumber"
-                                variant="outlined"
-                                fullWidth
-                                value={asset.registrationNumber}
-                                onChange={handleInputChange}
-                            />
-                            <TextField
-                                label="Call Sign"
-                                name="callSign"
-                                variant="outlined"
-                                fullWidth
-                                value={asset.callSign}
-                                onChange={handleInputChange}
-                            />
-                            <TextField
-                                label="Flight School Designation"
-                                name="flightSchoolDesignation"
-                                variant="outlined"
-                                fullWidth
-                                value={asset.flightSchoolDesignation}
-                                onChange={handleInputChange}
-                            />
-                            {/* Save button */}
-                            <Button variant="contained" fullWidth onClick={handleSaveClick}>
-                                Save
-                            </Button>
-                        </>
+                        <BasicTabs
+                            title={isEditingMode ? 'Edit Plane' : 'Create Plane'}
+                            tab1={(
+                                <BoxView>
+                                    <TextField
+                                        label="Name"
+                                        name="name"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={asset.name}
+                                        onChange={handleInputChange}
+                                    />
+                                    <TextField
+                                        label="Type"
+                                        name="type"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={asset.type}
+                                        onChange={handleInputChange}
+                                    />
+                                    <TextField
+                                        label="Call Sign"
+                                        name="callSign"
+                                        variant="outlined"
+                                        fullWidth
+                                        value={asset.callSign}
+                                        onChange={handleInputChange}
+                                    />
+
+                                </BoxView>
+                            )}
+
+                            tab2={(<BoxView>
+                                <TextField
+                                    label="Registration Number"
+                                    name="registrationNumber"
+                                    variant="outlined"
+                                    fullWidth
+                                    value={asset.registrationNumber}
+                                    onChange={handleInputChange}
+                                />
+                                <TextField
+                                    label="Flight School Designation"
+                                    name="flightSchoolDesignation"
+                                    variant="outlined"
+                                    fullWidth
+                                    value={asset.flightSchoolDesignation}
+                                    onChange={handleInputChange}
+                                />
+
+                            </BoxView>)}
+                            tab3={(<BoxView>
+                                 <TextField
+                                    label="Flight School Aerodrome"
+                                    name="flightSchoolAerodrome"
+                                    variant="outlined"
+                                    fullWidth
+                                    value={asset.flightSchoolAerodrome}
+                                    onChange={handleInputChange}
+                                />
+                            </BoxView>)}
+                            tab4={(<History historyListData={historyListData} />)}
+                        />
+
                     </BoxView>
                 </Grid>
+                <Grid item xs="12" md="3">
+                    <Grid item xs="12" >
+                        <BoxView>
+                            <AirplaneTicket fontSize="large" />
+                            <Button variant="contained" fullWidth onClick={() => { alert('click') }}>
+                                Add Photo
+                            </Button>
+                        </BoxView>
+                    </Grid>
+                    <Grid item xs="12" >
+                        <BoxView>
+                            <Button variant="contained" fullWidth onClick={handleSaveClick}>
+                                Save Plane
+                            </Button>
+
+                            <Button variant="contained" fullWidth onClick={handleSaveClick}>
+                                Schedule Maintenance
+                            </Button>
+                        </BoxView>
+                    </Grid>
+                </Grid>
             </Grid>
+
+
+
+
 
         </>
     );
