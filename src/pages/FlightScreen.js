@@ -24,9 +24,15 @@ function FlightScreen() {
         // Add more assets as needed
     ];
 
+    const types = [
+        { id: 1, name: 'Lesson' },
+        { id: 2, name: 'Tour' },
+        // Add more assets as needed
+    ];
+
     const scheduledFlights = [
-        { id: 1, studentId: 1, instructorId: 1, assetId: 1, time: '2023-05-23 10:00 AM' },
-        { id: 2, studentId: 2, instructorId: 1, assetId: 2, time: '2023-05-24 2:00 PM' },
+        { id: 1, studentid: 1, instructorid: 1, assetid: 1, typeid: 1, time: '2023-05-23 10:00 AM' },
+        { id: 2, studentid: 2, instructorid: 1, assetid: 2, typeid: 2, time: '2023-05-24 2:00 PM' },
         // Add more scheduled flights as needed
     ];
 
@@ -42,9 +48,9 @@ function FlightScreen() {
     };
 
     const filteredFlights = scheduledFlights.filter((flight) => {
-        const studentName = students.find((student) => student.id === flight.studentId)?.name || '';
-        const instructorName = instructors.find((instructor) => instructor.id === flight.instructorId)?.name || '';
-        const assetName = assets.find((asset) => asset.id === flight.assetId)?.name || '';
+        const studentName = students.find((student) => student.id === flight.studentid)?.name || '';
+        const instructorName = instructors.find((instructor) => instructor.id === flight.instructorid)?.name || '';
+        const assetName = assets.find((asset) => asset.id === flight.assetid)?.name || '';
         const dateTime = flight.time || '';
         const searchText = filter.toLowerCase();
         const selectedDateTime = `${selectedDate} ${selectedTime}`;
@@ -69,7 +75,7 @@ function FlightScreen() {
                     <TextField
                         label="Student"
                         name="Student"
-                        defaultValue={selectedFlight ? selectedFlight.studentId : ''}
+                        defaultValue={selectedFlight ? selectedFlight.studentid : ''}
                         variant="outlined"
                         fullWidth
                         select
@@ -84,7 +90,7 @@ function FlightScreen() {
                     <TextField
                         label="Instructor"
                         name="Instructor"
-                        defaultValue={selectedFlight ? selectedFlight.instructorId : ''}
+                        defaultValue={selectedFlight ? selectedFlight.instructorid : ''}
                         variant="outlined"
                         fullWidth
                         select
@@ -98,7 +104,7 @@ function FlightScreen() {
 
                     <TextField
                         label="Asset"
-                        defaultValue={selectedFlight ? selectedFlight.assetId : ''}
+                        defaultValue={selectedFlight ? selectedFlight.assetid : ''}
                         variant="outlined"
                         fullWidth
                         select
@@ -109,6 +115,21 @@ function FlightScreen() {
                             </MenuItem>
                         ))}
                     </TextField>
+
+                    <TextField
+                        label="Type"
+                        defaultValue={selectedFlight ? selectedFlight.typid : ''}
+                        variant="outlined"
+                        fullWidth
+                        select
+                    >
+                        {types.map((type) => (
+                            <MenuItem value={type.id} key={type.id}>
+                                {type.name}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                   
 
                     <TextField
                         InputLabelProps={{ shrink: true }}
@@ -196,9 +217,9 @@ function FlightScreen() {
 
                                     >
                                         <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{flight.id}</TableCell>
-                                        <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{students.find((student) => student.id === flight.studentId)?.name}</TableCell>
-                                        <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{instructors.find((instructor) => instructor.id === flight.instructorId)?.name}</TableCell>
-                                        <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{assets.find((asset) => asset.id === flight.assetId)?.name}</TableCell>
+                                        <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{students.find((student) => student.id === flight.studentid)?.name}</TableCell>
+                                        <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{instructors.find((instructor) => instructor.id === flight.instructorid)?.name}</TableCell>
+                                        <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{assets.find((asset) => asset.id === flight.assetid)?.name}</TableCell>
                                         <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{flight.time}</TableCell>
                                     </TableRow>
                                 ))}

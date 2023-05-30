@@ -6,6 +6,7 @@ import BoxView from '../components/BoxView';
 import { useParams } from 'react-router-dom';
 import History from '../components/History';
 import BasicTabs from '../components/Tabs/BasicTabs';
+import AssetControlPanel from '../components/ControlPanels/AssetControlPanel';
 
 
 
@@ -20,7 +21,7 @@ function AssetScreen() {
             registrationNumber: '',
             callSign: 'KWM',
             flightSchoolDesignation: '',
-            flightSchoolAerodrome:'YTZ',
+            flightSchoolAerodrome: 'YTZ',
         },
         {
             id: 2,
@@ -29,7 +30,7 @@ function AssetScreen() {
             registrationNumber: '',
             callSign: 'KWO',
             flightSchoolDesignation: '',
-            flightSchoolAerodrome:'YYZ',
+            flightSchoolAerodrome: 'YYZ',
 
         },
         // Add more assets as needed
@@ -41,7 +42,7 @@ function AssetScreen() {
         registrationNumber: '',
         callSign: '',
         flightSchoolDesignation: '',
-        flightSchoolAerodrome:'',
+        flightSchoolAerodrome: '',
 
     };
 
@@ -91,7 +92,7 @@ function AssetScreen() {
             <Grid container columnSpacing={2} >
 
 
-                <Grid item xs="12" md="9">
+                <Grid item xs="12" md="8">
                     <BoxView>
                         <BasicTabs
                             title={isEditingMode ? 'Edit Plane' : 'Create Plane'}
@@ -145,7 +146,7 @@ function AssetScreen() {
 
                             </BoxView>)}
                             tab3={(<BoxView>
-                                 <TextField
+                                <TextField
                                     label="Flight School Aerodrome"
                                     name="flightSchoolAerodrome"
                                     variant="outlined"
@@ -159,26 +160,14 @@ function AssetScreen() {
 
                     </BoxView>
                 </Grid>
-                <Grid item xs="12" md="3">
-                    <Grid item xs="12" >
-                        <BoxView>
-                            <AirplaneTicket fontSize="large" />
-                            <Button variant="contained" fullWidth onClick={() => { alert('click') }}>
-                                Add Photo
-                            </Button>
-                        </BoxView>
-                    </Grid>
-                    <Grid item xs="12" >
-                        <BoxView>
-                            <Button variant="contained" fullWidth onClick={handleSaveClick}>
-                                Save Plane
-                            </Button>
-
-                            <Button variant="contained" fullWidth onClick={handleSaveClick}>
-                                Schedule Maintenance
-                            </Button>
-                        </BoxView>
-                    </Grid>
+                <Grid item xs="12" md="4">
+                    <AssetControlPanel
+                        assetid={asset.id}
+                        handleSaveClick={handleSaveClick}
+                        handleScheduleMaintenance={() => { alert("handleScheduleMaintenance") }}
+                        handleAddPhoto={() => { alert("handleAddPhoto") }}
+                        handleBookLesson={() => { alert("handleBookLesson") }}
+                    />
                 </Grid>
             </Grid>
 

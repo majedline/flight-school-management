@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, MenuItem, Grid } from '@mui/material';
-import AccountBox from '@mui/icons-material/AccountBox';
+import { TextField, MenuItem, Grid } from '@mui/material';
 
 import BoxView from '../components/BoxView';
 import { useParams } from 'react-router-dom';
@@ -9,6 +8,7 @@ import aeroplaneLicenceOptions from '../rules/aeroplaneLicenceOptions.json';
 import History from '../components/History';
 import Address from '../components/Address';
 import BasicTabs from '../components/Tabs/BasicTabs';
+import PersonControlPanel from '../components/ControlPanels/PersonControlPanel';
 
 
 
@@ -140,7 +140,7 @@ function InstructorScreen() {// Fetch instructor data
   return (
     <Grid container columnSpacing={2}>
 
-      <Grid item xs="12" md="9">
+      <Grid item xs="12" md="8">
 
         <BoxView>
 
@@ -286,30 +286,15 @@ function InstructorScreen() {// Fetch instructor data
 
       </Grid>
 
-      <Grid item xs="12" md="3">
-        <Grid item xs="12" >
-          <BoxView>
-            <AccountBox fontSize="large" />
-            <Button variant="contained" fullWidth onClick={handleCreateUserAccountClick}>
-              Add Photo
-            </Button>
-          </BoxView>
-        </Grid>
-        <Grid item xs="12" >
-          <BoxView>
-            <Button variant="contained" fullWidth onClick={handleSaveClick}>
-              Save Instructor
-            </Button>
-
-            <Button variant="contained" fullWidth onClick={handleCreateUserAccountClick}>
-              Create Log-in
-            </Button>
-
-            <Button variant="contained" fullWidth onClick={handleCreateUserAccountClick}>
-              Reset Password
-            </Button>
-          </BoxView>
-        </Grid>
+      <Grid item xs="12" md="4">
+        <PersonControlPanel
+          instructorid={instructor.id}
+          handleSaveClick={handleSaveClick}
+          handleCreateUserAccountClick={handleCreateUserAccountClick}
+          handleAddPhoto={() => { alert("handleAddPhoto") }}
+          handleBookLesson={() => { alert("handleBookLesson") }}
+          handlePasswordReset={() => { alert("handlePasswordReset") }}
+        />
       </Grid>
     </Grid>
   );

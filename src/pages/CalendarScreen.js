@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography, Grid, Paper, Button } from '@mui/material';
+import { Typography, Grid, Paper, Button, Modal, Box } from '@mui/material';
 
 function CalendarScreen() {
   // Get the current date
@@ -7,12 +7,15 @@ function CalendarScreen() {
 
   // State for storing the selected month and year
   const [selectedDate, setSelectedDate] = useState(currentDate);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   // Sample data array
   const sampleData = [
-    { date: new Date().setDate(5), data: 'Event 1' },
-    { date: new Date().setDate(10), data: 'Event 2' },
-    { date: new Date().setDate(15), data: 'Event 3' },
+    { date: new Date().setDate(5), data: 'KWO Lesson', details: "Student John Rud with instructor Steve Jinkens" },
+    { date: new Date().setDate(10), data: 'KWM Tour', details: "Steve Jinkens taking Alex Smith on tour" },
+    { date: new Date().setDate(15), data: 'KWO Maintenance', details: "KWO Scheduled Maintenance" },
+    { date: new Date().setDate(15), data: 'KWM Lesson', details: "Student John Rud with instructor Steve Jinkens" },
+    { date: new Date().setDate(50), data: 'KWM Lesson', details: "Student John Rud with instructor Steve Jinkens" },
   ];
 
   // Function to handle navigation to the next month
@@ -65,12 +68,24 @@ function CalendarScreen() {
   // Function to get data for a given date
   const getData = (date) => {
     const dateString = date.toDateString();
-    const eventData = sampleData.find((event) => new Date(event.date).toDateString() === dateString);
-    return eventData ? eventData.data : '';
+    const eventData = sampleData.filter((event) => new Date(event.date).toDateString() === dateString);
+    return eventData.map((event) => event.data);
+  };
+
+  // Function to handle event click and open modal
+  const handleEventClick = (date) => {
+    const dateString = date.toDateString();
+    const eventData = sampleData.filter((event) => new Date(event.date).toDateString() === dateString);
+    setSelectedEvent(eventData);
+  };
+
+  // Function to close the modal
+  const handleCloseModal = () => {
+    setSelectedEvent(null);
   };
 
   return (
-    <Grid container justifyContent="flex-start" spacing={2}>
+    <Grid container justifyContent="flex-start" spacing={2} >
       <Grid item xs={12}>
         <Typography variant="h4" component="h1" align="center" gutterBottom>
           {currentMonth} {currentYear}
@@ -80,7 +95,7 @@ function CalendarScreen() {
       {daysOfWeek.map((day) => (
         <Grid item xs={1.6} key={`weekday-${day}`}>
           <Paper elevation={0} sx={{ height: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Typography variant="body1" align="center">
+            <Typography variant="h6" align="center">
               {day}
             </Typography>
           </Paper>
@@ -103,7 +118,14 @@ function CalendarScreen() {
               backgroundColor: hasData(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day))
                 ? '#eee'
                 : undefined,
+              cursor: 'pointer',
+              '&:hover': {
+                backgroundColor: hasData(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day))
+                  ? '#ddd'
+                  : undefined,
+              },
             }}
+            onClick={() => handleEventClick(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day))}
           >
             <Typography
               variant="body1"
@@ -113,9 +135,13 @@ function CalendarScreen() {
               {(isToday(selectedDate, day)) ? `${day} (Today)` : day}
             </Typography>
             {hasData(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day)) && (
-              <Typography variant="caption" align="center">
-                {getData(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day))}
-              </Typography>
+              <Box sx={{ maxHeight: '60px', overflow: 'auto' }}>
+                {getData(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day)).map((event, index) => (
+                  <Typography key={`event-${index}`} variant="caption" align="center">
+                    {event}
+                  </Typography>
+                ))}
+              </Box>
             )}
           </Paper>
         </Grid>
@@ -129,6 +155,39 @@ function CalendarScreen() {
           Next
         </Button>
       </Grid>
+
+      <Modal
+        open={Boolean(selectedEvent)}
+        onClose={handleCloseModal}
+        aria-labelledby="event-modal-title"
+        aria-describedby="event-modal-description"
+      >
+        <Paper
+          elevation={3}
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '400px',
+            p: 2,
+          }}
+        >
+          {selectedEvent && (
+            <>
+              <Typography variant="h6" id="event-modal-title" gutterBottom>
+                {selectedEvent.map((event) => event.data).join(', ')}
+              </Typography>
+              <Typography variant="body1" id="event-modal-description">
+                {selectedEvent.map((event) => event.details).join(', ')}
+              </Typography>
+            </>
+          )}
+          <Button variant="contained" onClick={handleCloseModal} style={{ marginTop: '10px' }}>
+            Close
+          </Button>
+        </Paper>
+      </Modal>
     </Grid>
   );
 }

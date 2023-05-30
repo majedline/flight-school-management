@@ -8,6 +8,7 @@ export const darkTheme = createTheme({
 });
 
 export const semiDarkTheme = createTheme({
+
     palette: {
         background: {
             default: "#888888"

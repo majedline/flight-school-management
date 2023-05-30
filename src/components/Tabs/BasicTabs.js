@@ -31,9 +31,16 @@ export default function BasicTabs({ title, tab1, tab2, tab3, tab4 }) {
                 {title}
             </Typography>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    variant="scrollable"
+                    scrollButtons
+                    allowScrollButtonsMobile
+                    aria-label="scrollable force tabs example"
+                >
                     {(tab1) ? <Tab label="Basic Info." {...a11yProps(0)} /> : ""}
-                    {(tab2) ? <Tab label="Additional Info." {...a11yProps(1)} /> : ""}
+                    {(tab2) ? <Tab label="Details" {...a11yProps(1)} /> : ""}
                     {(tab3) ? <Tab label="Address" {...a11yProps(2)} /> : ""}
                     {(tab4) ? <Tab label="History" {...a11yProps(3)} /> : ""}
                 </Tabs>
