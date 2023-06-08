@@ -1,0 +1,55 @@
+[
+    {
+      "permitOrLicenceType": "Student Pilot Permit",
+      "age": 14
+    },
+    {
+      "permitOrLicenceType": "Pilot Permit Ultra-light Aeroplane",
+      "age": 16
+    },
+    {
+      "permitOrLicenceType": "Pilot Permit Gyroplane",
+      "age": 17
+    },
+    {
+      "permitOrLicenceType": "Pilot Permit Recreational Aeroplane",
+      "age": 16
+    },
+    {
+      "permitOrLicenceType": "Pilot Licence - Glider",
+      "age": 16
+    },
+    {
+      "permitOrLicenceType": "Pilot Licence - Balloon",
+      "age": 17
+    },
+    {
+      "permitOrLicenceType": "Private Pilot Licence - Aeroplane",
+      "age": 17
+    },
+    {
+      "permitOrLicenceType": "Private Pilot Licence - Helicopter",
+      "age": 17
+    },
+    {
+      "permitOrLicenceType": "Commercial Pilot Licence - Aeroplane",
+      "age": 18
+    },
+    {
+      "permitOrLicenceType": "Commercial Pilot Licence - Helicopter",
+      "age": 18
+    },
+    {
+      "permitOrLicenceType": "Airline Transport Pilot Licence - Aeroplane",
+      "age": 21
+    },
+    {
+      "permitOrLicenceType": "Airline Transport Pilot Licence - Helicopter",
+      "age": 21
+    },
+    {
+      "permitOrLicenceType": "Flight Engineer Licence",
+      "age": 18
+    }
+  ]
+  
