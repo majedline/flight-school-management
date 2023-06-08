@@ -39,6 +39,8 @@ const register = async (req, res) => {
 
         const newUser = await db.user.create({
             email,
+            firstName:firstName,
+            lastName:lastName,
             password: hashedPassword,
             type: userType,
             active: true,

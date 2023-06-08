@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, TableHead, TableRow, TableCell, TableBody, Paper, Typography, Button, TextField } from '@mui/material';
 import BoxView from '../components/BoxView';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import api from '../util/api';
 
 function StudentListScreen() {
   const navigate = useNavigate();
-
-  // Fetch student data
-  const initialStudents = [
-    { id: 1, name: 'John Doe' },
-    { id: 2, name: 'Jane Smith' },
-    // Add more students as needed
-  ];
-
-  const [students, setStudents] = useState(initialStudents);
+  const [students, setStudents] = useState([]);
   const [filterText, setFilterText] = useState('');
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await axios.get(api.activeStudents);
+        setStudents(response.data.students);
+      } catch (error) {
+        console.error('Failed to fetch students:', error.message);
+      }
+    };
+
+    fetchStudents();
+  }, []);
 
   const handleStudentClick = (studentId) => {
     navigate(`/student/${studentId}`);
@@ -24,10 +31,13 @@ function StudentListScreen() {
     setFilterText(e.target.value);
   };
 
-  const filteredStudents = students.filter((student) =>
-    student.name.toLowerCase().includes(filterText.toLowerCase()) ||
-    String(student.id).toLowerCase().includes(filterText.toLowerCase())
-  );
+  const filteredStudents = students.filter((student) => {
+    const studentName = student.name || ''; // Set an empty string if student.name is undefined
+    const studentId = String(student.id).toLowerCase();
+    const filter = filterText.toLowerCase();
+
+    return studentName.toLowerCase().includes(filter) || studentId.includes(filter);
+  });
 
   return (
     <BoxView>
@@ -60,14 +70,14 @@ function StudentListScreen() {
           <TableBody>
             {filteredStudents.map((student) => (
               <TableRow
-                key={student.id}
+                key={student.idStudent}
                 component={Link}
-                to={`/student/${student.id}`}
+                to={`/student/${student.idStudent}`}
                 style={{ textDecoration: 'none' }}
-                onClick={() => handleStudentClick(student.id)}
+                onClick={() => handleStudentClick(student.idStudent)}
               >
-                <TableCell align="center">{student.id}</TableCell>
-                <TableCell align="center">{student.name}</TableCell>
+                <TableCell align="center">{student.idStudent}</TableCell>
+                <TableCell align="center">{student.firstName+" "+student.lastName}</TableCell>
               </TableRow>
             ))}
           </TableBody>

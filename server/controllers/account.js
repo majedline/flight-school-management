@@ -14,13 +14,10 @@ const getAccountByID = async (req, res) => {
 
         let account = {
             "userid": user.id,
-            "clientRef": user.clientRef,
             "firstName": user.firstName,
-            "aliasName": user.aliasName,
             "lastName": user.lastName,
             "phone": user.phone,
             "email": user.email,
-            "profilePicture": user.profilePicture,
             "createdOn": toDateTime(user.createdOn.getTime() / 1000)
         };
 
@@ -47,16 +44,14 @@ const updateAccountByID = async (req, res) => {
             return res.status(400).send({ error: errors.array() });
         }
 
-        const { firstName, aliasName, lastName, email, newPassword, phone, profilePicture } = req.body;
+        const { firstName,  lastName, email, newPassword, phone } = req.body;
         const userId = req.user.id;
 
         const payload = {
             "firstName": firstName,
-            "aliasName": aliasName,
             "lastName": lastName,
             "email": email,
             "phone": phone,
-            "profilePicture": profilePicture
         };
 
         // check if the user has the correct email and password

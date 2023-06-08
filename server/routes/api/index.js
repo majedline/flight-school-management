@@ -7,5 +7,7 @@ router.use('/logout', require('./logout'));
 router.use('/account', require('./account'));
 router.use('/blob', require('./blob'));
 
+router.use ('/student', require('./student'));
+
 
 module.exports = router;

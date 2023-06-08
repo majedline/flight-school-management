@@ -8,55 +8,11 @@ import History from '../components/History';
 import Address from '../components/Address';
 import BasicTabs from '../components/Tabs/BasicTabs';
 import PersonControlPanel from '../components/ControlPanels/PersonControlPanel';
-
+import axios from 'axios';
+import api from '../util/api';
 
 
 function StudentScreen() {
-  // Fetch student data
-  const students = [
-    {
-      id: 1,
-      name: 'John Doe',
-      age: 20,
-      email: 'john@email.com',
-      medicalFitness: '',
-      languageProficiency: '',
-      groundSchool: '',
-      flightTraining: '',
-      flightTest: '',
-      writtenExam: '',
-      address: {
-        addressLine1: '',
-        addressLine2: '',
-        city: '',
-        province: '',
-        country: '',
-        postalCode: '',
-      },
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      age: 22,
-      email: 'jane@email.com',
-      medicalFitness: '',
-      languageProficiency: '',
-      groundSchool: '',
-      flightTraining: '',
-      flightTest: '',
-      writtenExam: '',
-      address: {
-        addressLine1: '',
-        addressLine2: '',
-        city: '',
-        province: '',
-        country: '',
-        postalCode: '',
-      }
-    },
-    // Add more students as needed
-  ];
-
   const historyListData = [
     { id: 1, info: 'Created Account', date: '01/22/2023' },
     { id: 2, info: 'Flight Lesson with Jack Jones', date: '01/25/2023' },
@@ -80,6 +36,7 @@ function StudentScreen() {
     flightTraining: '',
     flightTest: '',
     writtenExam: '',
+    aeroplaneLicence: '',
   };
 
   const [student, setStudent] = useState(initialStudentData);
@@ -94,17 +51,25 @@ function StudentScreen() {
   const { studentid } = useParams();
 
   useEffect(() => {
-    if (studentid) {
-      // Find the student data from the students array based on the ID
-      const existingStudent = students.find((student) => student.id === parseInt(studentid, 10));
-
-      if (existingStudent) {
-        // Set the existing student data as the initial state
-        setStudent(existingStudent);
+    const fetchStudentData = async () => {
+      try {
+        const response = await axios.get(`${api.student}${studentid}`);
+        const studentData = response.data;
+        setStudent(studentData);
         setIsEditingMode(true);
+      } catch (error) {
+        console.log(error);
+        // Handle error condition
       }
+    };
+
+    if (studentid) {
+      fetchStudentData();
     }
   }, [studentid]);
+
+
+
 
   const handleSaveClick = () => {
     console.log('student handleSaveClick', student);
@@ -126,7 +91,6 @@ function StudentScreen() {
       let addr = student.address;
       addr[e.target.name] = e.target.value
       setStudent({ ...student, address: addr });
-
     }
 
     setStudent({ ...student, [e.target.name]: e.target.value });
@@ -140,7 +104,7 @@ function StudentScreen() {
   return (
     <Grid container columnSpacing={2}>
 
-      <Grid item xs="12" md="8">
+      <Grid item xs={12} md={8}>
 
         <BoxView>
 
@@ -331,9 +295,9 @@ function StudentScreen() {
 
       </Grid>
 
-      <Grid item xs="12" md="4">
+      <Grid item xs={12} md={4}>
 
-      <PersonControlPanel
+        <PersonControlPanel
           studentid={student.id}
           handleSaveClick={handleSaveClick}
           handleCreateUserAccountClick={handleCreateUserAccountClick}

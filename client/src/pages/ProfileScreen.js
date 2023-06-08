@@ -42,11 +42,19 @@ function ProfileScreen() {
             </Typography>
             <>
                 <TextField
-                    label="Name"
-                    name="name"
+                    label="First Name"
+                    name="firstName"
                     variant="outlined"
                     fullWidth
-                    value={updatedUser.name}
+                    value={updatedUser.firstName}
+                    onChange={handleInputChange}
+                />
+                  <TextField
+                    label="Last Name"
+                    name="lastName"
+                    variant="outlined"
+                    fullWidth
+                    value={updatedUser.lastName}
                     onChange={handleInputChange}
                 />
                 <TextField
@@ -59,7 +67,7 @@ function ProfileScreen() {
                 />
 
                 <TextField
-                    label="Password"
+                    label="Enter a new Password to change it, otherwise leave it blank"
                     name="password"
                     variant="outlined"
                     fullWidth

@@ -4,6 +4,7 @@ const { validationResult } = require('express-validator');
 const settings = require("../../config/settings");
 const { getTokenKey } = require('../misc/helper');
 const db = require('../models');
+const { captureRejectionSymbol } = require('nodemailer/lib/xoauth2');
 
 const login = async (req, res) => {
     console.log("POST login");
@@ -36,13 +37,14 @@ const login = async (req, res) => {
         const payload = {
             user: {
                 id: user.id,
-                clientRef: user.clientRef,
                 firstName: user.firstName,
                 lastName: user.lastName,
-                profilePicture: user.profilePicture,
-                userType: user.userType
+                email: user.email,
+                type: user.type
             }
         };
+        
+        console.log(payload);
 
         jwt.sign(
             payload,
