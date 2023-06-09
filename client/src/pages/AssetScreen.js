@@ -3,77 +3,67 @@ import { TextField, Button, Typography, Grid } from '@mui/material';
 import AirplaneTicket from '@mui/icons-material/AirplaneTicket';
 
 import BoxView from '../components/BoxView';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate} from 'react-router-dom';
 import History from '../components/History';
 import BasicTabs from '../components/Tabs/BasicTabs';
 import AssetControlPanel from '../components/ControlPanels/AssetControlPanel';
-
-
+import axios from 'axios';
+import api from '../util/api';
 
 function AssetScreen() {
-
-    // Fetch asset data
-    const assets = [
-        {
-            id: 1,
-            name: 'plane 1',
-            type: 'Cessna 174',
-            registrationNumber: '',
-            callSign: 'KWM',
-            flightSchoolDesignation: '',
-            flightSchoolAerodrome: 'YTZ',
-        },
-        {
-            id: 2,
-            name: 'plane 2',
-            type: 'Cessna 172',
-            registrationNumber: '',
-            callSign: 'KWO',
-            flightSchoolDesignation: '',
-            flightSchoolAerodrome: 'YYZ',
-
-        },
-        // Add more assets as needed
-    ];
-
-    const initialAssetData = {
-        name: '',
-        type: '',
-        registrationNumber: '',
-        callSign: '',
-        flightSchoolDesignation: '',
-        flightSchoolAerodrome: '',
-
-    };
-
     const historyListData = [
         { id: 1, info: "Created", date: "01/22/2023" },
         { id: 2, info: "Flight by Bob Smith", date: "01/25/2023" },
         { id: 3, info: "Maintenance oil change", date: "02/02/2023" }
     ];
+    const navigate = useNavigate();
+
+    const initialAssetData = {
+        name: '',
+        type: '',
+        callSign: '',
+        registrationNumber: '',
+        flightSchoolDesignation: '',
+        flightSchoolAerodrome: ''
+    };
 
     const [asset, setAsset] = useState(initialAssetData);
-    const [isEditingMode, setIsEditingMode] = useState(false); // Check if assetid exists (editing an existing asset)
+    const [isEditingMode, setIsEditingMode] = useState(false);
 
     const { assetid } = useParams();
 
     useEffect(() => {
-        if (assetid) {
-            // Find the asset data from the assets array based on the ID
-            const existingAsset = assets.find((asset) => asset.id === parseInt(assetid, 10));
-
-            if (existingAsset) {
-                // Set the existing asset data as the initial state
-                setAsset(existingAsset);
-                setIsEditingMode(true);
+        const fetchAssetData = async () => {
+            try {
+                if (assetid) {
+                    const response = await axios.get(`${api.asset}${assetid}`);
+                    const assetData = response.data.asset;
+                    setAsset(assetData);
+                    setIsEditingMode(true);
+                }
+            } catch (error) {
+                console.log(error);
+                // Handle error condition
             }
-        }
+        };
+
+        fetchAssetData();
     }, [assetid]);
 
-
-    const handleSaveClick = () => {
-        console.log('asset is', asset);
-        // call save
+    const handleSaveClick = async () => {
+        try {
+            if (assetid) {
+                await axios.put(`${api.asset}${assetid}`, asset);
+                console.log('Asset data updated');
+            } else {
+                const response = await axios.post(api.asset, asset);
+                const newAssetId = response.data.assetId;
+                console.log('New asset created with ID:', newAssetId);
+            }
+        } catch (error) {
+            console.log(error);
+            // Handle error condition
+        }
     };
 
     const handleInputChange = (e) => {
@@ -92,7 +82,7 @@ function AssetScreen() {
             <Grid container columnSpacing={2} >
 
 
-                <Grid item xs="12" md="8">
+                <Grid item xs={12} md={8}>
                     <BoxView>
                         <BasicTabs
                             title={isEditingMode ? 'Edit Plane' : 'Create Plane'}
@@ -160,7 +150,7 @@ function AssetScreen() {
 
                     </BoxView>
                 </Grid>
-                <Grid item xs="12" md="4">
+                <Grid item xs={12} md={4}>
                     <AssetControlPanel
                         assetid={asset.id}
                         handleSaveClick={handleSaveClick}

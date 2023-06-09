@@ -23,6 +23,10 @@ module.exports = (sequelize, Sequelize) => {
     flightSchoolAerodrome: {
       type: Sequelize.STRING(100),
     },
+    active: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true,
+    },
     createdOn: {
       type: Sequelize.DATE,
       defaultValue: Sequelize.NOW
