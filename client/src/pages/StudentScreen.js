@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, MenuItem, Grid } from '@mui/material';
 import BoxView from '../components/BoxView';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate} from 'react-router-dom';
 import permitOrLicenceTypes from '../rules/permitOrLicenceType.json';
 import aeroplaneLicenceOptions from '../rules/aeroplaneLicenceOptions.json';
 import History from '../components/History';
@@ -17,6 +17,9 @@ function StudentScreen() {
     { id: 1, info: 'Created Account', date: '01/22/2023' },
     { id: 2, info: 'Flight Lesson with Jack Jones', date: '01/25/2023' },
   ];
+
+  const navigate = useNavigate();
+
 
   const initialStudentData = {
     name: '',
@@ -78,12 +81,14 @@ function StudentScreen() {
     try {
       if (studentid) {
         // Editing an existing user
-        await axios.post(`http://localhost:3001/api/student/${studentid}`, student);
+        await axios.post(`${api.student}${studentid}`, student);
         console.log('Student data updated');
       } else {
         // Creating a new user
-        await axios.post('http://localhost:3001/api/student/', student);
+        const results = await axios.post(api.student, student);
         console.log('New student created');
+        navigate(`/student/${results.data.student.idStudent}`);
+
       }
     } catch (error) {
       console.log(error);

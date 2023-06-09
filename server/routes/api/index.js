@@ -8,6 +8,9 @@ router.use('/account', require('./account'));
 router.use('/blob', require('./blob'));
 
 router.use ('/student', require('./student'));
+router.use ('/instructor', require('./instructor'));
+router.use ('/asset', require('./asset'));
+
 
 
 module.exports = router;

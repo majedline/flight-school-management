@@ -1,114 +1,95 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, MenuItem, Grid } from '@mui/material';
-
 import BoxView from '../components/BoxView';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import permitOrLicenceTypes from '../rules/permitOrLicenceType.json';
 import aeroplaneLicenceOptions from '../rules/aeroplaneLicenceOptions.json';
 import History from '../components/History';
 import Address from '../components/Address';
 import BasicTabs from '../components/Tabs/BasicTabs';
 import PersonControlPanel from '../components/ControlPanels/PersonControlPanel';
+import axios from 'axios';
+import api from '../util/api';
 
 
-
-function InstructorScreen() {// Fetch instructor data
-  const instructors = [
-    {
-      id: 1,
-      name: 'John Doe',
-      age: 20,
-      email: 'john@email.com',
-      medicalFitness: '',
-      languageProficiency: '',
-      groundSchool: '',
-      flightTraining: '',
-      flightTest: '',
-      writtenExam: '',
-      address: {
-        addressLine1: '',
-        addressLine2: '',
-        city: '',
-        province: '',
-        country: '',
-        postalCode: '',
-      },
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      age: 22,
-      email: 'jane@email.com',
-      medicalFitness: '',
-      languageProficiency: '',
-      groundSchool: '',
-      flightTraining: '',
-      flightTest: '',
-      writtenExam: '',
-      address: {
-        addressLine1: '',
-        addressLine2: '',
-        city: '',
-        province: '',
-        country: '',
-        postalCode: '',
-      }
-    },
-    // Add more instructors as needed
-  ];
-
+function InstructorScreen() {
   const historyListData = [
     { id: 1, info: 'Created Account', date: '01/22/2023' },
     { id: 2, info: 'Flight Lesson with Jack Jones', date: '01/25/2023' },
   ];
 
+  const navigate = useNavigate();
+
   const initialInstructorData = {
     name: '',
-    age: '',
     email: '',
-    address: {
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      province: '',
-      country: '',
-      postalCode: '',
-    },
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    province: '',
+    country: '',
+    postalCode: '',
     medicalFitness: '',
     languageProficiency: '',
     groundSchool: '',
     flightTraining: '',
     flightTest: '',
     writtenExam: '',
+    aeroplaneLicence: '',
   };
 
   const [instructor, setInstructor] = useState(initialInstructorData);
   const [isEditingMode, setIsEditingMode] = useState(false); // Check if instructorid exists (editing an existing instructor)
 
-  const [selectedAge, setSelectedAge] = useState('');
   const [selectedPermitType, setSelectedPermitType] = useState('');
   const [selectedLicence, setSelectedLicence] = useState('');
 
-  const filteredPermitTypes = permitOrLicenceTypes.filter((permitType) => permitType.age <= selectedAge);
+  // const filteredPermitTypes = permitOrLicenceTypes.filter((permitType) => permitType.age <= selectedAge);
 
   const { instructorid } = useParams();
 
   useEffect(() => {
-    if (instructorid) {
-      // Find the instructor data from the instructors array based on the ID
-      const existingInstructor = instructors.find((instructor) => instructor.id === parseInt(instructorid, 10));
-
-      if (existingInstructor) {
-        // Set the existing instructor data as the initial state
-        setInstructor(existingInstructor);
+    const fetchInstructorData = async () => {
+      try {
+        const response = await axios.get(`${api.instructor}${instructorid}`);
+        console.log(response);
+        const instructorData = response.data.instructor;
+        setInstructor(instructorData);
         setIsEditingMode(true);
+
+        setSelectedPermitType(instructorData.permitType);
+        setSelectedLicence(instructorData.aeroplaneLicence);
+
+      } catch (error) {
+        console.log(error);
+        // Handle error condition
       }
+    };
+
+    if (instructorid) {
+      fetchInstructorData();
     }
   }, [instructorid]);
 
-  const handleSaveClick = () => {
+
+  const handleSaveClick = async () => {
     console.log('instructor handleSaveClick', instructor);
-    // call save
+    try {
+      if (instructorid) {
+        // Editing an existing user
+        await axios.post(`${api.instructor}${instructorid}`, instructor);
+        console.log('Instructor data updated');
+      } else {
+        // Creating a new user
+        const results = await axios.post(api.instructor, instructor);
+        console.log('New instructor created');
+        navigate(`/instructor/${results.data.instructor.idInstructor}`);
+
+      }
+    } catch (error) {
+      console.log(error);
+      // Handle error condition
+    }
   };
 
   const handleCreateUserAccountClick = () => {
@@ -126,7 +107,6 @@ function InstructorScreen() {// Fetch instructor data
       let addr = instructor.address;
       addr[e.target.name] = e.target.value
       setInstructor({ ...instructor, address: addr });
-
     }
 
     setInstructor({ ...instructor, [e.target.name]: e.target.value });
@@ -140,13 +120,13 @@ function InstructorScreen() {// Fetch instructor data
   return (
     <Grid container columnSpacing={2}>
 
-      <Grid item xs="12" md="8">
+      <Grid item xs={12} md={8}>
 
         <BoxView>
 
           <BasicTabs
 
-            title={(isEditingMode) ? 'Edit Instructor' : 'Create Instructor'}
+            title={(isEditingMode) ? 'Edit Instructor ' : 'Create Instructor'}
 
             tab1={(
               <BoxView>
@@ -199,11 +179,15 @@ function InstructorScreen() {// Fetch instructor data
                   variant="outlined"
                   fullWidth
                   value={selectedPermitType}
-                  onChange={(e) => setSelectedPermitType(e.target.value)}
+                  onChange={(e) => {
+                    setSelectedPermitType(e.target.value)
+                    setInstructor({ ...instructor, permitType: e.target.value });
+
+                  }}
                   select
                 >
                   <MenuItem value="">Select Permit or Licence Type</MenuItem>
-                  {filteredPermitTypes.map((permitType) => (
+                  {permitOrLicenceTypes.map((permitType) => (
                     <MenuItem
                       value={permitType.permitOrLicenceType}
                       key={permitType.permitOrLicenceType}
@@ -219,7 +203,11 @@ function InstructorScreen() {// Fetch instructor data
                   variant="outlined"
                   fullWidth
                   value={selectedLicence}
-                  onChange={(e) => setSelectedLicence(e.target.value)}
+                  onChange={(e) => {
+                    setSelectedLicence(e.target.value);
+                    setInstructor({ ...instructor, aeroplaneLicence: e.target.value });
+
+                  }}
                   select
                 >
                   <MenuItem value="">Select Aeroplane Licence</MenuItem>
@@ -270,12 +258,26 @@ function InstructorScreen() {// Fetch instructor data
                   value={instructor.flightTest}
                   onChange={handleInputChange}
                 />
-
+                <TextField
+                  label="Transport Canada Written Exam"
+                  name="writtenExam"
+                  variant="outlined"
+                  fullWidth
+                  value={instructor.writtenExam}
+                  onChange={handleInputChange}
+                />
               </BoxView>
 
             )}
 
-            tab3={(<Address address={instructor.address} handleInputChange={handleInputChange} />)}
+            tab3={(<Address address={{
+              "addressLine1": instructor.addressLine1,
+              "addressLine2": instructor.addressLine2,
+              "city": instructor.city,
+              "province": instructor.province,
+              "country": instructor.country,
+              "postalCode": instructor.postalCode
+            }} handleInputChange={handleInputChange} />)}
 
             tab4={(<History historyListData={historyListData} />)}
           />
@@ -286,7 +288,8 @@ function InstructorScreen() {// Fetch instructor data
 
       </Grid>
 
-      <Grid item xs="12" md="4">
+      <Grid item xs={12} md={4}>
+
         <PersonControlPanel
           instructorid={instructor.id}
           handleSaveClick={handleSaveClick}

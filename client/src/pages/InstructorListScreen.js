@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, TableHead, TableRow, TableCell, TableBody, Paper, Typography, Button, TextField } from '@mui/material';
 import BoxView from '../components/BoxView';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import api from '../util/api';
 
 function InstructorListScreen() {
   const navigate = useNavigate();
-
-  // Fetch Instructor data
-  const initialInstructors = [
-    { id: 1, name: 'John Doe' },
-    { id: 2, name: 'Jane Smith' },
-    // Add more Instructors as needed
-  ];
-
-  const [instructors, setInstructor] = useState(initialInstructors);
+  const [instructors, setInstructors] = useState([]);
   const [filterText, setFilterText] = useState('');
+
+  useEffect(() => {
+    const fetchInstructors = async () => {
+      try {
+        const response = await axios.get(api.activeInstructors);
+        setInstructors(response.data.instructors);
+      } catch (error) {
+        console.error('Failed to fetch instructors:', error.message);
+      }
+    };
+
+    fetchInstructors();
+  }, []);
 
   const handleInstructorClick = (instructorId) => {
     navigate(`/instructor/${instructorId}`);
@@ -24,12 +31,13 @@ function InstructorListScreen() {
     setFilterText(e.target.value);
   };
 
-  const filteredInstructors = instructors.filter((instructor) =>
-    instructor.name.toLowerCase().includes(filterText.toLowerCase()) ||
-    String(instructor.id).toLowerCase().includes(filterText.toLowerCase())
+  const filteredInstructors = instructors.filter((instructor) => {
+    const instructorName = instructor.name || ''; // Set an empty string if instructor.name is undefined
+    const instructorId = String(instructor.id).toLowerCase();
+    const filter = filterText.toLowerCase();
 
-    
-  );
+    return instructorName.toLowerCase().includes(filter) || instructorId.includes(filter);
+  });
 
   return (
     <BoxView>
@@ -62,14 +70,14 @@ function InstructorListScreen() {
           <TableBody>
             {filteredInstructors.map((instructor) => (
               <TableRow
-                key={instructor.id}
+                key={instructor.idInstructor}
                 component={Link}
-                to={`/instructor/${instructor.id}`}
+                to={`/instructor/${instructor.idInstructor}`}
                 style={{ textDecoration: 'none' }}
-                onClick={() => handleInstructorClick(instructor.id)}
+                onClick={() => handleInstructorClick(instructor.idInstructor)}
               >
-                <TableCell align="center">{instructor.id}</TableCell>
-                <TableCell align="center">{instructor.name}</TableCell>
+                <TableCell align="center">{instructor.idInstructor}</TableCell>
+                <TableCell align="center">{instructor.firstName+" "+instructor.lastName}</TableCell>
               </TableRow>
             ))}
           </TableBody>
