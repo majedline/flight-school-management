@@ -56,6 +56,9 @@ module.exports = (sequelize, Sequelize) => {
     aeroplaneLicence: {
       type: Sequelize.STRING(100),
     },
+    permitType: {
+      type: Sequelize.STRING(100),
+    },
     active: {
       type: Sequelize.BOOLEAN,
       defaultValue: true,

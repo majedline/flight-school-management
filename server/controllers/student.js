@@ -7,14 +7,9 @@ const createStudent = async (req, res) => {
     const {
       firstName,
       lastName,
-      email,
       age,
-      addressLine1,
-      addressLine2,
-      city,
-      province,
-      country,
-      postalCode,
+      email,
+      address,
       medicalFitness,
       languageProficiency,
       groundSchool,
@@ -22,6 +17,7 @@ const createStudent = async (req, res) => {
       flightTest,
       writtenExam,
       aeroplaneLicence,
+      permitType,
     } = req.body;
 
     // Create the student in the database
@@ -30,12 +26,12 @@ const createStudent = async (req, res) => {
       lastName,
       email,
       age,
-      addressLine1,
-      addressLine2,
-      city,
-      province,
-      country,
-      postalCode,
+      addressLine1: ((address) ? address.addressLine1 : null),
+      addressLine2: ((address) ? address.addressLine2 : null),
+      city: ((address) ? address.city : null),
+      province: ((address) ? address.province : null),
+      country: ((address) ? address.country : null),
+      postalCode: ((address) ? address.postalCode : null),
       medicalFitness,
       languageProficiency,
       groundSchool,
@@ -43,6 +39,7 @@ const createStudent = async (req, res) => {
       flightTest,
       writtenExam,
       aeroplaneLicence,
+      permitType,
       active: true,
     });
 
@@ -60,14 +57,9 @@ const editStudent = async (req, res) => {
     const {
       firstName,
       lastName,
-      email,
       age,
-      addressLine1,
-      addressLine2,
-      city,
-      province,
-      country,
-      postalCode,
+      email,
+      address,
       medicalFitness,
       languageProficiency,
       groundSchool,
@@ -75,6 +67,7 @@ const editStudent = async (req, res) => {
       flightTest,
       writtenExam,
       aeroplaneLicence,
+      permitType,
     } = req.body;
 
     // Find the student in the database
@@ -89,12 +82,12 @@ const editStudent = async (req, res) => {
     student.lastName = lastName;
     student.email = email;
     student.age = age;
-    student.addressLine1 = addressLine1;
-    student.addressLine2 = addressLine2;
-    student.city = city;
-    student.province = province;
-    student.country = country;
-    student.postalCode = postalCode;
+    student.addressLine1 = ((address) ? address.addressLine1 : null);
+    student.addressLine2 = ((address) ? address.addressLine2 : null);
+    student.city = ((address) ? address.city : null);
+    student.province = ((address) ? address.province : null);
+    student.country = ((address) ? address.country : null);
+    student.postalCode = ((address) ? address.postalCode : null);
     student.medicalFitness = medicalFitness;
     student.languageProficiency = languageProficiency;
     student.groundSchool = groundSchool;
@@ -102,6 +95,7 @@ const editStudent = async (req, res) => {
     student.flightTest = flightTest;
     student.writtenExam = writtenExam;
     student.aeroplaneLicence = aeroplaneLicence;
+    student.permitType = permitType;
 
     // Save the updated student in the database
     await student.save();
@@ -205,6 +199,7 @@ const getActiveStudents = async (req, res) => {
   }
 };
 
+
 module.exports = {
   createStudent,
   editStudent,
@@ -212,5 +207,4 @@ module.exports = {
   getStudent,
   searchStudents,
   getActiveStudents
-
 };

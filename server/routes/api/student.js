@@ -29,7 +29,6 @@ router.post('/',
 // POST set a student to active or inactive
 router.post('/:id/active',
   [
-    // Validation checks for the request body
     check('active').isBoolean().withMessage('Active status must be a boolean value'),
   ],
   studentController.setStudentActiveStatus

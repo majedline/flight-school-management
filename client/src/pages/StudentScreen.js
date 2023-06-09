@@ -22,14 +22,12 @@ function StudentScreen() {
     name: '',
     age: '',
     email: '',
-    address: {
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      province: '',
-      country: '',
-      postalCode: '',
-    },
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    province: '',
+    country: '',
+    postalCode: '',
     medicalFitness: '',
     languageProficiency: '',
     groundSchool: '',
@@ -54,9 +52,15 @@ function StudentScreen() {
     const fetchStudentData = async () => {
       try {
         const response = await axios.get(`${api.student}${studentid}`);
-        const studentData = response.data;
+        console.log(response);
+        const studentData = response.data.student;
         setStudent(studentData);
         setIsEditingMode(true);
+
+        setSelectedAge(parseInt(studentData.age));
+        setSelectedPermitType(studentData.permitType);
+        setSelectedLicence(studentData.aeroplaneLicence);
+
       } catch (error) {
         console.log(error);
         // Handle error condition
@@ -69,11 +73,22 @@ function StudentScreen() {
   }, [studentid]);
 
 
-
-
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
     console.log('student handleSaveClick', student);
-    // call save
+    try {
+      if (studentid) {
+        // Editing an existing user
+        await axios.post(`http://localhost:3001/api/student/${studentid}`, student);
+        console.log('Student data updated');
+      } else {
+        // Creating a new user
+        await axios.post('http://localhost:3001/api/student/', student);
+        console.log('New student created');
+      }
+    } catch (error) {
+      console.log(error);
+      // Handle error condition
+    }
   };
 
   const handleCreateUserAccountClick = () => {
@@ -110,7 +125,7 @@ function StudentScreen() {
 
           <BasicTabs
 
-            title={(isEditingMode) ? 'Edit Student' : 'Create Student'}
+            title={(isEditingMode) ? 'Edit Student ' : 'Create Student'}
 
             tab1={(
               <BoxView>
@@ -150,9 +165,6 @@ function StudentScreen() {
                     value={student.email}
                     onChange={handleInputChange}
                   />
-
-
-
                 </>
               </BoxView>
             )}
@@ -164,7 +176,10 @@ function StudentScreen() {
                   variant="outlined"
                   fullWidth
                   value={selectedAge}
-                  onChange={(e) => setSelectedAge(e.target.value)}
+                  onChange={(e) => {
+                    setSelectedAge(e.target.value)
+                    setStudent({ ...student, age: e.target.value });
+                  }}
                   select
                 >
                   <MenuItem value="">Select Age</MenuItem>
@@ -200,7 +215,11 @@ function StudentScreen() {
                   variant="outlined"
                   fullWidth
                   value={selectedPermitType}
-                  onChange={(e) => setSelectedPermitType(e.target.value)}
+                  onChange={(e) => {
+                    setSelectedPermitType(e.target.value)
+                    setStudent({ ...student, permitType: e.target.value });
+
+                  }}
                   disabled={!selectedAge}
                   select
                 >
@@ -221,7 +240,11 @@ function StudentScreen() {
                   variant="outlined"
                   fullWidth
                   value={selectedLicence}
-                  onChange={(e) => setSelectedLicence(e.target.value)}
+                  onChange={(e) => {
+                    setSelectedLicence(e.target.value);
+                    setStudent({ ...student, aeroplaneLicence: e.target.value });
+
+                  }}
                   select
                 >
                   <MenuItem value="">Select Aeroplane Licence</MenuItem>
@@ -284,7 +307,14 @@ function StudentScreen() {
 
             )}
 
-            tab3={(<Address address={student.address} handleInputChange={handleInputChange} />)}
+            tab3={(<Address address={{
+              "addressLine1": student.addressLine1,
+              "addressLine2": student.addressLine2,
+              "city": student.city,
+              "province": student.province,
+              "country": student.country,
+              "postalCode": student.postalCode
+            }} handleInputChange={handleInputChange} />)}
 
             tab4={(<History historyListData={historyListData} />)}
           />
