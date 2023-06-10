@@ -142,6 +142,7 @@ function StudentScreen() {
                     fullWidth
                     value={student.firstName}
                     onChange={handleInputChange}
+                    InputLabelProps={{ shrink: true }}
                   />
 
                   <TextField
@@ -151,6 +152,7 @@ function StudentScreen() {
                     fullWidth
                     value={student.middleName}
                     onChange={handleInputChange}
+                    InputLabelProps={{ shrink: true }}
                   />
 
                   <TextField
@@ -160,6 +162,7 @@ function StudentScreen() {
                     fullWidth
                     value={student.lastName}
                     onChange={handleInputChange}
+                    InputLabelProps={{ shrink: true }}
                   />
 
                   <TextField
@@ -169,6 +172,7 @@ function StudentScreen() {
                     fullWidth
                     value={student.email}
                     onChange={handleInputChange}
+                    InputLabelProps={{ shrink: true }}
                   />
                 </>
               </BoxView>
@@ -186,6 +190,7 @@ function StudentScreen() {
                     setStudent({ ...student, age: e.target.value });
                   }}
                   select
+                  InputLabelProps={{ shrink: true }}
                 >
                   <MenuItem value="">Select Age</MenuItem>
                   <MenuItem value={14} key={14}>
@@ -227,6 +232,7 @@ function StudentScreen() {
                   }}
                   disabled={!selectedAge}
                   select
+                  InputLabelProps={{ shrink: true }}
                 >
                   <MenuItem value="">Select Permit or Licence Type</MenuItem>
                   {filteredPermitTypes.map((permitType) => (
@@ -251,6 +257,7 @@ function StudentScreen() {
 
                   }}
                   select
+                  InputLabelProps={{ shrink: true }}
                 >
                   <MenuItem value="">Select Aeroplane Licence</MenuItem>
                   {aeroplaneLicenceOptions.map((licence) => (
@@ -267,6 +274,7 @@ function StudentScreen() {
                   fullWidth
                   value={student.medicalFitness}
                   onChange={handleInputChange}
+                  InputLabelProps={{ shrink: true }}
                 />
                 <TextField
                   label="Language Proficiency"
@@ -275,6 +283,7 @@ function StudentScreen() {
                   fullWidth
                   value={student.languageProficiency}
                   onChange={handleInputChange}
+                  InputLabelProps={{ shrink: true }}
                 />
                 <TextField
                   label="Ground School"
@@ -283,6 +292,7 @@ function StudentScreen() {
                   fullWidth
                   value={student.groundSchool}
                   onChange={handleInputChange}
+                  InputLabelProps={{ shrink: true }}
                 />
                 <TextField
                   label="Flight Training"
@@ -291,6 +301,7 @@ function StudentScreen() {
                   fullWidth
                   value={student.flightTraining}
                   onChange={handleInputChange}
+                  InputLabelProps={{ shrink: true }}
                 />
                 <TextField
                   label="Flight Test"
@@ -299,6 +310,7 @@ function StudentScreen() {
                   fullWidth
                   value={student.flightTest}
                   onChange={handleInputChange}
+                  InputLabelProps={{ shrink: true }}
                 />
                 <TextField
                   label="Transport Canada Written Exam"
@@ -307,6 +319,7 @@ function StudentScreen() {
                   fullWidth
                   value={student.writtenExam}
                   onChange={handleInputChange}
+                  InputLabelProps={{ shrink: true }}
                 />
               </BoxView>
 

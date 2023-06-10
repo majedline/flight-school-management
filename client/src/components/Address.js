@@ -14,6 +14,7 @@ function Address({ address, handleInputChange }) {
                 fullWidth
                 value={address.addressLine1}
                 onChange={handleInputChange}
+                InputLabelProps={{ shrink: true }}
             />
             <TextField
                 label="Address Line 2"
@@ -22,6 +23,7 @@ function Address({ address, handleInputChange }) {
                 fullWidth
                 value={address.addressLine2}
                 onChange={handleInputChange}
+                InputLabelProps={{ shrink: true }}
             />
             <TextField 
 
@@ -31,6 +33,7 @@ function Address({ address, handleInputChange }) {
                 fullWidth
                 value={address.city}
                 onChange={handleInputChange}
+                InputLabelProps={{ shrink: true }}
             />
             <TextField
                 label="Province/State"
@@ -39,6 +42,7 @@ function Address({ address, handleInputChange }) {
                 fullWidth
                 value={address.province}
                 onChange={handleInputChange}
+                InputLabelProps={{ shrink: true }}
             />
             <TextField
                 label="Country"
@@ -47,6 +51,7 @@ function Address({ address, handleInputChange }) {
                 fullWidth
                 value={address.country}
                 onChange={handleInputChange}
+                InputLabelProps={{ shrink: true }}
             />
             <TextField
                 label="Postal Code/Zip"
@@ -55,6 +60,7 @@ function Address({ address, handleInputChange }) {
                 fullWidth
                 value={address.postalCode}
                 onChange={handleInputChange}
+                InputLabelProps={{ shrink: true }}
             />
 
 

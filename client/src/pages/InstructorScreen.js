@@ -138,6 +138,7 @@ function InstructorScreen() {
                     fullWidth
                     value={instructor.firstName}
                     onChange={handleInputChange}
+                    InputLabelProps={{ shrink: true }}
                   />
 
                   <TextField
@@ -147,6 +148,7 @@ function InstructorScreen() {
                     fullWidth
                     value={instructor.middleName}
                     onChange={handleInputChange}
+                    InputLabelProps={{ shrink: true }}
                   />
 
                   <TextField
@@ -156,6 +158,7 @@ function InstructorScreen() {
                     fullWidth
                     value={instructor.lastName}
                     onChange={handleInputChange}
+                    InputLabelProps={{ shrink: true }}
                   />
 
                   <TextField
@@ -165,6 +168,7 @@ function InstructorScreen() {
                     fullWidth
                     value={instructor.email}
                     onChange={handleInputChange}
+                    InputLabelProps={{ shrink: true }}
                   />
                 </>
               </BoxView>
@@ -179,6 +183,8 @@ function InstructorScreen() {
                   variant="outlined"
                   fullWidth
                   value={selectedPermitType}
+                  InputLabelProps={{ shrink: true }}
+
                   onChange={(e) => {
                     setSelectedPermitType(e.target.value)
                     setInstructor({ ...instructor, permitType: e.target.value });
@@ -203,6 +209,8 @@ function InstructorScreen() {
                   variant="outlined"
                   fullWidth
                   value={selectedLicence}
+                  InputLabelProps={{ shrink: true }}
+
                   onChange={(e) => {
                     setSelectedLicence(e.target.value);
                     setInstructor({ ...instructor, aeroplaneLicence: e.target.value });
@@ -225,6 +233,7 @@ function InstructorScreen() {
                   fullWidth
                   value={instructor.medicalFitness}
                   onChange={handleInputChange}
+                  InputLabelProps={{ shrink: true }}
                 />
                 <TextField
                   label="Language Proficiency"
@@ -233,6 +242,7 @@ function InstructorScreen() {
                   fullWidth
                   value={instructor.languageProficiency}
                   onChange={handleInputChange}
+                  InputLabelProps={{ shrink: true }}
                 />
                 <TextField
                   label="Ground School"
@@ -241,6 +251,7 @@ function InstructorScreen() {
                   fullWidth
                   value={instructor.groundSchool}
                   onChange={handleInputChange}
+                  InputLabelProps={{ shrink: true }}
                 />
                 <TextField
                   label="Flight Training"
@@ -249,6 +260,7 @@ function InstructorScreen() {
                   fullWidth
                   value={instructor.flightTraining}
                   onChange={handleInputChange}
+                  InputLabelProps={{ shrink: true }}
                 />
                 <TextField
                   label="Flight Test"
@@ -257,6 +269,7 @@ function InstructorScreen() {
                   fullWidth
                   value={instructor.flightTest}
                   onChange={handleInputChange}
+                  InputLabelProps={{ shrink: true }}
                 />
                 <TextField
                   label="Transport Canada Written Exam"
@@ -265,6 +278,7 @@ function InstructorScreen() {
                   fullWidth
                   value={instructor.writtenExam}
                   onChange={handleInputChange}
+                  InputLabelProps={{ shrink: true }}
                 />
               </BoxView>
 
@@ -277,7 +291,8 @@ function InstructorScreen() {
               "province": instructor.province,
               "country": instructor.country,
               "postalCode": instructor.postalCode
-            }} handleInputChange={handleInputChange} />)}
+            }} handleInputChange={handleInputChange}
+              InputLabelProps={{ shrink: true }} />)}
 
             tab4={(<History historyListData={historyListData} />)}
           />

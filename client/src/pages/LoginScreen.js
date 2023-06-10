@@ -69,7 +69,6 @@ function LoginScreen() {
         Forgot password? <Link to="/reset-password">Reset Password</Link>
       </Typography>
       <Typography variant="body1" align="center" color={'#f00'}>
-        *** Site Under Developmet. Press Login to continue ***
       </Typography>
     </BoxView>
   );

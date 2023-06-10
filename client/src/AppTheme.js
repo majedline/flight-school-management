@@ -31,3 +31,12 @@ export const lightTheme = createTheme({
         mode: 'light',
     },
 });
+
+export const customTheme = createTheme({
+    palette: {
+      mode: 'light',
+      primary: {
+        main: '#345555', // Update the primary color to your preferred color
+      },
+    }
+  });

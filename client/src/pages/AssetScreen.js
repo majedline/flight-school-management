@@ -3,7 +3,7 @@ import { TextField, Button, Typography, Grid } from '@mui/material';
 import AirplaneTicket from '@mui/icons-material/AirplaneTicket';
 
 import BoxView from '../components/BoxView';
-import { useParams, useNavigate} from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import History from '../components/History';
 import BasicTabs from '../components/Tabs/BasicTabs';
 import AssetControlPanel from '../components/ControlPanels/AssetControlPanel';
@@ -95,6 +95,7 @@ function AssetScreen() {
                                         fullWidth
                                         value={asset.name}
                                         onChange={handleInputChange}
+                                        InputLabelProps={{ shrink: true }}
                                     />
                                     <TextField
                                         label="Type"
@@ -103,6 +104,7 @@ function AssetScreen() {
                                         fullWidth
                                         value={asset.type}
                                         onChange={handleInputChange}
+                                        InputLabelProps={{ shrink: true }}
                                     />
                                     <TextField
                                         label="Call Sign"
@@ -111,6 +113,7 @@ function AssetScreen() {
                                         fullWidth
                                         value={asset.callSign}
                                         onChange={handleInputChange}
+                                        InputLabelProps={{ shrink: true }}
                                     />
 
                                 </BoxView>
@@ -124,6 +127,7 @@ function AssetScreen() {
                                     fullWidth
                                     value={asset.registrationNumber}
                                     onChange={handleInputChange}
+                                    InputLabelProps={{ shrink: true }}
                                 />
                                 <TextField
                                     label="Flight School Designation"
@@ -132,6 +136,7 @@ function AssetScreen() {
                                     fullWidth
                                     value={asset.flightSchoolDesignation}
                                     onChange={handleInputChange}
+                                    InputLabelProps={{ shrink: true }}
                                 />
 
                             </BoxView>)}
@@ -143,6 +148,7 @@ function AssetScreen() {
                                     fullWidth
                                     value={asset.flightSchoolAerodrome}
                                     onChange={handleInputChange}
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             </BoxView>)}
                             tab4={(<History historyListData={historyListData} />)}

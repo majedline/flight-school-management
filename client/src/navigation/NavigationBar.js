@@ -18,7 +18,7 @@ function NavigationBar() {
         Sign Up
       </Button>
       <Button color="inherit" component={Link} to="/">
-        About
+        Overview
       </Button>
     </>
   );
@@ -123,7 +123,7 @@ function NavigationBar() {
                   <ListItemText primary="Sign Up" />
                 </ListItem>
                 <ListItem component={Link} to="/">
-                  <ListItemText primary="About" />
+                  <ListItemText primary="Overview" />
                 </ListItem>
               </>
             )}
