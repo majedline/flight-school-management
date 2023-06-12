@@ -9,6 +9,7 @@ import BasicTabs from '../components/Tabs/BasicTabs';
 import AssetControlPanel from '../components/ControlPanels/AssetControlPanel';
 import axios from 'axios';
 import api from '../util/api';
+import NotificationPopup from '../components/NotificationPopup';
 
 function AssetScreen() {
     const historyListData = [
@@ -54,10 +55,12 @@ function AssetScreen() {
         try {
             if (assetid) {
                 await axios.put(`${api.asset}${assetid}`, asset);
+                setOpen(true);
                 console.log('Asset data updated');
             } else {
                 const response = await axios.post(api.asset, asset);
                 const newAssetId = response.data.assetId;
+                setOpen(true);
                 console.log('New asset created with ID:', newAssetId);
             }
         } catch (error) {
@@ -75,12 +78,19 @@ function AssetScreen() {
     const handleTabChange = (event, newValue) => {
         console.log(newValue); // You can perform any additional logic based on the selected tab
     };
+  ///////////////////notfication////////////////////////////
+  const [open, setOpen] = useState(false);
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+  /////////////////////////////////////////////////////////
 
     return (
         <>
             <Grid container columnSpacing={2} >
 
+            <NotificationPopup open={open} handleClose={handleClose} />
 
                 <Grid item xs={12} md={8}>
                     <BoxView>

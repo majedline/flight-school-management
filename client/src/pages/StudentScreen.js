@@ -10,12 +10,14 @@ import BasicTabs from '../components/Tabs/BasicTabs';
 import PersonControlPanel from '../components/ControlPanels/PersonControlPanel';
 import axios from 'axios';
 import api from '../util/api';
+import NotificationPopup from '../components/NotificationPopup';
+import StudentStats from '../components/Stats/StudentStats';
 
 
 function StudentScreen() {
   const historyListData = [
     { id: 1, info: 'Created Account', date: '01/22/2023' },
-    { id: 2, info: 'Flight Lesson with Jack Jones', date: '01/25/2023' },
+    { id: 2, info: 'Flight Lesson with instructor Mary Jane', date: '01/25/2023' },
   ];
 
   const navigate = useNavigate();
@@ -51,6 +53,14 @@ function StudentScreen() {
 
   const { studentid } = useParams();
 
+  ///////////////////notfication////////////////////////////
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  /////////////////////////////////////////////////////////
+
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
@@ -82,11 +92,13 @@ function StudentScreen() {
       if (studentid) {
         // Editing an existing user
         await axios.post(`${api.student}${studentid}`, student);
+        setOpen(true);
         console.log('Student data updated');
       } else {
         // Creating a new user
         const results = await axios.post(api.student, student);
         console.log('New student created');
+        setOpen(true);
         navigate(`/student/${results.data.student.idStudent}`);
 
       }
@@ -127,6 +139,7 @@ function StudentScreen() {
       <Grid item xs={12} md={8}>
 
         <BoxView>
+        <NotificationPopup open={open} handleClose={handleClose} />
 
           <BasicTabs
 
@@ -335,6 +348,9 @@ function StudentScreen() {
             }} handleInputChange={handleInputChange} />)}
 
             tab4={(<History historyListData={historyListData} />)}
+
+            tab5={<StudentStats></StudentStats>}
+
           />
 
           {/* Save button */}

@@ -17,7 +17,7 @@ function a11yProps(index) {
     };
 }
 
-export default function BasicTabs({ title, tab1, tab2, tab3, tab4 }) {
+export default function BasicTabs({ title, tab1, tab2, tab3, tab4, tab5 }) {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -43,6 +43,7 @@ export default function BasicTabs({ title, tab1, tab2, tab3, tab4 }) {
                     {(tab2) ? <Tab label="Details" {...a11yProps(1)} /> : ""}
                     {(tab3) ? <Tab label="Address" {...a11yProps(2)} /> : ""}
                     {(tab4) ? <Tab label="History" {...a11yProps(3)} /> : ""}
+                    {(tab5) ? <Tab label="Stats" {...a11yProps(4)} /> : ""}
                 </Tabs>
             </Box>
 
@@ -50,6 +51,8 @@ export default function BasicTabs({ title, tab1, tab2, tab3, tab4 }) {
             {(tab2) ? (<TabPanel value={value} index={1}> {tab2}</TabPanel>) : ("")}
             {(tab3) ? (<TabPanel value={value} index={2}> {tab3}</TabPanel>) : ("")}
             {(tab4) ? (<TabPanel value={value} index={3}> {tab4}</TabPanel>) : ("")}
+            {(tab5) ? (<TabPanel value={value} index={4}> {tab5}</TabPanel>) : ("")}
+
 
         </Box>
     );

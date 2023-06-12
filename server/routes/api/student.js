@@ -11,6 +11,8 @@ router.get('/students', studentController.searchStudents);
 // GET all active students sorted by creation date
 router.get('/active-students', studentController.getActiveStudents);
 
+router.get('/quick-search', studentController.quickSearchStudents);
+
 // GET a student by ID
 router.get('/:id', studentController.getStudent);
 

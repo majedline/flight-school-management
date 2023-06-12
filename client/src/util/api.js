@@ -16,6 +16,7 @@ exports.upload = base + '/api/blob/upload';
 
 exports.activeStudents = base+ '/api/student/active-students'
 exports.student = base+ '/api/student/'
+exports.studentQuickSearch = base + '/api/student/quick-search'
 
 exports.activeInstructors = base+ '/api/instructor/active-instructors'
 exports.instructor = base+ '/api/instructor/'

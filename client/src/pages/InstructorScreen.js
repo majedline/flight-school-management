@@ -10,12 +10,14 @@ import BasicTabs from '../components/Tabs/BasicTabs';
 import PersonControlPanel from '../components/ControlPanels/PersonControlPanel';
 import axios from 'axios';
 import api from '../util/api';
+import NotificationPopup from '../components/NotificationPopup';
+import InstructorStats from '../components/Stats/InstructorStats';
 
 
 function InstructorScreen() {
   const historyListData = [
     { id: 1, info: 'Created Account', date: '01/22/2023' },
-    { id: 2, info: 'Flight Lesson with Jack Jones', date: '01/25/2023' },
+    { id: 2, info: 'Flight Lesson with Student Jack Jones', date: '01/25/2023' },
   ];
 
   const navigate = useNavigate();
@@ -78,11 +80,13 @@ function InstructorScreen() {
       if (instructorid) {
         // Editing an existing user
         await axios.post(`${api.instructor}${instructorid}`, instructor);
+        setOpen(true);
         console.log('Instructor data updated');
       } else {
         // Creating a new user
         const results = await axios.post(api.instructor, instructor);
         console.log('New instructor created');
+        setOpen(true);
         navigate(`/instructor/${results.data.instructor.idInstructor}`);
 
       }
@@ -116,11 +120,19 @@ function InstructorScreen() {
     console.log(newValue); // You can perform any additional logic based on the selected tab
   };
 
+    ///////////////////notfication////////////////////////////
+    const [open, setOpen] = useState(false);
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+    /////////////////////////////////////////////////////////
 
   return (
     <Grid container columnSpacing={2}>
 
       <Grid item xs={12} md={8}>
+      <NotificationPopup open={open} handleClose={handleClose} />
 
         <BoxView>
 
@@ -295,6 +307,8 @@ function InstructorScreen() {
               InputLabelProps={{ shrink: true }} />)}
 
             tab4={(<History historyListData={historyListData} />)}
+            
+            tab5={<InstructorStats></InstructorStats>}
           />
 
           {/* Save button */}

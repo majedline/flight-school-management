@@ -12,7 +12,7 @@ const CalendarPage = () => {
         { date: new Date().setDate(5), data: 'KWO Lesson', details: "Student John Rud with instructor Steve Jinkens" },
         { date: new Date().setDate(10), data: 'KWM Tour', details: "Steve Jinkens taking Alex Smith on tour" },
         { date: new Date().setDate(15), data: 'KWO Maintenance', details: "KWO Scheduled Maintenance" },
-        { date: new Date().setDate(15), data: 'KWM Lesson', details: "Student John Rud with instructor Steve Jinkens" },
+        { date: new Date().setDate(18), data: 'KWM Lesson', details: "Student John Rud with instructor Steve Jinkens" },
         { date: new Date().setDate(50), data: 'KWM Lesson', details: "Student John Rud with instructor Steve Jinkens" },
     ];
 
@@ -44,7 +44,7 @@ const CalendarPage = () => {
     return (
         <BoxView>
             <Typography variant="h4" component="h1" align="center" gutterBottom>
-                Calendar Page
+                Calendar Page                
             </Typography>
 
             <Grid container spacing={2} alignItems="center">

@@ -156,15 +156,19 @@ const getStudent = async (req, res) => {
 const searchStudents = async (req, res) => {
   try {
     // Extract search parameters from request query
-    const { name, email, active } = req.query;
+    const { firstName, lastName, email, active } = req.query;
 
     // Prepare search conditions
     const searchConditions = {
       where: {},
     };
 
-    if (name) {
-      searchConditions.where.firstName = { [db.Sequelize.Op.like]: `%${name}%` };
+    if (firstName) {
+      searchConditions.where.firstName = { [db.Sequelize.Op.like]: `%${firstName}%` };
+    }
+
+    if (lastName) {
+      searchConditions.where.lastName = { [db.Sequelize.Op.like]: `%${lastName}%` };
     }
 
     if (email) {
@@ -199,6 +203,39 @@ const getActiveStudents = async (req, res) => {
   }
 };
 
+const quickSearchStudents = async (req, res) => {
+  const { name } = req.query;
+  const [firstName, lastName] = name.split(' ');
+
+  try {
+    let students;
+    if (firstName && lastName) {
+      // Search for firstName in the firstName field and lastName in the lastName field
+      students = await db.student.findAll({
+        firstName: { $regex: firstName, $options: 'i' },
+        lastName: { $regex: lastName, $options: 'i' },
+      });
+    } else {
+      // Search for name in the firstName or lastName field
+      students = await db.student.findAll({
+        $or: [
+          { firstName: { $regex: name, $options: 'i' } },
+          { lastName: { $regex: name, $options: 'i' } },
+        ],
+      });
+    }
+
+    students = students.slice(0, 25); // Limit the search to top 25 results
+    res.json(students);
+  } catch (error) {
+    console.error('Error searching students:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
+
+
 
 module.exports = {
   createStudent,
@@ -206,5 +243,6 @@ module.exports = {
   setStudentActiveStatus,
   getStudent,
   searchStudents,
-  getActiveStudents
+  getActiveStudents,
+  quickSearchStudents
 };

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Typography, Grid, Paper, Button, Modal, Box } from '@mui/material';
+import { Typography, Grid, Paper, Button, Modal, Box, Switch, FormControlLabel } from '@mui/material';
+import CalendarPage from './CalendarPage';
 
 function CalendarScreen() {
   // Get the current date
@@ -8,13 +9,14 @@ function CalendarScreen() {
   // State for storing the selected month and year
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [calendarView, setCalendarView] = useState(true);
 
   // Sample data array
   const sampleData = [
     { date: new Date().setDate(5), data: 'KWO Lesson', details: "Student John Rud with instructor Steve Jinkens" },
     { date: new Date().setDate(10), data: 'KWM Tour', details: "Steve Jinkens taking Alex Smith on tour" },
     { date: new Date().setDate(15), data: 'KWO Maintenance', details: "KWO Scheduled Maintenance" },
-    { date: new Date().setDate(15), data: 'KWM Lesson', details: "Student John Rud with instructor Steve Jinkens" },
+    { date: new Date().setDate(16), data: 'KWM Lesson', details: "Student John Rud with instructor Steve Jinkens" },
     { date: new Date().setDate(50), data: 'KWM Lesson', details: "Student John Rud with instructor Steve Jinkens" },
   ];
 
@@ -84,7 +86,9 @@ function CalendarScreen() {
     setSelectedEvent(null);
   };
 
-  return (
+
+  const calendarViewUI = (<>
+
     <Grid container justifyContent="flex-start" spacing={2} >
       <Grid item xs={12}>
         <Typography variant="h4" component="h1" align="center" gutterBottom>
@@ -189,6 +193,31 @@ function CalendarScreen() {
         </Paper>
       </Modal>
     </Grid>
+
+  </>);
+  const listViewUI = (<>
+    <CalendarPage></CalendarPage>
+    <Grid item xs={12} container justifyContent="center" style={{ margin: '5px' }}>
+        <Button variant="contained" onClick={handlePreviousMonth} style={{ margin: '5px' }}>
+          Previous
+        </Button>
+        <Button variant="contained" onClick={handleNextMonth} style={{ margin: '5px' }}>
+          Next
+        </Button>
+      </Grid>
+  </>);
+
+
+
+  return (
+    <>
+      <Grid container justifyContent="flex-start" spacing={2} >
+        <FormControlLabel control={<Switch defaultChecked onClick={() => { setCalendarView(!calendarView) }} />} label="Calendar View" />
+      </Grid>
+      {(calendarView) ? calendarViewUI : listViewUI}
+
+    </>
+
   );
 }
 
