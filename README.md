@@ -108,6 +108,6 @@ DB_NAME=your_mysql_database_name
 
 <h2>Contact</h2>
 
-<p>For further information or inquiries, please contact our team at <code>info@admcan.com</code>.</p>
+<p>For further information or inquiries, please contact our team at <code>admin@admcan.com</code>.</p>
 
 <p>Website: <a href="#">coming soon...</a></p>
