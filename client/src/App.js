@@ -18,6 +18,7 @@ import FooterBar from './navigation/FooterBar';
 import HomeIntro from './pages/HomeIntro';
 import InstructorListScreen from './pages/InstructorListScreen';
 import InstructorScreen from './pages/InstructorScreen';
+import PTRScreen from './pages/PTRScreen';
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
           <Route path="/students" element={<StudentListScreen />} />
           <Route path="/student" element={<StudentScreen />} />
           <Route path="/student/:studentid" element={<StudentScreen />} />
+          <Route path="/ptr" element={<PTRScreen />} />
 
           <Route path="/instructors" element={<InstructorListScreen />} />
           <Route path="/instructor" element={<InstructorScreen />} />

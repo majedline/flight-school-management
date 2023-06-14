@@ -19,6 +19,9 @@ function FooterBar() {
             <Typography variant="body2" color="textSecondary">
                 Flight School Management &copy; {new Date().getFullYear()}
             </Typography>
+            <Typography variant="caption" color="textSecondary">
+                 (Demo Version 0.1.5)
+            </Typography>
         </footer>
     );
 }
