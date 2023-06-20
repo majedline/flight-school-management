@@ -8,6 +8,9 @@ module.exports = (sequelize, Sequelize) => {
     firstName: {
       type: Sequelize.STRING(45),
     },
+    middleName: {
+      type: Sequelize.STRING(45),
+    },
     lastName: {
       type: Sequelize.STRING(45),
     },

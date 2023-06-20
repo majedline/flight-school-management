@@ -6,6 +6,7 @@ const createStudent = async (req, res) => {
     // Extract student data from request body
     const {
       firstName,
+      middleName,
       lastName,
       age,
       email,
@@ -23,6 +24,7 @@ const createStudent = async (req, res) => {
     // Create the student in the database
     const newStudent = await db.student.create({
       firstName,
+      middleName,
       lastName,
       email,
       age,
@@ -56,6 +58,7 @@ const editStudent = async (req, res) => {
     const { id } = req.params;
     const {
       firstName,
+      middleName,
       lastName,
       age,
       email,
@@ -79,6 +82,7 @@ const editStudent = async (req, res) => {
 
     // Update the student's data
     student.firstName = firstName;
+    student.middleName = middleName;
     student.lastName = lastName;
     student.email = email;
     student.age = age;

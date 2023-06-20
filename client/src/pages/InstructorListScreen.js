@@ -32,11 +32,12 @@ function InstructorListScreen() {
   };
 
   const filteredInstructors = instructors.filter((instructor) => {
-    const instructorName = instructor.name || ''; // Set an empty string if instructor.name is undefined
+    const instructorFirstName = instructor.firstName || ''; 
+    const instructorLastName = instructor.lastName || ''; 
     const instructorId = String(instructor.id).toLowerCase();
     const filter = filterText.toLowerCase();
 
-    return instructorName.toLowerCase().includes(filter) || instructorId.includes(filter);
+    return instructorFirstName.toLowerCase().includes(filter) || instructorLastName.toLowerCase().includes(filter) || instructorId.includes(filter);
   });
 
   return (
@@ -77,7 +78,7 @@ function InstructorListScreen() {
                 onClick={() => handleInstructorClick(instructor.idInstructor)}
               >
                 <TableCell align="center">{instructor.idInstructor}</TableCell>
-                <TableCell align="center">{instructor.firstName+" "+instructor.lastName}</TableCell>
+                <TableCell align="center">{instructor.firstName + " " + instructor.lastName}</TableCell>
               </TableRow>
             ))}
           </TableBody>

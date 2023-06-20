@@ -6,6 +6,7 @@ const createInstructor = async (req, res) => {
     // Extract instructor data from request body
     const {
       firstName,
+      middleName,
       lastName,
       email,
       address,
@@ -22,6 +23,7 @@ const createInstructor = async (req, res) => {
     // Create the instructor in the database
     const newInstructor = await db.instructor.create({
       firstName,
+      middleName,
       lastName,
       email,
       addressLine1: ((address) ? address.addressLine1 : null),
@@ -54,6 +56,7 @@ const editInstructor = async (req, res) => {
     const { id } = req.params;
     const {
       firstName,
+      middleName,
       lastName,
       email,
       address,
@@ -76,6 +79,7 @@ const editInstructor = async (req, res) => {
 
     // Update the instructor's data
     instructor.firstName = firstName;
+    instructor.middleName = middleName;
     instructor.lastName = lastName;
     instructor.email = email;
     instructor.addressLine1 = ((address) ? address.addressLine1 : null);

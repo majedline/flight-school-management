@@ -23,7 +23,9 @@ function InstructorScreen() {
   const navigate = useNavigate();
 
   const initialInstructorData = {
-    name: '',
+    firstName: '',
+    middleName:'',
+    lastName:'',
     email: '',
     addressLine1: '',
     addressLine2: '',
@@ -96,8 +98,32 @@ function InstructorScreen() {
     }
   };
 
-  const handleCreateUserAccountClick = () => {
+  const handleCreateUserAccountClick = async () => {
     console.log('instructor handleCreateUserAccountClick', instructor);
+
+    try {
+      const response = await axios.post(api.register, {
+        firstName: instructor.firstName,
+        lastName: instructor.lastName,
+        email: instructor.email,
+        password: "test123",
+        confirmPassword: "test123",
+        phone: ((instructor.phone) ? instructor.phone : null),
+        userType: "instructor",
+        disclaimerSigned: true
+      });
+
+      // Handle success response here
+      console.log(response.data);
+      alert(`account created for instructor ${instructor.firstName} ${instructor.lastName} with password 'test123'`);
+
+
+    } catch (error) {
+      // Handle error here
+      console.error(error);
+      alert(error.response.data.error[0].msg);
+    }
+
   };
 
   const handleInputChange = (e) => {
@@ -120,19 +146,19 @@ function InstructorScreen() {
     console.log(newValue); // You can perform any additional logic based on the selected tab
   };
 
-    ///////////////////notfication////////////////////////////
-    const [open, setOpen] = useState(false);
+  ///////////////////notfication////////////////////////////
+  const [open, setOpen] = useState(false);
 
-    const handleClose = () => {
-      setOpen(false);
-    };
-    /////////////////////////////////////////////////////////
+  const handleClose = () => {
+    setOpen(false);
+  };
+  /////////////////////////////////////////////////////////
 
   return (
     <Grid container columnSpacing={2}>
 
       <Grid item xs={12} md={8}>
-      <NotificationPopup open={open} handleClose={handleClose} />
+        <NotificationPopup open={open} handleClose={handleClose} />
 
         <BoxView>
 
@@ -307,7 +333,7 @@ function InstructorScreen() {
               InputLabelProps={{ shrink: true }} />)}
 
             tab4={(<History historyListData={historyListData} />)}
-            
+
             tab5={<InstructorStats></InstructorStats>}
           />
 

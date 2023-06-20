@@ -33,7 +33,9 @@ function App() {
           <Route path="/home" element={<HomeIntro />} />
 
           <Route path="/login" element={<LoginScreen />} />
-          <Route path="/signup" element={<SignupScreen />} />
+          <Route path="/signup" element={<SignupScreen type="student" />} />
+          <Route path="/instructor-signup" element={<SignupScreen type="instructor" />} />
+
           <Route path="/reset-password" element={<ResetPasswordScreen />} />
 
           <Route path="/students" element={<StudentListScreen />} />

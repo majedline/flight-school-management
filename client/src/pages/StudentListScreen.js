@@ -32,11 +32,13 @@ function StudentListScreen() {
   };
 
   const filteredStudents = students.filter((student) => {
-    const studentName = student.name || ''; // Set an empty string if student.name is undefined
+    console.log("student", student);
+    const studentFirstName = student.firstNamename || ''; // Set an empty string if student.name is undefined
+    const studentLastName = student.lastName || ''; // Set an empty string if student.name is undefined
     const studentId = String(student.id).toLowerCase();
     const filter = filterText.toLowerCase();
 
-    return studentName.toLowerCase().includes(filter) || studentId.includes(filter);
+    return studentFirstName.toLowerCase().includes(filter) || studentLastName.toLowerCase().includes(filter) || studentId.includes(filter);
   });
 
   return (
