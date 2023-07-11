@@ -1,7 +1,11 @@
 import React from 'react';
 import { Typography } from '@mui/material';
+import LanguageSwitcher from '../components/LanguageSwitcher/LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 
 function FooterBar() {
+    const { t } = useTranslation();
+
 
     return (
         <footer
@@ -22,6 +26,8 @@ function FooterBar() {
             <Typography variant="caption" color="textSecondary">
                  (Demo Version 0.1.5)
             </Typography>
+            <LanguageSwitcher></LanguageSwitcher>
+
         </footer>
     );
 }

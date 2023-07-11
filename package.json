@@ -38,6 +38,7 @@
     "react-google-recaptcha": "^2.1.0",
     "react-toastify": "^9.0.3",
     "sequelize": "^6.32.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "winston": "^3.10.0"
   }
 }

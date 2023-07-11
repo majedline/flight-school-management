@@ -24,5 +24,9 @@ exports.instructor = base+ '/api/instructor/'
 exports.activeAssets = base+ '/api/asset/active-assets'
 exports.asset = base+ '/api/asset/'
 
+exports.getFiles = base+ '/api/blob/'
+exports.uploadFile = base+ '/api/blob/upload-blob/'
+
+
 /* ************************** TO BE IMPLEMENTED ON SERVER ************************** */
 exports.emailToResetPassword = base + '/api/email-to-password-reset';

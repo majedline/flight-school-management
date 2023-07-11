@@ -5,20 +5,23 @@ import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem
 import FlightIcon from '@mui/icons-material/Flight';
 import MenuIcon from '@mui/icons-material/Menu';
 
+import { useTranslation } from 'react-i18next';
+
 function NavigationBar() {
   const { appState, setAppState } = useContext(AppContext);
   const { user, settings } = appState;
+  const { t } = useTranslation();
 
   const loggedOutView = (
     <>
       <Button color="inherit" component={Link} to="/login">
-        Login
+        {t('nav_login')}
       </Button>
       <Button color="inherit" component={Link} to="/signup">
-        Sign Up
+        {t('nav_signup')}
       </Button>
       <Button color="inherit" component={Link} to="/">
-        Overview
+        {t('nav_overview')}
       </Button>
     </>
   );
@@ -45,6 +48,9 @@ function NavigationBar() {
       </Button> */}
       <Button color="inherit" component={Link} to="/my-profile">
         My Profile
+      </Button>
+      <Button color="inherit" component={Link} to="/test">
+        Test
       </Button>
     </>
   );
@@ -89,7 +95,7 @@ function NavigationBar() {
           >
             <FlightIcon fontSize="small" /> FSM Flight School Management
           </Typography>
-          
+
 
           {!isMobileView && (
             <>{(user) ? loggedInView : loggedOutView}</>
@@ -119,6 +125,9 @@ function NavigationBar() {
                 </ListItem> */}
                 <ListItem component={Link} to="/my-profile">
                   <ListItemText primary="My Profile" />
+                </ListItem>
+                <ListItem component={Link} to="/test">
+                  <ListItemText primary="Test" />
                 </ListItem>
               </>
             ) : (

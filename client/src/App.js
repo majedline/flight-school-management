@@ -19,6 +19,7 @@ import HomeIntro from './pages/HomeIntro';
 import InstructorListScreen from './pages/InstructorListScreen';
 import InstructorScreen from './pages/InstructorScreen';
 import PTRScreen from './pages/PTRScreen';
+import Test from './Test/Test';
 
 function App() {
 
@@ -59,6 +60,9 @@ function App() {
 
 
           <Route path="/my-profile" element={<ProfileScreen />} />
+
+          <Route path="/test" element={<Test></Test>} />
+
 
           <Route path="*" element={<PageNotFoundScreen />} />
         </Routes>

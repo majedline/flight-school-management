@@ -33,7 +33,7 @@ function StudentListScreen() {
 
   const filteredStudents = students.filter((student) => {
     console.log("student", student);
-    const studentFirstName = student.firstNamename || ''; // Set an empty string if student.name is undefined
+    const studentFirstName = student.firstName || ''; // Set an empty string if student.name is undefined
     const studentLastName = student.lastName || ''; // Set an empty string if student.name is undefined
     const studentId = String(student.id).toLowerCase();
     const filter = filterText.toLowerCase();

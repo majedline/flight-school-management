@@ -25,7 +25,7 @@ function SignupScreen(type) {
         password,
         confirmPassword,
         phone,
-        userType: type,
+        userType: String(type),
         disclaimerSigned: true
       });
 
