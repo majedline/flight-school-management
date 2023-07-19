@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { AppContext } from '../AppContext';
+import emailValidator from 'email-validator'
 
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, TextField, Typography, Box } from '@mui/material';
+import { Button, TextField, Typography, FormHelperText } from '@mui/material';
 import BoxView from '../components/BoxView';
 
 import axios from 'axios';
@@ -11,13 +12,15 @@ import api from '../util/api';
 
 function LoginScreen() {
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const [errorMsg, setErrorMsg] = useState("");
 
   const navigate = useNavigate();
 
   const { appState, setAppState } = useContext(AppContext);
+
+
 
   // Update the appState using setAppState
   const updateGlobalUser = (newUser) => {
@@ -29,6 +32,11 @@ function LoginScreen() {
 
   const handleLogin = () => {
     // Handle login logic here
+
+    if (!checkEmailAndPasswordAreValid()){
+      return;
+    }
+
     axios
       .post(api.login, {
         email,
@@ -49,8 +57,29 @@ function LoginScreen() {
       }).catch(err => {
         setErrorMsg(err.response.data.error)
       })
-
   };
+
+  const checkEmailAndPasswordAreValid = () => {
+    if (email && password) {
+      let isEmailValid = false;
+      let isPasswordValid = false;
+
+      if (!emailValidator.validate(email)) {
+        setErrorMsg("The email format is invlaid.");
+      } else {
+        isEmailValid = true;
+      }
+
+      if (password.length <= 2) {
+        setErrorMsg("The password is too small.");
+      } else {
+        isPasswordValid = true;
+      }
+      return (isEmailValid && isPasswordValid);
+    }
+    setErrorMsg("Please enter the email and password to sign in");
+    return false;
+  }
 
   return (
     <BoxView>
@@ -62,13 +91,15 @@ function LoginScreen() {
       <Button variant="contained" fullWidth onClick={handleLogin}>
         Login
       </Button>
+
       <Typography variant="body2" align="center">
         Don't have an account? <Link to="/signup">Sign up</Link>
       </Typography>
       <Typography variant="body2" align="center">
         Forgot password? <Link to="/reset-password">Reset Password</Link>
       </Typography>
-      <Typography variant="body1" align="center" color={'#f00'}>
+      <Typography variant="body2" align="center">
+        <FormHelperText error={true}>{errorMsg}</FormHelperText>
       </Typography>
     </BoxView>
   );

@@ -19,3 +19,4 @@ router.post('/', authMiddleware, updatePasswordCheckMiddlware, [
 
 module.exports = router;
 
+ 
