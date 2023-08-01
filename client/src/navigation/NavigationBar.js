@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../AppContext';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText, useMediaQuery, useTheme } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText, useMediaQuery, useTheme, Avatar } from '@mui/material';
 import FlightIcon from '@mui/icons-material/Flight';
 import MenuIcon from '@mui/icons-material/Menu';
+import { getNameInitials } from '../util/helper';
 
 import { useTranslation } from 'react-i18next';
 
@@ -11,6 +12,7 @@ function NavigationBar() {
   const { appState, setAppState } = useContext(AppContext);
   const { user, settings } = appState;
   const { t } = useTranslation();
+  console.log("appState", appState.user);
 
   const loggedOutView = (
     <>
@@ -47,7 +49,11 @@ function NavigationBar() {
         My PTR
       </Button> */}
       <Button color="inherit" component={Link} to="/my-profile">
-        My Profile
+        <Avatar >{
+          (appState && appState.user) ?
+            getNameInitials(appState.user.firstName, appState.user.lastName) :
+            "FSM"
+        }</Avatar>
       </Button>
       <Button color="inherit" component={Link} to="/test">
         Test
@@ -124,7 +130,7 @@ function NavigationBar() {
                   <ListItemText primary="My PTR" />
                 </ListItem> */}
                 <ListItem component={Link} to="/my-profile">
-                  <ListItemText primary="My Profile" />
+                  <ListItemText primary="Profile" />
                 </ListItem>
                 <ListItem component={Link} to="/test">
                   <ListItemText primary="Test" />

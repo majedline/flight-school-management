@@ -21,7 +21,7 @@ function BoxView({ children, size }) {
                 marginBottom: 2,
                 boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                 borderRadius: 8,
-                backgroundColor: '#eee',
+                backgroundColor: '#ddd', //eee
             }}
         >
             {children}

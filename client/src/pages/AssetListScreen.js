@@ -14,7 +14,6 @@ function AssetListScreen() {
     const fetchAssets = async () => {
       try {
         const response = await axios.get(api.activeAssets);
-        console.log(response.data);
         setAssets(response.data.assets);
       } catch (error) {
         console.error('Failed to fetch assets:', error.message);
@@ -74,13 +73,13 @@ function AssetListScreen() {
           <TableBody>
             {filteredAssets.map((asset) => (
               <TableRow
-                key={asset.idasset}
+                key={asset.assetID}
                 component={Link}
-                to={`/asset/${asset.idasset}`}
+                to={`/asset/${asset.assetID}`}
                 style={{ textDecoration: 'none' }}
-                onClick={() => handleAssetClick(asset.idasset)}
+                onClick={() => handleAssetClick(asset.assetID)}
               >
-                <TableCell align="center">{asset.idasset}</TableCell>
+                <TableCell align="center">{asset.assetID}</TableCell>
                 <TableCell align="center">{asset.type}</TableCell>
                 <TableCell align="center">{asset.callSign}</TableCell>
               </TableRow>

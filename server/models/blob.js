@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const Blob = sequelize.define("blob", {
-        id: {
+        blobID: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,

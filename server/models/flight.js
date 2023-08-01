@@ -1,19 +1,19 @@
 module.exports = (sequelize, Sequelize) => {
     const Flight = sequelize.define("flight", {
-        id: {
+        flightID: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
-        studentId: {
+        studentID: {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
-        instructorId: {
+        instructorID: {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
-        assetId: {
+        assetID: {
             type: Sequelize.INTEGER,
             allowNull: false,
         },

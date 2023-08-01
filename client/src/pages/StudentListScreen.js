@@ -32,7 +32,6 @@ function StudentListScreen() {
   };
 
   const filteredStudents = students.filter((student) => {
-    console.log("student", student);
     const studentFirstName = student.firstName || ''; // Set an empty string if student.name is undefined
     const studentLastName = student.lastName || ''; // Set an empty string if student.name is undefined
     const studentId = String(student.id).toLowerCase();
@@ -72,13 +71,13 @@ function StudentListScreen() {
           <TableBody>
             {filteredStudents.map((student) => (
               <TableRow
-                key={student.idStudent}
+                key={student.studentID}
                 component={Link}
-                to={`/student/${student.idStudent}`}
+                to={`/student/${student.studentID}`}
                 style={{ textDecoration: 'none' }}
-                onClick={() => handleStudentClick(student.idStudent)}
+                onClick={() => handleStudentClick(student.studentID)}
               >
-                <TableCell align="center">{student.idStudent}</TableCell>
+                <TableCell align="center">{student.studentID}</TableCell>
                 <TableCell align="center">{student.firstName+" "+student.lastName}</TableCell>
               </TableRow>
             ))}

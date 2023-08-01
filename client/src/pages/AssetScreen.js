@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Grid } from '@mui/material';
-import AirplaneTicket from '@mui/icons-material/AirplaneTicket';
-
 import BoxView from '../components/BoxView';
 import { useParams, useNavigate } from 'react-router-dom';
 import History from '../components/History';
@@ -54,7 +52,7 @@ function AssetScreen() {
     const handleSaveClick = async () => {
         try {
             if (assetid) {
-                await axios.put(`${api.asset}${assetid}`, asset);
+                await axios.post(`${api.asset}${assetid}`, asset);
                 setOpen(true);
                 console.log('Asset data updated');
             } else {
@@ -92,10 +90,11 @@ function AssetScreen() {
 
             <NotificationPopup open={open} handleClose={handleClose} />
 
+
                 <Grid item xs={12} md={8}>
                     <BoxView>
                         <BasicTabs
-                            title={isEditingMode ? 'Edit Plane' : 'Create Plane'}
+                            title={isEditingMode ? `Asset: ${asset.callSign}`  : 'Create Plane'}
                             tab1={(
                                 <BoxView>
                                     <TextField

@@ -9,7 +9,12 @@ const createInstructor = async (req, res) => {
       middleName,
       lastName,
       email,
-      address,
+      addressLine1,
+      addressLine2,
+      city,
+      province,
+      country,
+      postalCode,
       medicalFitness,
       languageProficiency,
       groundSchool,
@@ -26,12 +31,12 @@ const createInstructor = async (req, res) => {
       middleName,
       lastName,
       email,
-      addressLine1: ((address) ? address.addressLine1 : null),
-      addressLine2: ((address) ? address.addressLine2 : null),
-      city: ((address) ? address.city : null),
-      province: ((address) ? address.province : null),
-      country: ((address) ? address.country : null),
-      postalCode: ((address) ? address.postalCode : null),
+      addressLine1,
+      addressLine2,
+      city,
+      province,
+      country,
+      postalCode,
       medicalFitness,
       languageProficiency,
       groundSchool,
@@ -59,7 +64,12 @@ const editInstructor = async (req, res) => {
       middleName,
       lastName,
       email,
-      address,
+      addressLine1,
+      addressLine2,
+      city,
+      province,
+      country,
+      postalCode,
       medicalFitness,
       languageProficiency,
       groundSchool,
@@ -82,12 +92,12 @@ const editInstructor = async (req, res) => {
     instructor.middleName = middleName;
     instructor.lastName = lastName;
     instructor.email = email;
-    instructor.addressLine1 = ((address) ? address.addressLine1 : null);
-    instructor.addressLine2 = ((address) ? address.addressLine2 : null);
-    instructor.city = ((address) ? address.city : null);
-    instructor.province = ((address) ? address.province : null);
-    instructor.country = ((address) ? address.country : null);
-    instructor.postalCode = ((address) ? address.postalCode : null);
+    instructor.addressLine1 = addressLine1;
+    instructor.addressLine2 = addressLine2;
+    instructor.city = city;
+    instructor.province = province;
+    instructor.country = country
+    instructor.postalCode = postalCode;
     instructor.medicalFitness = medicalFitness;
     instructor.languageProficiency = languageProficiency;
     instructor.groundSchool = groundSchool;

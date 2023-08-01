@@ -56,7 +56,6 @@ function InstructorScreen() {
     const fetchInstructorData = async () => {
       try {
         const response = await axios.get(`${api.instructor}${instructorid}`);
-        console.log(response);
         const instructorData = response.data.instructor;
         setInstructor(instructorData);
         setIsEditingMode(true);
@@ -127,19 +126,7 @@ function InstructorScreen() {
   };
 
   const handleInputChange = (e) => {
-    if (e.target.name === "addressLine1" ||
-      e.target.name === "addressLine2" ||
-      e.target.name === "city" ||
-      e.target.name === "province" ||
-      e.target.name === "country" ||
-      e.target.name === "postalCode"
-    ) {
-      let addr = instructor.address;
-      addr[e.target.name] = e.target.value
-      setInstructor({ ...instructor, address: addr });
-    }
-
-    setInstructor({ ...instructor, [e.target.name]: e.target.value });
+     setInstructor({ ...instructor, [e.target.name]: e.target.value });
   };
 
   const handleTabChange = (event, newValue) => {
@@ -164,7 +151,7 @@ function InstructorScreen() {
 
           <BasicTabs
 
-            title={(isEditingMode) ? 'Edit Instructor ' : 'Create Instructor'}
+            title={(isEditingMode) ? `Instructor: ${instructor.firstName} ${instructor.lastName}`: 'Create Instructor'}
 
             tab1={(
               <BoxView>

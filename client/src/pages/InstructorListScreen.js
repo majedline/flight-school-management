@@ -71,13 +71,13 @@ function InstructorListScreen() {
           <TableBody>
             {filteredInstructors.map((instructor) => (
               <TableRow
-                key={instructor.idInstructor}
+                key={instructor.instructorID}
                 component={Link}
-                to={`/instructor/${instructor.idInstructor}`}
+                to={`/instructor/${instructor.instructorID}`}
                 style={{ textDecoration: 'none' }}
-                onClick={() => handleInstructorClick(instructor.idInstructor)}
+                onClick={() => handleInstructorClick(instructor.instructorID)}
               >
-                <TableCell align="center">{instructor.idInstructor}</TableCell>
+                <TableCell align="center">{instructor.instructorID}</TableCell>
                 <TableCell align="center">{instructor.firstName + " " + instructor.lastName}</TableCell>
               </TableRow>
             ))}

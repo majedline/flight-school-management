@@ -15,6 +15,8 @@ router.use('/student', auditLogger, require('./student'));
 router.use('/instructor', auditLogger, require('./instructor'));
 router.use('/asset', auditLogger, require('./asset'));
 
+router.use('/flight', auditLogger, require('./flight'));
+
 
 
 module.exports = router;

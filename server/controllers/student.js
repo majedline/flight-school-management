@@ -10,7 +10,13 @@ const createStudent = async (req, res) => {
       lastName,
       age,
       email,
-      address,
+      // address,
+      addressLine1,
+      addressLine2,
+      city,
+      province,
+      country,
+      postalCode,
       medicalFitness,
       languageProficiency,
       groundSchool,
@@ -28,12 +34,12 @@ const createStudent = async (req, res) => {
       lastName,
       email,
       age,
-      addressLine1: ((address) ? address.addressLine1 : null),
-      addressLine2: ((address) ? address.addressLine2 : null),
-      city: ((address) ? address.city : null),
-      province: ((address) ? address.province : null),
-      country: ((address) ? address.country : null),
-      postalCode: ((address) ? address.postalCode : null),
+      addressLine1,
+      addressLine2,
+      city,
+      province,
+      country,
+      postalCode,
       medicalFitness,
       languageProficiency,
       groundSchool,
@@ -62,7 +68,12 @@ const editStudent = async (req, res) => {
       lastName,
       age,
       email,
-      address,
+      addressLine1,
+      addressLine2,
+      city,
+      province,
+      country,
+      postalCode,
       medicalFitness,
       languageProficiency,
       groundSchool,
@@ -86,12 +97,12 @@ const editStudent = async (req, res) => {
     student.lastName = lastName;
     student.email = email;
     student.age = age;
-    student.addressLine1 = ((address) ? address.addressLine1 : null);
-    student.addressLine2 = ((address) ? address.addressLine2 : null);
-    student.city = ((address) ? address.city : null);
-    student.province = ((address) ? address.province : null);
-    student.country = ((address) ? address.country : null);
-    student.postalCode = ((address) ? address.postalCode : null);
+    student.addressLine1 = addressLine1;
+    student.addressLine2 = addressLine2;
+    student.city = city;
+    student.province = province;
+    student.country = country
+    student.postalCode = postalCode;
     student.medicalFitness = medicalFitness;
     student.languageProficiency = languageProficiency;
     student.groundSchool = groundSchool;

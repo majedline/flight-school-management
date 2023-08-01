@@ -24,6 +24,8 @@ exports.instructor = base+ '/api/instructor/'
 exports.activeAssets = base+ '/api/asset/active-assets'
 exports.asset = base+ '/api/asset/'
 
+exports.activeFlights = base + '/api/flight/active-flights'
+
 exports.getFiles = base+ '/api/blob/'
 exports.uploadFile = base+ '/api/blob/upload-blob/'
 

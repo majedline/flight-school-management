@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import Snackbar from '@mui/material/Snackbar';
-import {Alert} from '@mui/material/';
+import { Alert, AlertTitle } from '@mui/material/';
 
-const NotificationPopup = ({ open, handleClose }) => {
+const NotificationPopup = ({ open, handleClose, iserror = false }) => {
   useEffect(() => {
     if (open) {
       const timer = setTimeout(() => {
@@ -15,7 +15,10 @@ const NotificationPopup = ({ open, handleClose }) => {
 
   return (
     <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-           <Alert severity="info" onClose={handleClose}>Saved!</Alert>
+      <Alert severity={(iserror) ? "error" : "success"} variant="filled" onClose={handleClose}>
+        <AlertTitle>Success!</AlertTitle>
+        Record has been saved!
+      </Alert>
 
     </Snackbar>
   );

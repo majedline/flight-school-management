@@ -11,7 +11,7 @@ export const semiDarkTheme = createTheme({
 
     palette: {
         background: {
-            default: "#888888"
+            default: "#000000"
         }
     },
     components: {
@@ -22,7 +22,7 @@ export const semiDarkTheme = createTheme({
                 }
             }
         }
-    }
+    },
 });
 
 
@@ -34,9 +34,9 @@ export const lightTheme = createTheme({
 
 export const customTheme = createTheme({
     palette: {
-      mode: 'light',
-      primary: {
-        main: '#345555', // Update the primary color to your preferred color
-      },
+        mode: 'light',
+        primary: {
+            main: '#345555', // Update the primary color to your preferred color
+        },
     }
-  });
+});

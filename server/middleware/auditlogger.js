@@ -11,7 +11,7 @@ const logger = winston.createLogger(
     });
 
 // middleware to be called for incoming calls.
-function auditLogger(req, res, next) {
+const auditLogger = (req, res, next) => {
     logger.info('Request', {
         method: req.method,
         url: req.originalUrl,
@@ -20,6 +20,11 @@ function auditLogger(req, res, next) {
     });
     next();
 }
+
+// const sqlAuditLogger = (req, res, next) =>{
+
+// }
+
 
 
 module.exports = {

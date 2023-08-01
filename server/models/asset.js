@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
   const Asset = sequelize.define("asset", {
-    idasset: {
+    assetID: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,

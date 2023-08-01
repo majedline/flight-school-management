@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, MenuItem, Grid } from '@mui/material';
 import BoxView from '../components/BoxView';
-import { useParams, useNavigate} from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import permitOrLicenceTypes from '../rules/permitOrLicenceType.json';
 import aeroplaneLicenceOptions from '../rules/aeroplaneLicenceOptions.json';
 import History from '../components/History';
@@ -24,7 +24,9 @@ function StudentScreen() {
 
 
   const initialStudentData = {
-    name: '',
+    firstName: '',
+    middleName:'',
+    lastName:'',
     age: '',
     email: '',
     addressLine1: '',
@@ -40,6 +42,7 @@ function StudentScreen() {
     flightTest: '',
     writtenExam: '',
     aeroplaneLicence: '',
+    address:{}
   };
 
   const [student, setStudent] = useState(initialStudentData);
@@ -113,18 +116,6 @@ function StudentScreen() {
   };
 
   const handleInputChange = (e) => {
-    if (e.target.name === "addressLine1" ||
-      e.target.name === "addressLine2" ||
-      e.target.name === "city" ||
-      e.target.name === "province" ||
-      e.target.name === "country" ||
-      e.target.name === "postalCode"
-    ) {
-      let addr = student.address;
-      addr[e.target.name] = e.target.value
-      setStudent({ ...student, address: addr });
-    }
-
     setStudent({ ...student, [e.target.name]: e.target.value });
   };
 
@@ -139,11 +130,11 @@ function StudentScreen() {
       <Grid item xs={12} md={8}>
 
         <BoxView>
-        <NotificationPopup open={open} handleClose={handleClose} />
+          <NotificationPopup open={open} handleClose={handleClose} />
 
           <BasicTabs
 
-            title={(isEditingMode) ? 'Edit Student ' : 'Create Student'}
+            title={(isEditingMode) ? `Student: ${student.firstName} ${student.lastName}` : 'Create Student'}
 
             tab1={(
               <BoxView>
