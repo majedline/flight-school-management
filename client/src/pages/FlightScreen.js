@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FormControl, Select, Button, MenuItem, Typography, Table, TableHead, TableRow, TableCell, TableBody, TextField, Grid, Paper, NativeSelect, InputLabel } from '@mui/material';
+import {
+    FormControl, Select, Button, FormHelperText,
+    Typography, Table, TableHead, TableRow, TableCell,
+    TableBody, TextField, Grid, Paper, InputLabel
+} from '@mui/material';
 import BoxView from '../components/BoxView';
 import { Link } from 'react-router-dom';
 import api, { student } from '../util/api';
@@ -35,13 +39,16 @@ function FlightScreen() {
     //otherwise it is set with default values for a new flights
     const [selectedFlight, setSelectedFlight] = useState(
         {
-            studentId: null,
-            instructorId: null,
-            assetId: null,
+            flightID: null,
+            studentID: null,
+            instructorID: null,
+            assetID: null,
             startDate: new Date(),
             endDate: new Date()
         }
     );
+    const [selectedFlightUpdateCounter, setSelectedFlightUpdateCounter] = useState(0);
+    const [errorMsg, setErrorMsg] = useState("");
 
 
     // get active assets
@@ -90,7 +97,7 @@ function FlightScreen() {
         fetchStudents();
         fetchAssets();
         fetchFlights();
-    }, []);
+    }, [selectedFlightUpdateCounter]);
 
     const handleFlightClick = (flight) => {
         setSelectedFlight(flight);
@@ -123,7 +130,6 @@ function FlightScreen() {
             setSelectedStudent(student);
 
             const updatedFlight = { ...selectedFlight, studentID: student.studentID };
-            console.log("updatedFlight", updatedFlight);
             setSelectedFlight(updatedFlight)
         }
 
@@ -133,7 +139,6 @@ function FlightScreen() {
             setSelectedInstructor(instructor);
 
             const updatedFlight = { ...selectedFlight, instructorID: instructor.instructorID };
-            console.log("updatedFlight", updatedFlight);
             setSelectedFlight(updatedFlight)
         }
 
@@ -144,19 +149,81 @@ function FlightScreen() {
             setSelectedAsset(asset);
 
             const updatedFlight = { ...selectedFlight, assetID: asset.assetID };
-            console.log("updatedFlight", updatedFlight);
             setSelectedFlight(updatedFlight)
         }
-
+        console.log("updatedFlight selectedFlight", selectedFlight);
 
     };
 
 
-    const handleFlightSchedule = () => {
-        // Handle flight scheduling logic here
+    const handleSaveFlight = async () => {
+
+        const canSave = validateContentBeforeSaveFlight();
+        if (!canSave) {
+            return;
+        }
+
+        if (selectedFlight) {
+            let apiCall = api.flight;
+
+            if (selectedFlight.flightID != null) {
+                apiCall = `${api.flight}${selectedFlight.flightID}`
+            }
+
+            const requestBody = {
+                studentID: selectedFlight.studentID,
+                instructorID: selectedFlight.instructorID,
+                assetID: selectedFlight.assetID,
+                startDate: selectedFlight.startDate,
+                endDate: selectedFlight.endDate
+            }
+
+            console.log('Will save selectedFlight  ', selectedFlight, " by calling apiCall", apiCall, "with body", requestBody);
+
+            // Handle flight scheduling logic here
+            try {
+                const response = await axios.post(apiCall, requestBody);
+                setSelectedFlightUpdateCounter(selectedFlightUpdateCounter + 1);
+                console.log("response", response);
+                handleClearFlightScreen();
+            } catch (error) {
+                console.log(error);
+            }
+        }
     };
 
+    const handleClearFlightScreen = () => {
+        setSelectedFlight({
+            flightID: null,
+            studentID: null,
+            instructorID: null,
+            assetID: null,
+            startDate: new Date(),
+            endDate: new Date()
+        });
+        setSelectedAsset(null);
+        setSelectedStudent(null);
+        setSelectedInstructor(null);
+        setSelectedDate('');
+        setSelectedTime('');
+        setErrorMsg('');
+    }
 
+    const validateContentBeforeSaveFlight = () => {
+        if (selectedFlight === null) {
+            setErrorMsg("Enter a Flight or Select a Flight");
+            return false;
+        } else if (selectedFlight.assetID === null ||
+            selectedFlight.studentID === null ||
+            selectedFlight.instructorID === null) {
+
+            setErrorMsg("Enter All Flight Informtion");
+            return false;
+
+        } else {
+            return true;
+        }
+    }
 
 
     const filteredFlights = flights.filter((item) => {
@@ -181,7 +248,8 @@ function FlightScreen() {
             <BoxView>
 
                 <Typography variant="h4" component="h1" align="center">
-                    Schedule Flight
+
+                    {(selectedFlight.flightID === null) ? "Schedule Flight" : "Edit Flight " + selectedFlight.flightID}
                 </Typography>
 
 
@@ -189,7 +257,7 @@ function FlightScreen() {
                     <InputLabel
                         style={{ backgroundColor: "#dddddd" }}
                         htmlFor="studentSelectionList">
-                        Student
+                        &nbsp; Student &nbsp;
                     </InputLabel>
                     <Select
                         id="studentSelectionList"
@@ -213,7 +281,7 @@ function FlightScreen() {
                     <InputLabel
                         style={{ backgroundColor: "#dddddd" }}
                         htmlFor="instructorSelectionList">
-                        Instructor
+                        &nbsp; Instructor &nbsp;
                     </InputLabel>
                     <Select
                         id="instructorSelectionList"
@@ -237,7 +305,7 @@ function FlightScreen() {
                     <InputLabel
                         style={{ backgroundColor: "#dddddd" }}
                         htmlFor="assetSelectionList">
-                        Asset
+                        &nbsp; Asset &nbsp;
                     </InputLabel>
                     <Select
                         id="assetSelectionList"
@@ -257,65 +325,70 @@ function FlightScreen() {
                 </FormControl>
 
 
+                <FormControl>
+                    <TextField
+                        InputLabelProps={{ shrink: true }}
+                        label="Start Date"
+                        type="datetime"
+                        variant="outlined"
+                        // value={selectedFlight ? selectedFlight.startDate.split(' ')[0] : selectedDate}
+                        value={selectedFlight ? selectedFlight.startDate : selectedDate}
+                        onChange={(e) =>
+                            setSelectedDate(e.target.value)
+                        }
+                        fullWidth
+                        style={{ marginBottom: '16px' }}
+                    />
+                </FormControl>
+                <FormControl>
+
+                    <TextField
+                        InputLabelProps={{ shrink: true }}
+                        label="Start Time"
+                        type="time"
+                        variant="outlined"
+                        // value={selectedFlight ? selectedFlight.startDate.split(' ')[1] : selectedTime}
+                        onChange={(e) =>
+                            setSelectedTime(e.target.value)
+                        }
+                        fullWidth
+                        style={{ marginBottom: '16px' }}
+                    />
+
+                </FormControl>
+
+
+
                 {/* <TextField
-                    label="Type"
-                    defaultValue={selectedFlight ? selectedFlight.typid : ''}
-                    variant="outlined"
-                    fullWidth
-                    select
-                >
-                    {types.map((type) => (
-                        <MenuItem value={type.id} key={type.id}>
-                            {type.name}
-                        </MenuItem>
-                    ))}
-                </TextField> */}
-
-
-                {/* <TextField
-                    InputLabelProps={{ shrink: true }}
-                    label="Date"
-                    type="date"
-                    variant="outlined"
-                    value={selectedFlight ? selectedFlight.startDate.split(' ')[0] : selectedDate}
-                    onChange={(e) =>
-                        setSelectedDate(e.target.value)
-                    }
-                    fullWidth
-                    style={{ marginBottom: '16px' }}
-                />
-
-                <TextField
-                    InputLabelProps={{ shrink: true }}
-                    label="Time"
-                    type="time"
-                    variant="outlined"
-                    value={selectedFlight ? selectedFlight.startDate.split(' ')[1] : selectedTime}
-                    onChange={(e) =>
-                        setSelectedTime(e.target.value)
-                    }
-                    fullWidth
-                    style={{ marginBottom: '16px' }}
-                /> */}
+                        label="Type"
+                        defaultValue={selectedFlight ? selectedFlight.typid : ''}
+                        variant="outlined"
+                        fullWidth
+                        select
+                    >
+                        {types.map((type) => (
+                            <MenuItem value={type.id} key={type.id}>
+                                {type.name}
+                            </MenuItem>
+                        ))}
+                    </TextField> */}
 
 
 
-                <Button variant="contained" fullWidth onClick={handleFlightSchedule}>
-                    Schedule Flight
+
+                <Button variant="contained" fullWidth onClick={handleSaveFlight}>
+                    Save Flight
                 </Button>
-
                 <Button
                     variant="contained"
                     fullWidth
-                    onClick={() => {
-                        setSelectedFlight(null);
-                        setSelectedDate('');
-                        setSelectedTime('');
-                    }}
+                    onClick={handleClearFlightScreen}
                 >
                     Reset
                 </Button>
-
+                <Typography variant="body2" align="center">
+                    <FormHelperText error={true}>{errorMsg}</FormHelperText>
+                </Typography>
             </BoxView>
 
         </Grid>

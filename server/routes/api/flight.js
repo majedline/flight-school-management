@@ -13,7 +13,7 @@ router.get('/active-flights', flightController.getActiveFlights);
 
 
 // // GET a flight by ID
-// router.get('/:id', flightController.getFlight);
+// router.get('/:flightID', flightController.getFlight);
 
 ////////////////////////////// POSTs ////////////////////////////// 
 // POST create a new flight
@@ -27,6 +27,20 @@ router.post('/',
   ],
   flightController.createFlight
 );
+
+
+router.post('/:flightID',
+  [
+    check('studentID').notEmpty().withMessage('Student ID is required'),
+    check('instructorID').notEmpty().withMessage('Instructor ID is required'),
+    check('assetID').notEmpty().withMessage('Asset ID is required'),
+    check('startDate').notEmpty().withMessage('Start date is required'),
+    check('endDate').notEmpty().withMessage('End date is required'),
+  ],
+  flightController.editFlight
+);
+
+
 
 // // POST edit an existing flight
 // router.post('/:id',

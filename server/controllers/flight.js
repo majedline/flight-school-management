@@ -71,6 +71,40 @@ const createFlight = async (req, res) => {
   }
 };
 
+
+// Create a flight
+const editFlight = async (req, res) => {
+  console.log("editFlight");
+  try {
+    // Get the flightID paramater
+    const { flightID } = req.params;
+
+    // Extract flight data from request body
+    const { studentID, instructorID, assetID, startDate, endDate } = req.body;
+
+    // Find the flight. Return an error if not found.
+    const flight = await db.flight.findByPk(flightID);
+    if (!flight) {
+      return res.status(404).json({ error: 'Flight not found' });
+    }
+
+    console.log("Got the flight", flight);
+
+    flight.studentID = studentID;
+    flight.instructorID = instructorID;
+    flight.assetID = assetID;
+    flight.startDate = startDate;
+    flight.endDate = endDate;
+
+    //  Save the updated flight in the database
+    await flight.save();
+
+    res.status(201).json({ message: 'Flight updated successfully', flight: flight });
+  } catch (error) {
+    res.status(500).json({ error: `Failed to update flight: ${error.message}` });
+  }
+};
+
 // // Edit a flight
 // const editFlight = async (req, res) => {
 //     try {
@@ -233,7 +267,7 @@ module.exports = {
 
   getActiveFlights,
   createFlight,
-  // editFlight,
+  editFlight,
   // deleteFlight,
   // completeFlight,
 
