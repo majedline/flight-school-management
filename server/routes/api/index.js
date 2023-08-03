@@ -17,6 +17,8 @@ router.use('/asset', auditLogger, require('./asset'));
 
 router.use('/flight', auditLogger, require('./flight'));
 
+router.use('/company', auditLogger, require('./company'));
+
 
 
 module.exports = router;
