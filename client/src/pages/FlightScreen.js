@@ -7,8 +7,15 @@ import {
 } from '@mui/material';
 import BoxView from '../components/BoxView';
 import { Link } from 'react-router-dom';
-import api, { student } from '../util/api';
-import { stringify } from 'uuid';
+import api from '../util/api';
+import helper from '../util/helper';
+
+
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import dayjs from 'dayjs';
 
 
 function FlightScreen() {
@@ -33,8 +40,8 @@ function FlightScreen() {
     const [selectedAsset, setSelectedAsset] = useState(null);
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [selectedInstructor, setSelectedInstructor] = useState(null);
-    const [selectedDate, setSelectedDate] = useState('');
-    const [selectedTime, setSelectedTime] = useState('');
+    const [selectedStartDateTime, setSelectedStartDateTime] = useState(dayjs());
+    const [selectedEndDateTime, setSelectedEndDateTime] = useState(dayjs());
     // If a flight is selected from the list, then it will be loaded here, 
     //otherwise it is set with default values for a new flights
     const [selectedFlight, setSelectedFlight] = useState(
@@ -43,8 +50,8 @@ function FlightScreen() {
             studentID: null,
             instructorID: null,
             assetID: null,
-            startDate: new Date(),
-            endDate: new Date()
+            startDate: dayjs(),
+            endDate: dayjs(),
         }
     );
     const [selectedFlightUpdateCounter, setSelectedFlightUpdateCounter] = useState(0);
@@ -155,6 +162,25 @@ function FlightScreen() {
 
     };
 
+    const handleDateTimeChange = (value, type) => {
+        console.log(dayjs(value));
+        console.log(type)
+
+        if (type === "flightStartDateTime") {
+            setSelectedStartDateTime(dayjs(value));
+            const updatedFlight = { ...selectedFlight, startDate: selectedStartDateTime };
+            setSelectedFlight(updatedFlight);
+        }
+
+        if (type === "flightEndDateTime") {
+            setSelectedEndDateTime(dayjs(value));
+            const updatedFlight = { ...selectedFlight, startDate: selectedEndDateTime };
+            setSelectedFlight(updatedFlight);
+        }
+
+
+    }
+
 
     const handleSaveFlight = async () => {
 
@@ -199,13 +225,13 @@ function FlightScreen() {
             instructorID: null,
             assetID: null,
             startDate: new Date(),
-            endDate: new Date()
+            endDate: new Date(1990, 2, 2, 2, 2, 2)
         });
         setSelectedAsset(null);
         setSelectedStudent(null);
         setSelectedInstructor(null);
-        setSelectedDate('');
-        setSelectedTime('');
+        setSelectedStartDateTime(dayjs());
+        setSelectedEndDateTime(dayjs());
         setErrorMsg('');
     }
 
@@ -326,55 +352,32 @@ function FlightScreen() {
 
 
                 <FormControl>
-                    <TextField
-                        InputLabelProps={{ shrink: true }}
-                        label="Start Date"
-                        type="datetime"
-                        variant="outlined"
-                        // value={selectedFlight ? selectedFlight.startDate.split(' ')[0] : selectedDate}
-                        value={selectedFlight ? selectedFlight.startDate : selectedDate}
-                        onChange={(e) =>
-                            setSelectedDate(e.target.value)
-                        }
-                        fullWidth
-                        style={{ marginBottom: '16px' }}
-                    />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={['DateTimePicker']}>
+                            <DateTimePicker
+                                id="flightStartDateTime"
+                                value={selectedFlight ? dayjs(selectedFlight.startDate) : dayjs(selectedStartDateTime)}
+                                onChange={(value) => { handleDateTimeChange(value, "flightStartDateTime") }}
+                                label="Start Date & Time"
+                            />
+                        </DemoContainer>
+                    </LocalizationProvider>
                 </FormControl>
+
+
                 <FormControl>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={['DateTimePicker']}>
+                            <DateTimePicker
+                                id="flightEndDateTime"
 
-                    <TextField
-                        InputLabelProps={{ shrink: true }}
-                        label="Start Time"
-                        type="time"
-                        variant="outlined"
-                        // value={selectedFlight ? selectedFlight.startDate.split(' ')[1] : selectedTime}
-                        onChange={(e) =>
-                            setSelectedTime(e.target.value)
-                        }
-                        fullWidth
-                        style={{ marginBottom: '16px' }}
-                    />
-
+                                value={selectedFlight ? dayjs(selectedFlight.endDate) : dayjs(selectedEndDateTime)}
+                                onChange={(value) => { setSelectedEndDateTime(value) }}
+                                label="End Date & Time"
+                            />
+                        </DemoContainer>
+                    </LocalizationProvider>
                 </FormControl>
-
-
-
-                {/* <TextField
-                        label="Type"
-                        defaultValue={selectedFlight ? selectedFlight.typid : ''}
-                        variant="outlined"
-                        fullWidth
-                        select
-                    >
-                        {types.map((type) => (
-                            <MenuItem value={type.id} key={type.id}>
-                                {type.name}
-                            </MenuItem>
-                        ))}
-                    </TextField> */}
-
-
-
 
                 <Button variant="contained" fullWidth onClick={handleSaveFlight}>
                     Save Flight
@@ -420,7 +423,9 @@ function FlightScreen() {
                                 <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Student</TableCell>
                                 <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Instructor</TableCell>
                                 <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Asset</TableCell>
-                                <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Time</TableCell>
+                                <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Start</TableCell>
+                                <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Finish</TableCell>
+
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -435,7 +440,12 @@ function FlightScreen() {
                                     <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{flight.studentFirstName + " " + flight.studentMiddleName + " " + flight.studentLastName}</TableCell>
                                     <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{flight.instructorFirstName + " " + flight.instructorMiddleName + " " + flight.instructorLastName}</TableCell>
                                     <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{flight.assetName}</TableCell>
-                                    <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{flight.startDate}</TableCell>
+                                    <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{helper.formatDate(flight.startDate)}</TableCell>
+                                    <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{helper.formatDate(flight.endDate)}</TableCell>
+                                    {/*{console.log(new Date(1990, 2, 2, 2, 2, 2))}
+                                    {console.log(new Date(flight.endDate))}
+                                    {console.log(new Date(flight.endDate) == new Date(1990, 2, 2, 2, 2, 2))} */}
+
                                 </TableRow>
                             ))}
                         </TableBody>

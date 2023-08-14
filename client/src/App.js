@@ -54,7 +54,7 @@ function App() {
           <Route path="/asset" element={<AssetScreen />} />
           <Route path="/asset/:assetid" element={<AssetScreen />} />
 
-          <Route path="/flights" element={<FlightScreen />} />
+          <Route path="/scheduleFlights" element={<FlightScreen />} />
           <Route path="/calendar" element={<CalendarScreen />} />
           <Route path="/calendar-page" element={<CalendarPage />} />
 

@@ -16,13 +16,13 @@ function NavigationBar() {
 
   const loggedOutView = (
     <>
-      <Button color="inherit" component={Link} to="/login">
+      <Button  color="inherit" component={Link} to="/login">
         {t('nav_login')}
       </Button>
-      <Button color="inherit" component={Link} to="/signup">
+      <Button  color="inherit" component={Link} to="/signup">
         {t('nav_signup')}
       </Button>
-      <Button color="inherit" component={Link} to="/">
+      <Button  color="inherit" component={Link} to="/">
         {t('nav_overview')}
       </Button>
     </>
@@ -30,19 +30,19 @@ function NavigationBar() {
 
   const loggedInView = (
     <>
-      <Button color="inherit" component={Link} to="/flights">
+      <Button  color="inherit" component={Link} to="/scheduleFlights">
         Flights
       </Button>
-      <Button color="inherit" component={Link} to="/students">
+      <Button  color="inherit" component={Link} to="/students">
         Students
       </Button>
-      <Button color="inherit" component={Link} to="/instructors">
+      <Button  color="inherit" component={Link} to="/instructors">
         Instructors
       </Button>
-      <Button color="inherit" component={Link} to="/assets">
+      <Button  color="inherit" component={Link} to="/assets">
         Planes
       </Button>
-      <Button color="inherit" component={Link} to="/calendar">
+      <Button  color="inherit" component={Link} to="/calendar">
         Calendar
       </Button>
       {/* <Button color="inherit" component={Link} to="/ptr">
@@ -114,7 +114,7 @@ function NavigationBar() {
           <List style={{ width: 250 }} onClick={toggleDrawer(false)}>
             {(user) ? (
               <>
-                <ListItem component={Link} to="/flights">
+                <ListItem component={Link} to="/scheduleFlights">
                   <ListItemText primary="Flights" />
                 </ListItem>
                 <ListItem component={Link} to="/students">

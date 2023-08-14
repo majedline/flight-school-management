@@ -52,7 +52,7 @@ function LoginScreen() {
           token: res.data.token
         });
 
-        navigate("/flights");
+        navigate("/scheduleFlights");
 
       }).catch(err => {
         setErrorMsg(err.response.data.error)

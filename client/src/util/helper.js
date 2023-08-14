@@ -6,7 +6,7 @@ const getFirstLetterOfWord = (word) => {
     }
 }
 
-export const getNameInitials = (firstName, lastName) => {
+exports.getNameInitials = (firstName, lastName) => {
     let f = getFirstLetterOfWord(firstName);
     let l = getFirstLetterOfWord(lastName);
     if (f != null && l != null) {
@@ -17,3 +17,14 @@ export const getNameInitials = (firstName, lastName) => {
 }
 
 
+exports.formatDate = (inputDate) => {
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hour = date.getHours() % 12 || 12;
+    const minute = String(date.getMinutes()).padStart(2, '0');
+    const ampm = date.getHours() < 12 ? 'AM' : 'PM';
+
+    return `${year}-${month}-${day}, ${hour}:${minute} ${ampm}`;
+}

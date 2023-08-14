@@ -19,4 +19,4 @@ root.render(
       </ThemeProvider>
     </AppProvider>
   </React.StrictMode>
-);
+); 
