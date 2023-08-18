@@ -12,9 +12,9 @@ if (process.env.NODE_ENV === "production") {
     "password": process.env.password,
     "database": process.env.database,
     "host": process.env.host,
-    "port": process.env.port3306,
-    "dialect": process.env.dialect_mysql,
-    "use_env_variable": process.env.use_env_variable_JAWSDB_URL,
+    "port": process.env.port,
+    "dialect": process.env.dialect,
+    "use_env_variable": process.env.use_env_variable,
     "pool": {
       "max": 5,
       "min": 0,

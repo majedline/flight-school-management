@@ -1,7 +1,7 @@
 
 let base = "http://localhost:3001";
 if (process.env.NODE_ENV === "production") {
-    base = "https://edo3.herokuapp.com";
+    base = "https://flight-school-management-app-267d2b7528bd.herokuapp.com";
 }
 
 exports.version = base + '/api/version/';

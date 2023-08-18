@@ -1,7 +1,7 @@
 {
-  "name": "edo-server",
+  "name": "fsm-server",
   "version": "1.0.0",
-  "description": "server side for edo-client",
+  "description": "server side for fsm-client",
   "engines": {
     "node": "18.x"
   },

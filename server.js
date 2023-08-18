@@ -29,7 +29,7 @@ console.log("FSM Done cookie and body-parser. Now on to CORS ");
 if (process.env.NODE_ENV === "production") {
   console.log("FSM Cors Production");
   const corsOptions = {
-    origin: 'https://edo3.herokuapp.com/',
+    origin: 'https://flight-school-management-app-267d2b7528bd.herokuapp.com/',
     optionsSuccessStatus: 200
   }
   app.use(cors(corsOptions));
