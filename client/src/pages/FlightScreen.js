@@ -5,6 +5,9 @@ import {
     Typography, Table, TableHead, TableRow, TableCell,
     TableBody, TextField, Grid, Paper, InputLabel
 } from '@mui/material';
+
+// import { DoneOutlineIcon } from '@material-ui/icons';
+
 import BoxView from '../components/BoxView';
 import { Link } from 'react-router-dom';
 import api from '../util/api';
@@ -387,8 +390,28 @@ function FlightScreen() {
                     fullWidth
                     onClick={handleClearFlightScreen}
                 >
-                    Reset
+                    New Flight
                 </Button>
+
+
+                {(selectedFlight.flightID === null) ? "" : (
+                    <>
+                        <Button
+                            variant="contained"
+                            fullWidth
+                            onClick={handleClearFlightScreen}
+                        >
+                            Complete Flight
+                        </Button>
+                        <Button
+                            variant="contained"
+                            fullWidth
+                            onClick={handleClearFlightScreen}
+                        >
+                            Cancel Flight
+                        </Button>
+                    </>)}
+
                 <Typography variant="body2" align="center">
                     <FormHelperText error={true}>{errorMsg}</FormHelperText>
                 </Typography>

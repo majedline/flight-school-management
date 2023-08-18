@@ -36,6 +36,11 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: Sequelize.NOW
 
     },
+    companyID: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    }
   });
 
   return Asset;

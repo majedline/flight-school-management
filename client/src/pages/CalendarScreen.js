@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, Grid, Paper, Button, Modal, Box, Switch, FormControlLabel } from '@mui/material';
 import CalendarPage from './CalendarPage';
+import UnderConstruction from '../components/Icons/UnderConstruction';
 
 function CalendarScreen() {
   // Get the current date
@@ -92,7 +93,7 @@ function CalendarScreen() {
     <Grid container justifyContent="flex-start" spacing={2} >
       <Grid item xs={12}>
         <Typography variant="h4" component="h1" align="center" gutterBottom>
-          {currentMonth} {currentYear}
+          {currentMonth} {currentYear} <UnderConstruction></UnderConstruction>
         </Typography>
       </Grid>
 

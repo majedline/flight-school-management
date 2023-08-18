@@ -44,8 +44,12 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             field: 'editedOn',
             defaultValue: Sequelize.NOW
-
-        }
+        },
+        companyID: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
 
     });
     return User;

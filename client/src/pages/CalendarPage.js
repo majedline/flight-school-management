@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Typography, Grid, TextField, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper, Modal } from '@mui/material';
 import BoxView from '../components/BoxView';
+import UnderConstruction from '../components/Icons/UnderConstruction';
 
 const CalendarPage = () => {
     const [filterText, setFilterText] = useState('');
@@ -44,7 +45,7 @@ const CalendarPage = () => {
     return (
         <BoxView>
             <Typography variant="h4" component="h1" align="center" gutterBottom>
-                Calendar Page                
+                Calendar Page <UnderConstruction></UnderConstruction>
             </Typography>
 
             <Grid container spacing={2} alignItems="center">

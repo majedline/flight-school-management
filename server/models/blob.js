@@ -35,6 +35,11 @@ module.exports = (sequelize, Sequelize) => {
             field: 'editedOn',
             defaultValue: Sequelize.NOW
 
+        },
+        companyID: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            defaultValue: 0
         }
 
     });

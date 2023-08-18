@@ -41,6 +41,11 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DATE,
             defaultValue: Sequelize.NOW,
         },
+        companyID: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        }
     });
 
     return Flight;

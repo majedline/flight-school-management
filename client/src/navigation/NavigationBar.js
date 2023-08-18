@@ -16,13 +16,13 @@ function NavigationBar() {
 
   const loggedOutView = (
     <>
-      <Button  color="inherit" component={Link} to="/login">
+      <Button color="inherit" component={Link} to="/login">
         {t('nav_login')}
       </Button>
-      <Button  color="inherit" component={Link} to="/signup">
+      <Button color="inherit" component={Link} to="/signup">
         {t('nav_signup')}
       </Button>
-      <Button  color="inherit" component={Link} to="/">
+      <Button color="inherit" component={Link} to="/">
         {t('nav_overview')}
       </Button>
     </>
@@ -30,19 +30,19 @@ function NavigationBar() {
 
   const loggedInView = (
     <>
-      <Button  color="inherit" component={Link} to="/scheduleFlights">
+      <Button color="inherit" component={Link} to="/scheduleFlights">
         Flights
       </Button>
-      <Button  color="inherit" component={Link} to="/students">
+      <Button color="inherit" component={Link} to="/students">
         Students
       </Button>
-      <Button  color="inherit" component={Link} to="/instructors">
+      <Button color="inherit" component={Link} to="/instructors">
         Instructors
       </Button>
-      <Button  color="inherit" component={Link} to="/assets">
+      <Button color="inherit" component={Link} to="/assets">
         Planes
       </Button>
-      <Button  color="inherit" component={Link} to="/calendar">
+      <Button color="inherit" component={Link} to="/calendar">
         Calendar
       </Button>
       {/* <Button color="inherit" component={Link} to="/ptr">
@@ -55,9 +55,13 @@ function NavigationBar() {
             "FSM"
         }</Avatar>
       </Button>
-      <Button color="inherit" component={Link} to="/test">
-        Test
-      </Button>
+      
+      {(process.env.NODE_ENV === "production") ? "" : (
+        <Button color="inherit" component={Link} to="/test">
+          Test
+        </Button>
+      )}
+
     </>
   );
 

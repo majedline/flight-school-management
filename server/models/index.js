@@ -4,7 +4,29 @@ var path = require("path");
 var Sequelize = require("sequelize");
 var basename = path.basename(module.filename);
 var env = process.env.NODE_ENV || "development";
-var config = require(path.join(__dirname, "../../config/config.json"))[env];
+
+let configPart = ""
+if (process.env.NODE_ENV === "production") {
+  configPart = {
+    "username": process.env.username,
+    "password": process.env.password,
+    "database": process.env.database,
+    "host": process.env.host,
+    "port": process.env.port3306,
+    "dialect": process.env.dialect_mysql,
+    "use_env_variable": process.env.use_env_variable_JAWSDB_URL,
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
+    }
+  }
+} else {
+  configPart = require(path.join(__dirname, "../../config/config.json"))[env]
+}
+
+var config = configPart;
 var db = {};
 
 if (config.use_env_variable) {
@@ -15,15 +37,15 @@ if (config.use_env_variable) {
 
 fs
   .readdirSync(__dirname)
-  .filter(function(file) {
+  .filter(function (file) {
     return (file.indexOf(".") !== 0) && (file !== basename) && (file.slice(-3) === ".js");
   })
-  .forEach(function(file) {
+  .forEach(function (file) {
     var model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });
 
-Object.keys(db).forEach(function(modelName) {
+Object.keys(db).forEach(function (modelName) {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
