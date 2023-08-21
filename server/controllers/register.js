@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const { check, validationResult } = require('express-validator');
 const { v4: uuidv4 } = require('uuid');
-const config = require('config');
+// const config = require('config');
 const settings = require('../../config/settings');
 
 const db = require('../models');
@@ -39,8 +39,8 @@ const register = async (req, res) => {
 
         const newUser = await db.user.create({
             email,
-            firstName:firstName,
-            lastName:lastName,
+            firstName: firstName,
+            lastName: lastName,
             password: hashedPassword,
             type: userType,
             active: true,
@@ -54,15 +54,23 @@ const register = async (req, res) => {
             user: { id, clientRef, firstName, lastName, phone, userType, disclaimerSigned }
         };
 
+        let jwtpass = "welcometoadmcanxy2023";
+        let cookieName = "fsmaccesstoken";
+
+        if (process.env.NODE_ENV === "production") {
+            jwtpass = process.env.jwtpass;
+            cookieName = process.env.cookieName;
+        }
+
         jwt.sign(
             payload,
-            config.get('jwtpass'),
+            jwtpass,
             { expiresIn: 40000 },
             function (err, token) {
                 if (err) {
                     throw err;
                 } else {
-                    res.cookie(settings.cookieName, token, {
+                    res.cookie(cookieName, token, {
                         maxAge: 1 * 60 * 60 * 1000,
                         httpOnly: false,
                         secure: process.env.NODE_ENV === "production",

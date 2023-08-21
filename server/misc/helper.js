@@ -64,14 +64,22 @@ const cleanUpDataToSaveToFireDB = (firePayLoad) => {
 
 
 const getTokenKey = () => {
-    const config = require('config');
+    // const config = require('config');
+
+    let jwtpass = "welcometoadmcanxy2023";
+    let cookieName = "fsmaccesstoken";
+    
+    if (process.env.NODE_ENV === "production") {
+        jwtpass = process.env.jwtpass;
+        cookieName = process.env.cookieName;
+    }
 
     if (process.env.NODE_ENV === "production") {
         console.log("Getting production key");
         return process.env.jwtpass
     } else {
         console.log("Getting Dev key");
-        return config.get('jwtpass')
+        return jwtpass;
     }
 
 }

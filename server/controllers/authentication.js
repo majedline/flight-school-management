@@ -2,9 +2,19 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const settings = require("../../config/settings");
-const { getTokenKey } = require('../misc/helper');
+// const { getTokenKey } = require('../misc/helper');
 const db = require('../models');
 const { captureRejectionSymbol } = require('nodemailer/lib/xoauth2');
+
+
+let jwtpass = "welcometoadmcanxy2023";
+let cookieName = "fsmaccesstoken";
+
+if (process.env.NODE_ENV === "production") {
+    jwtpass = process.env.jwtpass;
+    cookieName = process.env.cookieName;
+}
+
 
 const login = async (req, res) => {
     console.log("POST login");
@@ -48,13 +58,13 @@ const login = async (req, res) => {
 
         jwt.sign(
             payload,
-            getTokenKey(),
+            jwtpass,
             { expiresIn: 40000 },
             function (err, token) {
                 if (err) {
                     throw err;
                 } else {
-                    res.cookie(settings.cookieName, token, {
+                    res.cookie(cookieName, token, {
                         maxAge: 1 * 60 * 60 * 1000,
                         httpOnly: false,
                         secure: process.env.NODE_ENV === "production",
@@ -73,7 +83,7 @@ const logout = async (req, res) => {
     console.log("POST logout");
 
     try {
-        res.cookie(settings.cookieName, "logout", {
+        res.cookie(cookieName, "logout", {
             maxAge: 0,
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
