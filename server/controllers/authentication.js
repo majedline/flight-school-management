@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
-const settings = require("../../config/settings");
+// const settings = require("../../config/settings");
 // const { getTokenKey } = require('../misc/helper');
 const db = require('../models');
 const { captureRejectionSymbol } = require('nodemailer/lib/xoauth2');

@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 const { v4: uuidv4 } = require('uuid');
 // const config = require('config');
-const settings = require('../../config/settings');
+// const settings = require('../../config/settings');
 
 const db = require('../models');
 
