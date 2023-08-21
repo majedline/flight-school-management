@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { AppContext } from '../AppContext';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import api from '../util/api';
+import axios from 'axios';
 
 import { Typography, TextField, Button } from '@mui/material';
 import BoxView from '../components/BoxView';
@@ -19,7 +21,7 @@ function ProfileScreen() {
         }));
     };
 
-    
+
 
     const [updatedUser, setUpdatedUser] = useState(user);
 
@@ -27,7 +29,8 @@ function ProfileScreen() {
         updateGlobalUser(updatedUser)
     };
 
-    const handleLogoutClick = () => {
+    const handleLogoutClick = async () => {
+        const response = await axios.post(api.logout);
         updateGlobalUser(null);
         navigate('/')
     };
@@ -50,7 +53,7 @@ function ProfileScreen() {
                     value={updatedUser.firstName}
                     onChange={handleInputChange}
                 />
-                  <TextField
+                <TextField
                     label="Last Name"
                     name="lastName"
                     variant="outlined"

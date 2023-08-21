@@ -55,7 +55,7 @@ function NavigationBar() {
             "FSM"
         }</Avatar>
       </Button>
-      
+
       {(process.env.NODE_ENV === "production") ? "" : (
         <Button color="inherit" component={Link} to="/test">
           Test
