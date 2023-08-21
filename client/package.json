@@ -1,7 +1,7 @@
 {
   "name": "flight-school-app-client",
   "version": "0.1.0",
-  "homepage": "https://majedline.github.io/flight-school-management/",
+  "proxy": "http://localhost:3001/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.0",
