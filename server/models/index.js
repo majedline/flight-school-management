@@ -32,10 +32,12 @@ var db = {};
 
 if (config.use_env_variable) {
   console.log(" #1 var sequelize = new Sequelize(process.env[config.use_env_variable]);");
-  var sequelize = new Sequelize(process.env[config.use_env_variable]);
+  // var sequelize = new Sequelize(process.env[config.use_env_variable]);
+  var sequelize = new Sequelize(config.database, config.username, config.password, config);
+
 } else {
   console.log(" #2 var sequelize = new Sequelize(config.database, config.username, config.password, config);")
-  var sequelize = new Sequelize(config.database, config.username, config.password, config.dialect, config);
+  var sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 console.log("seqielize", sequelize);
