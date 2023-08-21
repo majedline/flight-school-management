@@ -3,6 +3,8 @@
 # exlude the config
 /config/*
 
+# exlude audit log
+/audit.log
 
 # dependencies
 /node_modules

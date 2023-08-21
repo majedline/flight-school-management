@@ -22,6 +22,7 @@ if (process.env.NODE_ENV === "production") {
       "idle": 10000
     }
   }
+  console.log("configPart", configPart);
 } else {
   configPart = require(path.join(__dirname, "../../config/config.json"))[env]
 }
