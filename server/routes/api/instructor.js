@@ -6,10 +6,10 @@ const instructorController = require('../../controllers/instructor');
 
 ////////////////////////////// GETs ////////////////////////////// 
 // GET instructors based on search criteria
-router.get('/instructors', instructorController.searchInstructors);
+router.get('/instructors',instructorController.searchInstructors);
 
 // GET all active instructors sorted by creation date
-router.get('/active-instructors', instructorController.getActiveInstructors);
+router.get('/active-instructors',instructorController.getActiveInstructors);
 
 // GET a instructor by ID
 router.get('/:id', instructorController.getInstructor);

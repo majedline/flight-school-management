@@ -52,7 +52,6 @@ module.exports = (sequelize, Sequelize) => {
       editedOn: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
-        defaultValue: 0
       },
     });
   

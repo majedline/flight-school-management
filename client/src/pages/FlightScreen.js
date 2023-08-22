@@ -3,23 +3,23 @@ import axios from 'axios';
 import {
     FormControl, Select, Button, FormHelperText,
     Typography, Table, TableHead, TableRow, TableCell,
-    TableBody, TextField, Grid, Paper, InputLabel
+    TableBody, TextField, Grid, Paper, InputLabel, Fab
 } from '@mui/material';
 
 // import { DoneOutlineIcon } from '@material-ui/icons';
 
 import BoxView from '../components/BoxView';
+import NotificationPopup from '../components/NotificationPopup';
+
 import { Link } from 'react-router-dom';
 import api from '../util/api';
 import helper from '../util/helper';
-
+import dayjs from 'dayjs';
 
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import dayjs from 'dayjs';
-
 
 function FlightScreen() {
     const types = [
@@ -184,8 +184,7 @@ function FlightScreen() {
 
     }
 
-
-    const handleSaveFlight = async () => {
+    const handleSaveFlight = async (saveType) => {
 
         const canSave = validateContentBeforeSaveFlight();
         if (!canSave) {
@@ -207,13 +206,27 @@ function FlightScreen() {
                 endDate: selectedFlight.endDate
             }
 
-            console.log('Will save selectedFlight  ', selectedFlight, " by calling apiCall", apiCall, "with body", requestBody);
+            console.log('Will ' + saveType + ' selectedFlight  ', selectedFlight, " by calling apiCall", apiCall, "with body", requestBody);
 
             // Handle flight scheduling logic here
             try {
-                const response = await axios.post(apiCall, requestBody);
+                let response = null;
+
+                if (saveType === "SAVE")
+                    response = await axios.post(apiCall, requestBody);
+                else if (saveType === "COMPLETE")
+                    response = await axios.post(apiCall + "/complete", requestBody);
+                else if (saveType === "DELETE")
+                    response = await axios.post(apiCall + "/delete", requestBody);
+                else if (saveType === "CANCEL")
+                    response = await axios.post(apiCall + "/cancel", requestBody);
+
+                if (response)
+                    setOpen(true);
+
                 setSelectedFlightUpdateCounter(selectedFlightUpdateCounter + 1);
                 console.log("response", response);
+
                 handleClearFlightScreen();
             } catch (error) {
                 console.log(error);
@@ -272,9 +285,18 @@ function FlightScreen() {
         );
     });
 
+    ///////////////////notfication////////////////////////////
+    const [open, setOpen] = useState(false);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    /////////////////////////////////////////////////////////
+
     const flightEditSection = (
         <Grid item xs={12} md={4}>
             <BoxView>
+                <NotificationPopup open={open} handleClose={handleClose} />
 
                 <Typography variant="h4" component="h1" align="center">
 
@@ -382,7 +404,7 @@ function FlightScreen() {
                     </LocalizationProvider>
                 </FormControl>
 
-                <Button variant="contained" fullWidth onClick={handleSaveFlight}>
+                <Button variant="contained" fullWidth onClick={() => { handleSaveFlight("SAVE") }}>
                     Save Flight
                 </Button>
                 <Button
@@ -393,31 +415,35 @@ function FlightScreen() {
                     New Flight
                 </Button>
 
+                <Typography variant="body2" align="center">
+                    <FormHelperText error={true}>
+                        {errorMsg}
+                    </FormHelperText>
+                </Typography>
+            </BoxView>
 
-                {(selectedFlight.flightID === null) ? "" : (
-                    <>
+            {(selectedFlight.flightID === null) ? "" : (
+                <>
+                    <BoxView>
+                        These Actions Will Hide The Record
                         <Button
                             variant="contained"
                             fullWidth
-                            onClick={handleClearFlightScreen}
+                            onClick={() => { handleSaveFlight("COMPLETE"); }}
                         >
                             Complete Flight
                         </Button>
                         <Button
                             variant="contained"
                             fullWidth
-                            onClick={handleClearFlightScreen}
+                            onClick={() => { handleSaveFlight("CANCEL"); }}
                         >
                             Cancel Flight
                         </Button>
-                    </>)}
-
-                <Typography variant="body2" align="center">
-                    <FormHelperText error={true}>{errorMsg}</FormHelperText>
-                </Typography>
-            </BoxView>
-
+                    </BoxView>
+                </>)}
         </Grid>
+
     );
 
     const flightListSection = (
@@ -441,7 +467,7 @@ function FlightScreen() {
 
                     <Table>
                         <TableHead>
-                            <TableRow key="header-row">
+                            <TableRow id="row-1" key="header-row">
                                 <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>ID</TableCell>
                                 <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Student</TableCell>
                                 <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Instructor</TableCell>
@@ -454,6 +480,7 @@ function FlightScreen() {
                         <TableBody>
                             {filteredFlights.map((flight) => (
                                 <TableRow
+                                    id={"row" + flight.id}
                                     key={flight.id}
                                     onClick={() => handleFlightClick(flight)}
                                     selected={selectedFlight === flight}
@@ -465,9 +492,6 @@ function FlightScreen() {
                                     <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{flight.assetName}</TableCell>
                                     <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{helper.formatDate(flight.startDate)}</TableCell>
                                     <TableCell component={Link} style={{ textDecoration: 'none' }} align="center">{helper.formatDate(flight.endDate)}</TableCell>
-                                    {/*{console.log(new Date(1990, 2, 2, 2, 2, 2))}
-                                    {console.log(new Date(flight.endDate))}
-                                    {console.log(new Date(flight.endDate) == new Date(1990, 2, 2, 2, 2, 2))} */}
 
                                 </TableRow>
                             ))}

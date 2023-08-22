@@ -72,13 +72,22 @@ function StudentListScreen() {
             {filteredStudents.map((student) => (
               <TableRow
                 key={student.studentID}
-                component={Link}
-                to={`/student/${student.studentID}`}
-                style={{ textDecoration: 'none' }}
-                onClick={() => handleStudentClick(student.studentID)}
               >
-                <TableCell align="center">{student.studentID}</TableCell>
-                <TableCell align="center">{student.firstName+" "+student.lastName}</TableCell>
+                <TableCell
+                  align="center" component={Link}
+                  style={{ textDecoration: 'none' }}
+
+                  to={`/student/${student.studentID}`}
+                  onClick={() => handleStudentClick(student.studentID)}>
+                  {student.studentID}
+                </TableCell>
+                <TableCell
+                  align="center" component={Link}
+                  style={{ textDecoration: 'none' }}
+
+                  to={`/student/${student.studentID}`}
+                  onClick={() => handleStudentClick(student.studentID)}
+                >{student.firstName + " " + student.lastName}</TableCell>
               </TableRow>
             ))}
           </TableBody>

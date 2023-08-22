@@ -16,6 +16,7 @@ router.get('/active-flights', flightController.getActiveFlights);
 // router.get('/:flightID', flightController.getFlight);
 
 ////////////////////////////// POSTs ////////////////////////////// 
+
 // POST create a new flight
 router.post('/',
   [
@@ -28,7 +29,29 @@ router.post('/',
   flightController.createFlight
 );
 
+router.post('/:flightID/complete',
+  [
+    check('studentID').notEmpty().withMessage('Student ID is required'),
+    check('instructorID').notEmpty().withMessage('Instructor ID is required'),
+    check('assetID').notEmpty().withMessage('Asset ID is required'),
+    check('startDate').notEmpty().withMessage('Start date is required'),
+    check('endDate').notEmpty().withMessage('End date is required'),
+  ],
+  flightController.completeFlight
+);
 
+router.post('/:flightID/cancel',
+  [
+    check('studentID').notEmpty().withMessage('Student ID is required'),
+    check('instructorID').notEmpty().withMessage('Instructor ID is required'),
+    check('assetID').notEmpty().withMessage('Asset ID is required'),
+    check('startDate').notEmpty().withMessage('Start date is required'),
+    check('endDate').notEmpty().withMessage('End date is required'),
+  ],
+  flightController.completeFlight
+);
+
+// update a flight
 router.post('/:flightID',
   [
     check('studentID').notEmpty().withMessage('Student ID is required'),
@@ -41,28 +64,10 @@ router.post('/:flightID',
 );
 
 
+router.delete('/:flightID',
+  flightController.deleteFlight
+);
 
-// // POST edit an existing flight
-// router.post('/:id',
-//   [
-//     check('studentId').notEmpty().withMessage('Student ID is required'),
-//     check('instructorId').notEmpty().withMessage('Instructor ID is required'),
-//     check('assetId').notEmpty().withMessage('Asset ID is required'),
-//     check('startDate').notEmpty().withMessage('Start date is required'),
-//     check('endDate').notEmpty().withMessage('End date is required'),
-//   ],
-//   flightController.editFlight
-// );
 
-// // POST delete a flight
-// router.post('/:id/delete', flightController.deleteFlight);
-
-// // POST complete a flight
-// router.post('/:id/complete',
-//   [
-//     check('totalTime').isInt({ min: 0 }).withMessage('Total time must be a non-negative integer'),
-//   ],
-//   flightController.completeFlight
-// );
 
 module.exports = router;

@@ -1,28 +1,15 @@
 const db = require('../models');
 const { QueryTypes } = require('sequelize');
+const dayjs = require('dayjs')
+
 
 // const Flight = db.flight;
 // const Instructor = db.instructor;
 // const Student = db.student;
 
-
-// const getActiveFlights = async (req, res) => {
-//   try {
-//     // Find active instructors in the database
-//     const flights = await db.flight.findAll({
-//       where: { active: true },
-//       order: [['createdAt', 'DESC']],
-//     });
-
-//     res.json({ flights });
-//   } catch (error) {
-//     res.status(500).json({ error: `Failed to get active flight: ${error.message}` });
-//   }
-// };
-
 const getActiveFlightsExpandedQuery =
   `select f.flightID, s.studentID, i.instructorID, a.assetID, 
-f.startDate, f.endDate, f.totalTime, f.active,
+f.startDate, f.endDate, f.totalTime, f.active, f.flightStatus,
 s.firstName as 'studentFirstName', s.middleName  as 'studentMiddleName', s.lastName  as 'studentLastName', s.email  as 'studentEmail',
 i.firstName as 'instructorFirstName', i.middleName as 'instructorMiddleName', i.lastName as 'instructorLastName', i.email as 'instructorEmail',
 a.name as 'assetName', a.type as 'assetType', a.callSign as 'assetCallSign'
@@ -75,6 +62,29 @@ const createFlight = async (req, res) => {
 // Create a flight
 const editFlight = async (req, res) => {
   console.log("editFlight");
+  await updateFlightRecord(req, res, "EDIT");
+};
+
+
+const deleteFlight = async (req, res) => {
+  console.log("deleteFlight");
+  await updateFlightRecord(req, res, "DELETE");
+
+}
+
+const completeFlight = async (req, res) => {
+  console.log("completeFlight");
+  await updateFlightRecord(req, res, "COMPLETE");
+}
+
+
+const cancelFlight = async (req, res) => {
+  console.log("cancelFlight");
+  await updateFlightRecord(req, res, "CANCEL");
+}
+
+const updateFlightRecord = async (req, res, saveType) => {
+  console.log("updateFlightRecord", saveType);
   try {
     // Get the flightID paramater
     const { flightID } = req.params;
@@ -96,95 +106,29 @@ const editFlight = async (req, res) => {
     flight.startDate = startDate;
     flight.endDate = endDate;
 
+
+    flight.flightStatus = saveType;
+
+    if (saveType === "COMPLETE") {
+      flight.totalTime = (dayjs(endDate).diff(dayjs(startDate))) / 60000; // calculates the time in minutes
+      flight.active = false;
+
+    } else if (saveType === "DELETE" || saveType === "CANCEL") {
+      flight.totalTime = 0;
+      flight.active = false;
+
+    } else if (saveType === "EDIT") {
+      flight.totalTime = 0;
+      flight.active = true;
+    }
     //  Save the updated flight in the database
     await flight.save();
 
-    res.status(201).json({ message: 'Flight updated successfully', flight: flight });
+    res.status(201).json({ message: `${saveType} Flight Successfull`, flight: flight });
   } catch (error) {
-    res.status(500).json({ error: `Failed to update flight: ${error.message}` });
+    res.status(500).json({ error: `${saveType} Flight Failed: ${error.message}` });
   }
-};
-
-// // Edit a flight
-// const editFlight = async (req, res) => {
-//     try {
-//         // Extract flight ID and updated data from request body
-//         const { id } = req.params;
-//         const { studentId, instructorId, assetId, startDate, endDate } = req.body;
-
-//         // Find the flight in the database
-//         const flight = await db.Flight.findByPk(id);
-
-//         if (!flight) {
-//             return res.status(404).json({ error: 'Flight not found' });
-//         }
-
-//         // Update the flight's data
-//         flight.studentId = studentId;
-//         flight.instructorId = instructorId;
-//         flight.assetId = assetId;
-//         flight.startDate = startDate;
-//         flight.endDate = endDate;
-
-//         // Save the updated flight in the database
-//         await flight.save();
-
-//         res.json({ message: 'Flight updated successfully', flight });
-//     } catch (error) {
-//         res.status(500).json({ error: `Failed to edit flight: ${error.message}` });
-//     }
-// };
-
-// // Delete a flight
-// const deleteFlight = async (req, res) => {
-//     try {
-//         // Extract flight ID from request parameters
-//         const { id } = req.params;
-
-//         // Find the flight in the database
-//         const flight = await db.Flight.findByPk(id);
-
-//         if (!flight) {
-//             return res.status(404).json({ error: 'Flight not found' });
-//         }
-
-//         // Delete the flight from the database
-//         await flight.destroy();
-
-//         res.json({ message: 'Flight deleted successfully' });
-//     } catch (error) {
-//         res.status(500).json({ error: `Failed to delete flight: ${error.message}` });
-//     }
-// };
-
-// // Complete a flight
-// const completeFlight = async (req, res) => {
-//     try {
-//         // Extract flight ID and total time from request body
-//         const { id } = req.params;
-//         const { totalTime } = req.body;
-
-//         // Find the flight in the database
-//         const flight = await db.Flight.findByPk(id);
-
-//         if (!flight) {
-//             return res.status(404).json({ error: 'Flight not found' });
-//         }
-
-//         // Update the flight's total time and set it to inactive
-//         flight.totalTime = totalTime;
-//         flight.active = false;
-
-//         // Save the updated flight in the database
-//         await flight.save();
-
-//         res.json({ message: 'Flight completed successfully', flight });
-//     } catch (error) {
-//         res.status(500).json({ error: `Failed to complete flight: ${error.message}` });
-//     }
-// };
-
-
+}
 
 
 // const getAllFlights = async (req, res) => {
@@ -268,7 +212,8 @@ module.exports = {
   getActiveFlights,
   createFlight,
   editFlight,
-  // deleteFlight,
-  // completeFlight,
+  deleteFlight,
+  completeFlight,
+  cancelFlight
 
 };
