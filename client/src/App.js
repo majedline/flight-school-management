@@ -20,6 +20,7 @@ import InstructorListScreen from './pages/InstructorListScreen';
 import InstructorScreen from './pages/InstructorScreen';
 import PTRScreen from './pages/PTRScreen';
 import Test from './Test/Test';
+import FlightBookingComponent from './pages/FlightBookingComponent';
 
 function App() {
 
@@ -55,6 +56,8 @@ function App() {
           <Route path="/asset/:assetid" element={<AssetScreen />} />
 
           <Route path="/scheduleFlights" element={<FlightScreen />} />
+          {/* <Route path="/scheduleFlights" element={<FlightBookingComponent />} /> */}
+
           <Route path="/calendar" element={<CalendarScreen />} />
           <Route path="/calendar-page" element={<CalendarPage />} />
 

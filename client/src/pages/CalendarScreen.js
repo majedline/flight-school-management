@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Grid, Paper, Button, Modal, Box, Switch, FormControlLabel } from '@mui/material';
 import CalendarPage from './CalendarPage';
 import UnderConstruction from '../components/Icons/UnderConstruction';
+import axios from 'axios';
+import api from '../util/api';
+
 
 function CalendarScreen() {
   // Get the current date
@@ -13,13 +16,40 @@ function CalendarScreen() {
   const [calendarView, setCalendarView] = useState(true);
 
   // Sample data array
-  const sampleData = [
+  const [sampleData, setSampleData] = useState([
     { date: new Date().setDate(5), data: 'KWO Lesson', details: "Student John Rud with instructor Steve Jinkens" },
     { date: new Date().setDate(10), data: 'KWM Tour', details: "Steve Jinkens taking Alex Smith on tour" },
     { date: new Date().setDate(15), data: 'KWO Maintenance', details: "KWO Scheduled Maintenance" },
     { date: new Date().setDate(16), data: 'KWM Lesson', details: "Student John Rud with instructor Steve Jinkens" },
     { date: new Date().setDate(50), data: 'KWM Lesson', details: "Student John Rud with instructor Steve Jinkens" },
-  ];
+  ]);
+
+  const addRecord = (date, data, details) => {
+    const newRecord = {
+      date: date, // Current date and time
+      data: data,
+      details: details,
+    };
+
+    setSampleData(prevData => [...prevData, newRecord]);
+  };
+
+  const [flights, setFlights] = useState([]);
+  // get active flightss
+  useEffect(() => {
+    const fetchFlights = async () => {
+      try {
+        const response = await axios.get(api.activeFlights);
+        console.log("Done fetching Active Flights", response.data.flights);
+        setFlights(response.data.flights);
+
+      } catch (error) {
+        console.error('Failed to fetch flights:', error.message);
+      }
+    };
+    fetchFlights();
+
+  }, []);
 
   // Function to handle navigation to the next month
   const handleNextMonth = () => {
@@ -199,13 +229,13 @@ function CalendarScreen() {
   const listViewUI = (<>
     <CalendarPage></CalendarPage>
     <Grid item xs={12} container justifyContent="center" style={{ margin: '5px' }}>
-        <Button variant="contained" onClick={handlePreviousMonth} style={{ margin: '5px' }}>
-          Previous
-        </Button>
-        <Button variant="contained" onClick={handleNextMonth} style={{ margin: '5px' }}>
-          Next
-        </Button>
-      </Grid>
+      <Button variant="contained" onClick={handlePreviousMonth} style={{ margin: '5px' }}>
+        Previous
+      </Button>
+      <Button variant="contained" onClick={handleNextMonth} style={{ margin: '5px' }}>
+        Next
+      </Button>
+    </Grid>
   </>);
 
 
