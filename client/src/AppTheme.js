@@ -36,7 +36,7 @@ export const customTheme = createTheme({
     palette: {
         mode: 'light',
         primary: {
-            main: '#345555', // Update the primary color to your preferred color
+            main: '#286183', // Update the primary color to your preferred color
         },
     }
 });
