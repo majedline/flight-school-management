@@ -97,7 +97,7 @@ function NavigationBar() {
             </IconButton>
           )}
           <Link to='/'>
-            <img src={appLogo} style={{ width: '130px', paddingTop: '7px', marginLeft: '10px' }} />
+            <img src={appLogo} style={{ width: '120px', paddingTop: '7px', marginLeft: '10px' }} />
           </Link>
           <Typography
             variant={(isMobileView) ? "h7" : "h6"}
@@ -140,9 +140,9 @@ function NavigationBar() {
                 <ListItem component={Link} to="/my-profile">
                   <ListItemText primary="Profile" />
                 </ListItem>
-                <ListItem component={Link} to="/test">
+                {/* <ListItem component={Link} to="/test">
                   <ListItemText primary="Test" />
-                </ListItem>
+                </ListItem> */}
               </>
             ) : (
               <>
