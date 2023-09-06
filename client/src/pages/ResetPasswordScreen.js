@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, TextField, Typography, Box } from '@mui/material';
 import BoxView from '../components/BoxView';
+import UnderConstruction from '../components/Icons/UnderConstruction';
+
 
 function ResetPasswordScreen() {
   const handleResetPassword = () => {
@@ -11,7 +13,7 @@ function ResetPasswordScreen() {
   return (
     <BoxView>
       <Typography variant="h4" component="h1" align="center">
-        Reset Password
+        Reset Password <UnderConstruction />
       </Typography>
       <TextField label="Email" variant="outlined" fullWidth />
       <Button variant="contained" fullWidth onClick={handleResetPassword}>

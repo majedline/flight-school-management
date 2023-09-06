@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../AppContext';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText, useMediaQuery, useTheme, Avatar } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText, useMediaQuery, useTheme, Avatar, Box } from '@mui/material';
 import FlightIcon from '@mui/icons-material/Flight';
 import MenuIcon from '@mui/icons-material/Menu';
 import { getNameInitials } from '../util/helper';
 
 import { useTranslation } from 'react-i18next';
+import appLogo from '../images/app-logo-2.png';
 
 function NavigationBar() {
   const { appState, setAppState } = useContext(AppContext);
@@ -19,10 +20,10 @@ function NavigationBar() {
       <Button color="inherit" component={Link} to="/login">
         {t('nav_login')}
       </Button>
-      <Button color="inherit" component={Link} to="/signup">
+      <Button color="inherit" component={Link} to="/signup" >
         {t('nav_signup')}
       </Button>
-      <Button color="inherit" component={Link} to="/">
+      <Button color="inherit" component={Link} to="/" >
         {t('nav_overview')}
       </Button>
     </>
@@ -82,7 +83,7 @@ function NavigationBar() {
 
   return (
     <>
-      <AppBar position="static" style={{ marginBottom: '5px' }}>
+      <AppBar position="static" style={{ marginBottom: '5px' }}      >
         <Toolbar>
           {isMobileView && (
             <IconButton
@@ -95,7 +96,9 @@ function NavigationBar() {
               <MenuIcon />
             </IconButton>
           )}
-
+          <Link to='/'>
+            <img src={appLogo} style={{ width: '130px', paddingTop: '7px', marginLeft: '10px' }} />
+          </Link>
           <Typography
             variant={(isMobileView) ? "h7" : "h6"}
             component={Link}
@@ -103,7 +106,8 @@ function NavigationBar() {
             sx={{ flexGrow: 1 }}
             style={{ textDecoration: 'none', color: '#fff' }}
           >
-            <FlightIcon fontSize="small" /> FSM Flight School Management
+
+            {/* <FlightIcon fontSize="small" /> */}
           </Typography>
 
 
@@ -142,7 +146,7 @@ function NavigationBar() {
               </>
             ) : (
               <>
-                <ListItem component={Link} to="/login">
+                <ListItem component={Link} to="/login" >
                   <ListItemText primary="Login" />
                 </ListItem>
                 <ListItem component={Link} to="/signup">
