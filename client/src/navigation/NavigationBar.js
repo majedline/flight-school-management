@@ -140,9 +140,9 @@ function NavigationBar() {
                 <ListItem component={Link} to="/my-profile">
                   <ListItemText primary="Profile" />
                 </ListItem>
-                {/* <ListItem component={Link} to="/test">
+                <ListItem component={Link} to="/test">
                   <ListItemText primary="Test" />
-                </ListItem> */}
+                </ListItem>
               </>
             ) : (
               <>
