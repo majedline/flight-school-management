@@ -8,6 +8,7 @@ import { getNameInitials } from '../util/helper';
 
 import { useTranslation } from 'react-i18next';
 import appLogo from '../images/app-logo-2.png';
+import LanguageSwitcher from '../components/LanguageSwitcher/LanguageSwitcher';
 
 function NavigationBar() {
   const { appState, setAppState } = useContext(AppContext);
@@ -26,6 +27,7 @@ function NavigationBar() {
       <Button color="inherit" component={Link} to="/" >
         {t('nav_overview')}
       </Button>
+      <Box><LanguageSwitcher></LanguageSwitcher></Box>
     </>
   );
 

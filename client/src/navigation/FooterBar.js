@@ -25,10 +25,8 @@ function FooterBar() {
                 Flight School Management &copy; {new Date().getFullYear()} 
             </Typography>
             <Typography variant="caption" color="textSecondary">
-                 (Demo Version 0.1.5 - Powered by <Link style={{textDecoration: 'none'}} to="https://admcan.com/">ADMCAN</Link>)
+                 This site is under development - Demo Version 0.1.5 - Powered by <Link style={{textDecoration: 'none'}} to="https://admcan.com/">ADMCAN</Link>
             </Typography>
-            <LanguageSwitcher></LanguageSwitcher>
-
         </footer>
     );
 }

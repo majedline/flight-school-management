@@ -428,7 +428,6 @@ function FlightScreen() {
             {(selectedFlight.flightID === null) ? "" : (
                 <>
                     <BoxView>
-                       *Danger Zone*
                         <Button
                             variant="contained"
                             fullWidth

@@ -1,22 +1,47 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, IconButton, Typography, Tooltip } from '@mui/material';
 import { changeLanguage } from 'i18next';
+import LanguageIcon from '@mui/icons-material/Language';
 
 const LanguageSwitcher = () => {
 
     const { i18n } = useTranslation();
 
-    const changeLanguage = (lng) => {
+    const changeLanguage = () => {
+
+        let lng = 'en';
+        if (i18n.language == 'en')
+            lng = 'fr';
+        else
+            lng = 'en';
+
         i18n.changeLanguage(lng);
     }
 
+    const getToolTipToggleText = () => {
+        console.log("ss")
+        let lng = i18n.language;
+        if (lng == 'en')
+            return 'Changer la langue en français';
+        else
+            return 'Switch Language to English';
+    }
 
     return (
         <Grid container >
             <Grid item xs={12} >
-                <><Button variant="outlined" size="small" onClick={() => { changeLanguage('en') }}>English</Button></>
-                <> <Button variant="outlined" size="small" onClick={() => { changeLanguage('fr') }}>French</Button></>
+                <IconButton
+                    aria-label="langauge"
+                    color="inherit"
+                    size="small"
+                    onClick={() => { changeLanguage() }}>
+                    <Tooltip title={getToolTipToggleText()} >
+                        <LanguageIcon
+                            fontSize="small">
+                        </LanguageIcon>
+                    </Tooltip>
+                </IconButton>
             </Grid>
         </Grid>
     );
