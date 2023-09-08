@@ -359,7 +359,7 @@ function FlightScreen() {
                     <InputLabel
                         style={{ backgroundColor: "#dddddd" }}
                         htmlFor="assetSelectionList">
-                        &nbsp; Asset &nbsp;
+                        &nbsp; Plane &nbsp;
                     </InputLabel>
                     <Select
                         id="assetSelectionList"
@@ -428,7 +428,7 @@ function FlightScreen() {
             {(selectedFlight.flightID === null) ? "" : (
                 <>
                     <BoxView>
-                        These Actions Will Hide The Record
+                       *Danger Zone*
                         <Button
                             variant="contained"
                             fullWidth
@@ -474,7 +474,7 @@ function FlightScreen() {
                                 <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>ID</TableCell>
                                 <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Student</TableCell>
                                 <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Instructor</TableCell>
-                                <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Asset</TableCell>
+                                <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Plane</TableCell>
                                 <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Start</TableCell>
                                 <TableCell align="center" style={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Finish</TableCell>
 

@@ -21,6 +21,7 @@ import InstructorScreen from './pages/InstructorScreen';
 import PTRScreen from './pages/PTRScreen';
 import Test from './Test/Test';
 import FlightBookingComponent from './pages/FlightBookingComponent';
+import KPIScreen from './pages/KPIScreen';
 
 function App() {
 
@@ -63,6 +64,7 @@ function App() {
 
 
           <Route path="/my-profile" element={<ProfileScreen />} />
+          <Route path="/kpis" element={<KPIScreen />} />
 
           <Route path="/test" element={<Test></Test>} />
 

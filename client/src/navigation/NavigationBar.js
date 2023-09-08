@@ -46,6 +46,9 @@ function NavigationBar() {
       <Button color="inherit" component={Link} to="/calendar">
         Calendar
       </Button>
+      <Button color="inherit" component={Link} to="/kpis">
+        KPIs
+      </Button>
       {/* <Button color="inherit" component={Link} to="/ptr">
         My PTR
       </Button> */}
@@ -133,6 +136,9 @@ function NavigationBar() {
                 </ListItem>
                 <ListItem component={Link} to="/calendar">
                   <ListItemText primary="Calendar" />
+                </ListItem>
+                <ListItem component={Link} to="/kpis">
+                  <ListItemText primary="KPIs" />
                 </ListItem>
                 {/* <ListItem component={Link} to="/ptr">
                   <ListItemText primary="My PTR" />
