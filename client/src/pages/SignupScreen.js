@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, TextField, Typography } from '@mui/material';
+import { Button, TextField, Typography, Container, Paper } from '@mui/material';
 import BoxView from '../components/BoxView';
 import axios from 'axios';
 import api from '../util/api';
+import ULA from '../components/ULA';
 
 
 function SignupScreen(type) {
@@ -42,7 +43,7 @@ function SignupScreen(type) {
   return (
     <BoxView>
       <Typography variant="h4" component="h1" align="center">
-        Student Sign Up
+        Sign Up
       </Typography>
       <TextField
         label="First Name"
@@ -92,9 +93,12 @@ function SignupScreen(type) {
         onChange={(e) => setConfirmPassword(e.target.value)}
         fullWidth
       />
+      <ULA></ULA>
       <Button variant="contained" fullWidth onClick={handleSignup}>
         Sign Up
       </Button>
+
+
       <Typography variant="body2" align="center">
         Already have an account? <Link to="/login">Log in</Link>
       </Typography>
