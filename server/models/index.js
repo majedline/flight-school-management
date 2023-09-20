@@ -22,20 +22,35 @@ if (process.env.NODE_ENV === "production") {
       "idle": 10000
     }
   }
-  console.log("configPart", configPart);
 } else {
-  configPart = require(path.join(__dirname, "../../config/config.json"))[env]
-}
 
+  var configFile = path.join(__dirname, "../../config/config.json");
+  var configFileContents = fs.readFileSync(configFile, "utf-8");
+  configPart = JSON.parse(configFileContents);
+}
+ 
 var config = configPart;
 var db = {};
 
-if (config.use_env_variable) {
-  // var sequelize = new Sequelize(process.env[config.use_env_variable]);
-  var sequelize = new Sequelize(config.database, config.username, config.password, config);
-} else {
-  var sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+// if (config.use_env_variable) {
+//   // var sequelize = new Sequelize(process.env[config.use_env_variable]);
+//   var sequelize = new Sequelize(config.database, config.username, config.password, config);
+// } else {
+//   var sequelize = new Sequelize(config.database, config.username, config.password, config);
+// }
+
+console.log("config", config);
+var sequelize = new Sequelize(config.database, config.username, config.password, {
+  host: config.host,
+  port: config.port,
+  dialect: config.dialect,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  }
+});
 
 fs
   .readdirSync(__dirname)

@@ -50,8 +50,8 @@ app.use(routes);
 
 
  
-db.sequelize.sync({ force: false }).then(function () {
+db.sequelize.sync({ force: true }).then(function () {
   app.listen(port, () => {
     console.log(`FSM Server listening on port ${port}`);
   });
-}); 
+});  
