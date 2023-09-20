@@ -54,4 +54,4 @@ db.sequelize.sync({ force: false }).then(function () {
   app.listen(port, () => {
     console.log(`FSM Server listening on port ${port}`);
   });
-});
+}); 
