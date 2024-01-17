@@ -1,8 +1,15 @@
 console.log("FSM Loading Requirements");
+// Framework that uses http module with additoinal librarites that faciliates the req and response, and middleware 
 const express = require('express');
+// database module that will connect to sequalize (an orm). Great for suerity to ensure there is no sql injections/etc
 const db = require("./server/models");
+// module that will parse the request and set the cookie in a req.cookie in json that can be used. I use it to store session keys
 const cookieParser = require('cookie-parser')
+// module that will parse the request set the req body, param, and query in json that can be used.
 const bp = require('body-parser');
+// module Cross-Origin Resource Sharing in Node.js
+// allows the front end to talk to a 3rd party backend. Usually front and back are sitting in the same server
+// Here, it allows the server to look at the origin header. if the request header recieved is the same as the server, then allow.
 const cors = require('cors');
 
 const app = express();
@@ -37,6 +44,7 @@ if (process.env.NODE_ENV === "production") {
 } else {
   console.log("FSM Cors Dev");
   app.use(cors());
+  app.options('*', cors());
 }
 
 // Serve up static assets (usually on heroku)
@@ -46,8 +54,8 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const routes = require('./server/routes');
+const { Console } = require('winston/lib/winston/transports');
 app.use(routes);
-
 
  
 db.sequelize.sync({ force: false }).then(function () {

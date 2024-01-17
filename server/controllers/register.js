@@ -15,11 +15,14 @@ const register = async (req, res) => {
     // validation failed, send and leave
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).send({ error: errors.array() });
+        console.log("error", errors.array())
+        return res.status(400).send({ "error": errors.array() });
     }
 
     // no errors, get the content of the body
     const { firstName, lastName, email, password, phone, userType, disclaimerSigned } = req.body;
+
+    console.log(firstName, lastName, email, password, phone, userType, disclaimerSigned)
 
     try {
         console.log(db.user);

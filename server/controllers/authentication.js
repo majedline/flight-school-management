@@ -30,10 +30,12 @@ const login = async (req, res) => {
 
     try {
         // find the user
-        const user = await db.user.findOne({ where: { email } });
+
+        let user = await db.user.findOne({ where: { email } });
 
         // User does not exist, send and leave
         if (!user) {
+            console.log("username '" + email + "' not found in user table", user)
             return res.status(400).send({ error: `FSM Error - Invalid email or password` });
         }
 
@@ -41,6 +43,7 @@ const login = async (req, res) => {
 
         // found the email, now compare the username and password
         if (!matched) {
+            console.log("password wrong")
             return res.status(400).send({ error: `FSM Error - Invalid email or password` });
         }
 
@@ -53,9 +56,10 @@ const login = async (req, res) => {
                 type: user.type
             }
         };
-        
-        console.log(payload);
 
+        console.log("payload", payload);
+
+        console.log("jwt.sign")
         jwt.sign(
             payload,
             jwtpass,
@@ -64,10 +68,15 @@ const login = async (req, res) => {
                 if (err) {
                     throw err;
                 } else {
+                    console.log("cookie", cookieName, token )
+                    console.log("success, setting the cookie ("+cookieName+") now with token on ", (process.env.NODE_ENV === "production" ? "https://edo3.herokuapp.com" : "http://localhost:3000"), token)
+
                     res.cookie(cookieName, token, {
                         maxAge: 1 * 60 * 60 * 1000,
                         httpOnly: false,
-                        secure: process.env.NODE_ENV === "production",
+                        secure: process.env.NODE_ENV === "production" ? true : false,
+                        sameSite: process.env.NODE_ENV === "production" ? 'none' : 'Lax',
+                        path: "/"
                     })
                         .status(200)
                         .json({ token, user: payload.user, message: "Signed in successfully" })

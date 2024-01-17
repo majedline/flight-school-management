@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "server side for fsm-client",
   "engines": {
-    "node": "18.x"
+    "node": "21.x"
   },
   "main": "server.js",
   "scripts": {

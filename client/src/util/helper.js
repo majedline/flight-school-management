@@ -28,3 +28,7 @@ exports.formatDate = (inputDate) => {
 
     return `${year}-${month}-${day}, ${hour}:${minute} ${ampm}`;
 }
+
+exports.extractErrorMsgs = (errorArray) => {
+    return errorArray.map(error => error.msg)
+}

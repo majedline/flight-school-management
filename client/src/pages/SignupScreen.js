@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, TextField, Typography, Container, Paper } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import BoxView from '../components/BoxView';
 import axios from 'axios';
 import api from '../util/api';
 import ULA from '../components/ULA';
+import helper from '../util/helper';
+import ErrorList from '../components/ErrorList';
 
 
 function SignupScreen(type) {
@@ -16,6 +18,8 @@ function SignupScreen(type) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [phone, setPhone] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
+
 
   const handleSignup = async () => {
     try {
@@ -36,7 +40,9 @@ function SignupScreen(type) {
 
     } catch (error) {
       // Handle error here
-      console.error(error);
+      if (error.response.data.error) {
+        setErrorMsg(helper.extractErrorMsgs(error.response.data.error));
+      }
     }
   };
 
@@ -98,7 +104,9 @@ function SignupScreen(type) {
         Sign Up
       </Button>
 
-
+      <Typography variant="body2" align="center">
+        <ErrorList list={errorMsg} />
+      </Typography>
       <Typography variant="body2" align="center">
         Already have an account? <Link to="/login">Log in</Link>
       </Typography>

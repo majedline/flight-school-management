@@ -19,8 +19,7 @@ function LoginScreen() {
   const navigate = useNavigate();
 
   const { appState, setAppState } = useContext(AppContext);
-
-
+  console.log(appState);
 
   // Update the appState using setAppState
   const updateGlobalUser = (newUser) => {
@@ -32,11 +31,9 @@ function LoginScreen() {
 
   const handleLogin = () => {
     // Handle login logic here
-
-    if (!checkEmailAndPasswordAreValid()){
+    if (!checkEmailAndPasswordAreValid()) {
       return;
     }
-
     axios
       .post(api.login, {
         email,
@@ -55,7 +52,16 @@ function LoginScreen() {
         navigate("/scheduleFlights");
 
       }).catch(err => {
-        setErrorMsg(err.response.data.error)
+        if (err) {
+          if (err.response.data.error[0].msg){
+            console.log("Error:", err.response.data.error[0].msg)
+            setErrorMsg(err.response.data.error[0].msg)
+          }else{
+            console.log("Error", err);
+            setErrorMsg("Unknown error...");
+          }
+        }
+        
       })
   };
 
